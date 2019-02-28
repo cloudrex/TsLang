@@ -6,7 +6,7 @@ start:
 	directive* imprt* extern* namespace fnEntry (
 		strct
 		| iface
-		| class
+		| clss
 		| fnTopLevel
 		| topLevelDeclare
 	)* EOF;
@@ -95,7 +95,7 @@ strct: KeyExport? KeyStruct Id SymBlockL structEntry* SymBlockR;
 // Class.
 constructor: Modifier? Id args block;
 
-class:
+clss:
 	attrib* KeyExport? KeyClass Generic? Extends? Implements* Id SymBlockL constructor? fn*
 		SymBlockR;
 
@@ -130,10 +130,10 @@ forLoop:
 // While-loop.
 whileHeader: KeyWhile SymArgsL expr SymArgsR;
 
-while: whileHeader loopBlock;
+whileLoop: whileHeader loopBlock;
 
 // Do-while loop.
-doWhile: KeyDo SymArgsL expr SymArgsR loopBlock whileHeader;
+doWhileLoop: KeyDo SymArgsL expr SymArgsR loopBlock whileHeader;
 
 // Switch.
 caseBlock: block | KeyBreak SymEnd;
@@ -149,7 +149,7 @@ gotoStatement: KeyGoto Id;
 // Enum.
 enumEntry: Id ':' atom;
 
-enum: KeyEnum Id (KeyExtends)? SymBlockL enumEntry* SymBlockR;
+enm: KeyEnum Id (KeyExtends)? SymBlockL enumEntry* SymBlockR;
 
 // Directive.
 directive: KeyDirective Id (Id | StrLiteral);

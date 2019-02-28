@@ -1,4 +1,4 @@
-lexer grammar MyLangLexer;
+lexer grammar MyLang;
 
 // General.
 NumLiteral: [0-9]+ (.[0-9]+)?;
@@ -24,7 +24,6 @@ KeyTrue: 'true';
 KeyFalse: 'false';
 KeyNil: 'nil';
 KeyStatic: 'stat';
-KeyAsync: 'async';
 KeyConst: 'const';
 KeyNew: 'new';
 KeyExtern: 'extern';
