@@ -1,6 +1,10 @@
 import llvm, {BasicBlock} from "llvm-node";
 import {MyLangLexer} from "../gen/MyLangLexer.js";
 
+function enterTopLevelFn() {
+    
+}
+
 const context = new llvm.LLVMContext();
 const mod = new llvm.Module("Entry", context);
 
