@@ -1,0 +1,23 @@
+{
+    "name": "ts-lang",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "bash run.sh && tsc"
+    },
+    "keywords": [
+        "llvm",
+        "antlr",
+        "toy-language"
+    ],
+    "author": "CloudRex <cloudrex@outlook.com>",
+    "license": "MIT",
+    "dependencies": {
+        "llvm-node": "^2.1.0"
+    },
+    "devDependencies": {
+        "@types/antlr4": "^4.7.0",
+        "@types/node": "^11.9.5"
+    }
+}
