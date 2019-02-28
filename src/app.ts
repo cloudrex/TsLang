@@ -1,4 +1,5 @@
 import llvm, {BasicBlock} from "llvm-node";
+import {MyLangLexer} from "../gen/MyLangLexer.js";
 
 const context = new llvm.LLVMContext();
 const mod = new llvm.Module("Entry", context);
