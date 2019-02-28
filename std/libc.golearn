@@ -1,0 +1,83 @@
+space libc;
+
+exp extern a641(str string) ~> long;
+
+exp extern avoid() ~> void;
+
+exp extern abs(int number) ~> int;
+
+exp extern labs(long number) ~> long;
+
+exp extern access(str filename, int how) ~> int;
+
+exp extern acos(double x) ~> double;
+
+exp extern acosf(float x) ~> float;
+
+exp extern atan(double x) ~> double;
+
+exp extern atanf(float x) ~> float;
+
+exp extern atol(str string) ~> long;
+
+exp extern atoi(str string) ~> int;
+
+exp extern basename(str path) ~> str;
+
+exp extern dirname(str path) ~> str;
+
+/*
+ The printf function prints the optional
+ arguments under the control of the template
+ string template to the stream stdout.
+ It returns the number of characters printed,
+ or a negative value if there was an output error.
+ */
+exp extern printf(str template, ..) ~> int;
+
+/*
+ The putchar function is equivalent to putc with
+ stdout as the value of the stream argument.
+ */
+exp extern putchar(int c) ~> int;
+
+/*
+ The puts function writes the string s to the
+ stream stdout followed by a newline.
+ The terminating null character of the string is not written.
+ (Note that fputs does not write a newline as this function does.)
+ */
+exp extern puts(str s) ~> int;
+
+/*
+ This function establishes seed as the seed for a new series of
+ pseudo-random numbers. If you call rand before a seed has been
+ established with srand, it uses the value 1 as a default seed.
+ */
+exp srand(unsig int seed) ~> void;
+
+/*
+ The rand function returns the next pseudo-random number in the series.
+ The value ranges from 0 to RAND_MAX.
+ */
+exp extern rand() ~> int;
+
+/*
+ The unlink function deletes the file name filename. If this is a file’s
+ sole name, the file itself is also deleted. (Actually, if any process has
+ the file open when this happens, deletion is postponed until all processes
+ have closed the file.)
+ */
+exp extern unlink(str filename) ~> int;
+
+/*
+ The rmdir function deletes a directory. The directory must be empty before
+ it can be removed; in other words, it can only contain entries for . and ...
+ */
+exp extern rmdir(str filename) ~> int;
+
+/*
+ This is the ISO C function to remove a file. It works like unlink for files
+ and like rmdir for directories. remove is declared in stdio.h.
+ */
+exp extern remove(str filename) ~> int;

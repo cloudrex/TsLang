@@ -1,0 +1,15 @@
+space std.string;
+
+exp class String {
+	prot str value;
+
+	pub fn startsWith(str text) ~> bool {
+		for (int i = 0; i < this.value.len; i++) {
+			if (text[i] != this.value[i]) {
+				ret false;
+			}
+		}
+		
+		ret true;
+	}
+}

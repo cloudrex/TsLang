@@ -10,3 +10,10 @@ exp fn abs(int num) ~> int {
 	
 	ret num;
 }
+
+/*
+ Determine if input number is odd.
+ */
+exp fn isOdd(int num) ~> bool {
+	ret num % 2 == 1;
+}
