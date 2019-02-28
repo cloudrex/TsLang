@@ -1,29 +1,22 @@
 grammar MyLang;
-
 import MyLangLexer;
 
 // Entry.
-
 start:
-	imprt* extern* namespace entryFn (
+	directive* imprt* extern* namespace fnEntry (
 		strct
+		| iface
 		| class
-		| topLevelFn
+		| fnTopLevel
 		| topLevelDeclare
 	)* EOF;
 
-assign: idPath '=' expr;
-
-declare: Type Id '=' expr | Type Id;
-
-topLevelDeclare: KeyExport? declare;
-
-imprt: KeyImport Id SymEnd;
-
-namespace: KeyNamespace Id SymEnd;
+// Basic.
+atom: idPath | NumLiteral | StrLiteral | CharLiteral;
 
 expr:
 	atom
+	| declareInline // Inline declaration.
 	| KeyTypeOf expr // Type extraction.
 	| Id args // Function call.
 	| KeyNew Id args // Class creation.
@@ -31,97 +24,138 @@ expr:
 	| OpUnary expr // Unary operation.
 	| KeyAwait expr // Await async operation.
 	| KeyInterpolation StrLiteral // String interpolation.
-	| expr KeyAs (Type | ComplexType) // Type casting.
-	| SymArgsL (Type | ComplexType) SymArgsR expr // Type casting alternative.
+	| SymArgsL typeBasic SymArgsR expr // Type casting.
 	| SymArgsL expr SymArgsR; // Encapsulated expression within parenthesis.
 
-arg: Type Id;
+// Type.
+typeBasic: TypeSimple | TypeComplex;
 
-args: SymArgsL (arg SymComma)* arg SymArgsR | SymArgsL SymArgsR;
+fnReturnType: typeBasic | TypeVoid;
 
+// Variable.
+assign: idPath '=' expr;
+
+declare: typeBasic Id '=' expr | typeBasic Id;
+
+declareInline: SymBracketL declare SymBracketR;
+
+topLevelDeclare: KeyExport? declare;
+
+// Importing.
+imprt: KeyImport Id SymEnd;
+
+// Namespace.
+namespace: KeyNamespace Id SymEnd;
+
+// Block.
 statement:
 	expr SymEnd
-	| fnx SymEnd // Anonymous function.
+	| fnAnonymous SymEnd // Anonymous function.
 	| declare SymEnd // Variable declaration.
 	| assign SymEnd // Variable assignment.
-	| goto SymEnd // Goto labeled-block statement.
+	| gotoStatement SymEnd // Goto labeled-block statement.
 	| KeyExit expr SymEnd // Exit statement.
-	| KeyReturn expr? SymEnd; // Function return.
+	| KeyReturn expr? SymEnd // Function return.
+	| KeyAssert expr SymEnd // Assert statement.
+	| KeyThrow expr SymEnd; // Throw statement.
 
 block: (Id ':')? SymBlockL statement* SymBlockR;
 
-fnSigArgs: SymArgsL ((Type SymComma)* Type)? SymArgsR;
+// Function.
+arg: typeBasic Id;
 
-fnSig: Id fnSigArgs (SymFnType Type)? SymEnd;
+args: SymArgsL (arg SymComma)* arg SymArgsR | SymArgsL SymArgsR;
+
+fnSigArgs: SymArgsL ((typeBasic SymComma)* typeBasic)? SymArgsR;
+
+fnSig: Id fnSigArgs (SymFnType typeBasic)? SymEnd;
+
+fnEntry: attrib* KeyEntry args? (SymFnType fnReturnType)? block;
 
 fn:
 	attrib* KeyFn ModifierStatic? ModifierAsync? Modifier? Id args? (
-		SymFnType Type
+		SymFnType fnReturnType
 	)? block;
 
-entryFn: attrib* KeyEntry args? (SymFnType Type)? block;
-
-topLevelFn:
+fnTopLevel:
 	KeyExport? attrib* KeyFn ModifierAsync? Id args? (
-		SymFnType Type
+		SymFnType fnReturnType
 	)? block;
 
-// Anonymous function.
+fnAnonymous: KeyFn args? (SymFnType typeBasic)? block;
 
-fnx: KeyFnx args? (SymFnType Type)? block;
-
+// Attribute.
 attrib: SymAttribute Id args?;
 
-structEntry: Id ':' Type SymEnd;
+// Struct.
+structEntry: Id ':' typeBasic SymEnd;
 
 strct: KeyExport? KeyStruct Id SymBlockL structEntry* SymBlockR;
 
+// Class.
 constructor: Modifier? Id args block;
 
 class:
 	attrib* KeyExport? KeyClass Generic? Extends? Implements* Id SymBlockL constructor? fn*
 		SymBlockR;
 
-interface:
+// Interface.
+iface:
 	attrib* KeyExport? KeyInterface Id Implements SymBlockL fnSig* SymBlockR;
 
 objLiteralEntry: Id ':' expr;
 
 objLiteral: SymBlockL objLiteralEntry SymBlockR;
 
-extern: KeyExtern fnSig;
+// External declaration.
+extern:
+	KeyExport? KeyExtern (SymArgsL KeyAs Id SymArgsR)? fnSig;
 
-atom: idPath | NumLiteral | StrLiteral | CharLiteral;
+// If statement.
+ifStatement: KeyIf SymArgsL expr SymArgsR block;
 
-idPath: Id ('.' Id)*;
-
-if: KeyIf SymArgsL expr SymArgsR block;
-
+// Else-if statement.
 elseIf: KeyElseIf SymArgsL expr SymArgsR block;
 
-else: (if | elseIf) KeyElse SymArgsL expr SymArgsR;
+// Else statement.
+elseStatement: (ifStatement | elseIf) KeyElse SymArgsL expr SymArgsR;
 
+// Generic loop.
 loopBlock: block | KeyBreak SymEnd | KeyContinue SymEnd;
 
-for:
+// For-loop.
+forLoop:
 	KeyFor SymArgsL expr SymEnd expr SymEnd expr SymArgsR loopBlock;
 
+// While-loop.
 whileHeader: KeyWhile SymArgsL expr SymArgsR;
 
 while: whileHeader loopBlock;
 
+// Do-while loop.
 doWhile: KeyDo SymArgsL expr SymArgsR loopBlock whileHeader;
 
+// Switch.
 caseBlock: block | KeyBreak SymEnd;
 
-switch:
+switchStatement:
 	KeySwitch SymArgsL expr SymArgsR SymBlockL (
 		KeyCase expr ':' caseBlock
 	) (KeyDefault ':' caseBlock)?;
 
-goto: KeyGoto Id;
+// Goto.
+gotoStatement: KeyGoto Id;
 
+// Enum.
 enumEntry: Id ':' atom;
 
-enum:
-	KeyEnum Id (KeyExtends Type)? SymBlockL enumEntry* SymBlockR;
+enum: KeyEnum Id (KeyExtends)? SymBlockL enumEntry* SymBlockR;
+
+// Directive.
+directive: KeyDirective Id (Id | StrLiteral);
+
+// Definition/alias.
+def: KeyDef Id '=' (typeBasic (('|' | '&') typeBasic)*);
+
+// Object.
+idPath: Id ('.' Id)*;
