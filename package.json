@@ -4,8 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "bash run.sh && tsc",
-        "start": "npm run build && node dist/app.js"
+        "build": "bash prepare.sh && npm run antlr4ts && tsc",
+        "start": "npm run build && node dist/app.js",
+        "antlr4ts": "antlr4ts -listener grammar/MyLang.g4 -o gen"
     },
     "keywords": [
         "llvm",
