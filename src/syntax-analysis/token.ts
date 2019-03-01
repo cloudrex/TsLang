@@ -4,7 +4,7 @@ export enum CommonToken {
     Whitespace = -3
 }
 
-export type TokenType = CommonToken | number;
+export type TokenType = CommonToken | string;
 
 export interface IToken {
     readonly type: TokenType;
