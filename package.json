@@ -4,9 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "bash scripts/prepare.sh && npm run antlr4ts && tsc",
+        "build": "tsc",
         "start": "npm run build && node dist/app.js",
-        "antlr4ts": "antlr4ts -listener grammar/MyLang.g4 -o gen && bash scripts/post-antlr-build.sh"
+        "antlr4ts": "antlr4ts -listener grammar/MyLang.g4 -o gen && bash scripts/post-antlr-build.sh",
+        "test": "npm run build && node dist/test/runner.js"
     },
     "keywords": [
         "llvm",
@@ -23,6 +24,7 @@
         "@types/antlr4": "^4.7.0",
         "@types/node": "^11.9.5",
         "antlr4ts-cli": "^0.5.0-alpha.2",
-        "typescript": "^3.3.3333"
+        "typescript": "^3.3.3333",
+        "unit": "^1.1.0"
     }
 }
