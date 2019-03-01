@@ -18,15 +18,13 @@ export default class {
         Assert.equal(MatchEngine.resolve("test"), "test");
     }
 
-    @test("resolve(): should determine and resolve correct match rules with flags from provided text")
+    @test("resolve(): match rule should not be affected by flags")
     public resolve_correctRuleWithFlags() {
         const rule: RegExp = MatchEngine.resolve("/[a-z]/gi") as RegExp;
 
         Assert.that(rule, Is.instanceOf(RegExp));
-        Assert.true(rule.global);
-        Assert.true(rule.ignoreCase);
+        Assert.false(rule.global);
+        Assert.false(rule.ignoreCase);
         Assert.false(rule.multiline);
-
-        console.log("rule:", rule);
     }
 }
