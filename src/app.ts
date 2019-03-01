@@ -1,5 +1,4 @@
 import llvm, {BasicBlock} from "llvm-node";
-import {MyLangLexer} from "../gen/grammar/MyLangLexer.js";
 
 function enterTopLevelFn() {
     

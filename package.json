@@ -4,9 +4,9 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "bash prepare.sh && npm run antlr4ts && tsc",
+        "build": "bash scripts/prepare.sh && npm run antlr4ts && tsc",
         "start": "npm run build && node dist/app.js",
-        "antlr4ts": "antlr4ts -listener grammar/MyLang.g4 -o gen"
+        "antlr4ts": "antlr4ts -listener grammar/MyLang.g4 -o gen && bash scripts/post-antlr-build.sh"
     },
     "keywords": [
         "llvm",
@@ -22,6 +22,7 @@
     "devDependencies": {
         "@types/antlr4": "^4.7.0",
         "@types/node": "^11.9.5",
-        "antlr4ts-cli": "^0.5.0-alpha.2"
+        "antlr4ts-cli": "^0.5.0-alpha.2",
+        "typescript": "^3.3.3333"
     }
 }
