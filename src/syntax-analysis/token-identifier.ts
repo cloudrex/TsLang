@@ -4,9 +4,14 @@ import SpecialCharacter from "../core/special-character";
 import MatchEngine, {MatchRule} from "./match-engine";
 
 export interface ITokenIdentifier {
+    readonly defs: ReadonlyMap<MatchRule, string>;
+
     identify(text: RawToken): TokenType;
 }
 
+/**
+ * Identify and classify tokens by values.
+ */
 export default class TokenIdentifier implements ITokenIdentifier {
     public static primeCommonTokens(text: RawToken): CommonToken {
         // Test for common tokens.
@@ -24,12 +29,15 @@ export default class TokenIdentifier implements ITokenIdentifier {
     /**
      * Token definitions.
      */
-    protected readonly defs: Map<MatchRule, string>;
+    public readonly defs: ReadonlyMap<MatchRule, string>;
 
-    public constructor(defs: Map<MatchRule, string>) {
+    public constructor(defs: ReadonlyMap<MatchRule, string>) {
         this.defs = defs;
     }
 
+    /**
+     * Identify token types by values.
+     */
     public identify(text: RawToken): TokenType {
         // Set default case to a common token if applicable.
         let result: TokenType = TokenIdentifier.primeCommonTokens(text);
