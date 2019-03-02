@@ -1,21 +1,30 @@
-namespace SyntaxAnalysis {
-    export type MatchRule = RegExp | string;
+import {expect, Type} from "../Core/Expect";
+import {Pattern} from "../Core/Pattern";
 
-    export class MatchEngine {
-        public static resolve(@Core.expect(Core.Type.String) value: string): MatchRule {
-            if (Core.Pattern.matchRegexRule.test(value)) {
-                return new RegExp(value);
-            }
+export type MatchRule = RegExp | string;
 
-            return value;
+export class MatchEngine {
+    public static resolve(@expect(Type.String) value: string): MatchRule {
+        if (Pattern.matchRegexRule.test(value)) {
+            return new RegExp(value);
         }
 
-        public static test(@Core.expect(Core.Type.String) text: string, @Core.expect(RegExp, Core.Type.String) rule: MatchRule): boolean {
-            if (rule instanceof RegExp) {
-                return rule.test(text);
-            }
+        return value;
+    }
 
-            return rule === text;
+    public static test(@expect(Type.String) text: string, @expect(RegExp, Type.String) rule: MatchRule): boolean {
+        if (rule instanceof RegExp) {
+            return rule.test(text);
         }
+
+        return rule === text;
+    }
+
+    public static partialTest(@expect(Type.String) text: string, @expect(RegExp, Type.String) rule: MatchRule): boolean {
+        if (rule instanceof RegExp) {
+            return rule.test(text);
+        }
+
+        return rule.startsWith(text);
     }
 }

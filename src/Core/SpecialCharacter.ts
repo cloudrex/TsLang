@@ -1,5 +1,3 @@
-namespace Core {
-    export enum SpecialCharacter {
-        EOF = "\0"
-    }
+export enum SpecialCharacter {
+    EOF = "\0"
 }

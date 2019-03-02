@@ -1,5 +1,5 @@
-namespace SyntaxAnalysis {
-    export type Sequence<T> = Array<T>;
+import {IToken} from "./Token";
 
-    export type TokenSequence = Sequence<IToken>;
-}
+export type Sequence<T> = Array<T>;
+
+export type TokenSequence = Sequence<IToken>;

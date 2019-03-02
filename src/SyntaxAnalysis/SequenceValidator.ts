@@ -1,5 +1,3 @@
-namespace SyntaxAnalysis {
-    export interface ISequenceValidator {
-        //
-    }
+export interface ISequenceValidator {
+    //
 }

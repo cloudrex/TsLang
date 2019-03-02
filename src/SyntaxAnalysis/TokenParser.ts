@@ -1,9 +1,7 @@
-namespace SyntaxAnalysis {
-    export interface ITokenParser {
-        //
-    }
+export interface ITokenParser {
+    //
+}
 
-    export class TokenParser {
-        //
-    }
+export class TokenParser {
+    //
 }

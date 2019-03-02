@@ -1,14 +1,15 @@
-namespace Grammar {
-    export interface IValueResolver {
-        //
-    }
+import {Pattern} from "../Core/Pattern";
+import {expect, Type} from "../Core/Expect";
 
-    export class ValueResolver implements IValueResolver {
-        /**
-         * Break up input into tokens using whitespace as delimiter.
-         */
-        public static break(@Core.expect(Core.Type.String) value: string): string[] {
-            return value.split(Core.Pattern.whitepsace);
-        }
+export interface IValueResolver {
+    //
+}
+
+export class ValueResolver implements IValueResolver {
+    /**
+     * Break up input into tokens using whitespace as delimiter.
+     */
+    public static break(@expect(Type.String) value: string): string[] {
+        return value.split(Pattern.whitepsace);
     }
 }

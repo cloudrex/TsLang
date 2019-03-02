@@ -4,7 +4,7 @@ import {unit, test, Assert, Is} from "unit";
 default class {
     @test("resolve(): should determine and resolve correct match rule from provided text")
     public resolve_correctRule() {
-        const regexRule: RegExp = SyntaxAnalysis.MatchEngine.resolve("/[a-z]/") as RegExp;
+        const regexRule: RegExp = MatchEngine.resolve("/[a-z]/") as RegExp;
 
         // Assert regex rule.
         Assert.that(regexRule, Is.instanceOf(RegExp));
@@ -14,12 +14,12 @@ default class {
         Assert.false(regexRule.multiline);
 
         // Assert literal rule.
-        Assert.equal(SyntaxAnalysis.MatchEngine.resolve("test"), "test");
+        Assert.equal(MatchEngine.resolve("test"), "test");
     }
 
     @test("resolve(): match rule should not be affected by flags")
     public resolve_correctRuleWithFlags() {
-        const rule: RegExp = SyntaxAnalysis.MatchEngine.resolve("/[a-z]/gi") as RegExp;
+        const rule: RegExp = MatchEngine.resolve("/[a-z]/gi") as RegExp;
 
         Assert.that(rule, Is.instanceOf(RegExp));
         Assert.false(rule.global);

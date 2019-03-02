@@ -1,10 +1,8 @@
-namespace SyntaxAnalysis {
-    export interface IAmbiguousHandler {
-        //
-    }
+export interface IAmbiguousHandler {
+    //
+}
 
 
-    export class AmbiguousHandler implements IAmbiguousHandler {
-        //
-    }
+export class AmbiguousHandler implements IAmbiguousHandler {
+    //
 }

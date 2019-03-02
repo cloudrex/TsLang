@@ -1,9 +1,7 @@
-module SyntaxAnalysis {
-    export interface ISyntaxAnalyzer {
-        //
-    }
+export interface ISyntaxAnalyzer {
+    //
+}
 
-    export class SyntaxAnalyzer implements ISyntaxAnalyzer {
-        //
-    }
+export class SyntaxAnalyzer implements ISyntaxAnalyzer {
+    //
 }
