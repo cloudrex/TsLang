@@ -1,8 +1,8 @@
 import {Runner} from "unit";
 
 // Import tests.
-import "./tests/MatchEngine";
-import "./tests/ValueResolver";
-import "./tests/Tokenizer";
+import "./Tests/MatchEngine";
+import "./Tests/ValueResolver";
+import "./Tests/Tokenizer";
 
 Runner.test();
