@@ -1,5 +1,0 @@
-{
-    "UppercaseChar": "/[A-Z]/",
-    "Word": "/[a-zA-Z]+/",
-    "Sentence": "UppercaseChar Word+ '.'"
-}
