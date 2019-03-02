@@ -45,7 +45,7 @@ export class Tokenizer implements ITokenizer {
             const matches: MatchRule[] = this.filterDefs(input.substring(i));
 
             // TODO: Not matching.
-            console.log("Matches:", matches);
+            console.log("Matches:", matches, "substr:", input.substring(i));
 
             // Report ambiguous token definitions (2+ matches).
             if (matches.length > 1) {

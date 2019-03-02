@@ -6,7 +6,8 @@ export type MatchRule = RegExp | string;
 export class MatchEngine {
     public static resolve(@expect(Type.String) value: string): MatchRule {
         if (Pattern.matchRegexRule.test(value)) {
-            return new RegExp(value);
+            // Create expression and remove first + last characters of value (regex delimiters '/').
+            return new RegExp(value.substring(1).substring(0, value.length - 1));
         }
 
         return value;
