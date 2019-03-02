@@ -1,7 +1,7 @@
 import llvm, {BasicBlock} from "llvm-node";
 
 function enterTopLevelFn() {
-    
+    //
 }
 
 const context = new llvm.LLVMContext();
