@@ -37,8 +37,8 @@ default class {
 
     @test("partialTest(): correctly determine whether input text adheres to a rule")
     public partialTest_determineCorrectly() {
-        const rule: MatchRule = MatchEngine.resolve("test");
+        const rule: MatchRule = MatchEngine.resolve("tes");
 
-        Assert.true(MatchEngine.partialTest("tes", rule));
+        Assert.true(MatchEngine.partialTest("test", rule));
     }
 }

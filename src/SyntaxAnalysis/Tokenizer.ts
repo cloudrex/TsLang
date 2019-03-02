@@ -44,8 +44,21 @@ export class Tokenizer implements ITokenizer {
 
             const matches: MatchRule[] = this.filterDefs(input.substring(i));
 
-            // TODO
-            console.log("Matches:", matches, "substr:", input.substring(i));
+            // TODO: Not matching.
+            console.log("Matches:", matches);
+
+            // Report ambiguous token definitions (2+ matches).
+            if (matches.length > 1) {
+                // TODO: Better reporting required.
+                throw new Error("Ambiguous token definitions");
+            }
+            // Continue if there was no match.
+            else if (matches.length === 0) {
+                continue;
+            }
+
+            // Skip over matched character(s).
+            i += MatchEngine.lengthOf(matches[0]);
         }
 
         return result;
@@ -62,8 +75,6 @@ export class Tokenizer implements ITokenizer {
                 result.push(rule);
             }
         }
-
-        console.log("results:", result);
 
         return result;
     }

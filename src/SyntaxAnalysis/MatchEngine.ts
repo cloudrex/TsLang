@@ -12,6 +12,23 @@ export class MatchEngine {
         return value;
     }
 
+    /**
+     * Computes the exact length of a possible matched token by a rule.
+     */
+    public static lengthOf(@expect(RegExp, Type.String) rule: MatchRule): number {
+        if (rule instanceof RegExp) {
+            console.log(rule);
+
+            // TODO
+            return -1;
+        }
+
+        return rule.length;
+    }
+
+    /**
+     * Tests rule against input text. Whitespace is not ignored.
+     */
     public static test(@expect(Type.String) text: string, @expect(RegExp, Type.String) rule: MatchRule): boolean {
         if (rule instanceof RegExp) {
             return rule.test(text);
@@ -20,11 +37,14 @@ export class MatchEngine {
         return rule === text;
     }
 
+    /**
+     * Tests rule against the beginning of input text. Whitespace is not ignored.
+     */
     public static partialTest(@expect(Type.String) text: string, @expect(RegExp, Type.String) rule: MatchRule): boolean {
         if (rule instanceof RegExp) {
             return rule.test(text);
         }
 
-        return rule.startsWith(text);
+        return text.startsWith(rule);
     }
 }

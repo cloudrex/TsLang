@@ -1,14 +1,17 @@
-import {unit, test} from "unit";
+import {unit, test, Is, Assert} from "unit";
 import {Tokenizer} from "../../SyntaxAnalysis/Tokenizer";
+import {IToken} from "../../SyntaxAnalysis/Token";
 
 @unit("Tokenizer")
 default class {
     @test("tokenize(): should return correct tokens")
     public tokenize_returnCorrectTokens() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
-            ["hello", "HelloWorld"]
+            ["/hello/", "HelloWorld"]
         ]));
 
-        tokenizer.tokenize("abcd defg hello hilm")
+        const tokens: IToken[] = tokenizer.tokenize("abcd defg hello hilm");
+
+        Assert.that(tokens, Is.arrayWithLength(1));
     }
 }
