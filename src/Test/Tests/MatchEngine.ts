@@ -1,7 +1,7 @@
 import {unit, test, Assert, Is} from "unit";
 
 @unit("Match Engine")
-export default class {
+default class {
     @test("resolve(): should determine and resolve correct match rule from provided text")
     public resolve_correctRule() {
         const regexRule: RegExp = SyntaxAnalysis.MatchEngine.resolve("/[a-z]/") as RegExp;

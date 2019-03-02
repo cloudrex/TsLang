@@ -1,7 +1,7 @@
 import {unit, test, Assert, Is, JsType, Does} from "unit";
 
 @unit("Grammar Value Resolver")
-export default class {
+default class {
     @test("break(): should correctly tokenize input into an array")
     public break_correctlyTokenize() {
         Assert.that(Grammar.ValueResolver.break("hello world"),
