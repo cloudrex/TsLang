@@ -45,7 +45,7 @@ export class Tokenizer implements ITokenizer {
             const matches: MatchRule[] = this.filterDefs(input.substring(i));
 
             // TODO
-            console.log(matches);
+            console.log("Matches:", matches, "substr:", input.substring(i));
         }
 
         return result;
@@ -62,6 +62,8 @@ export class Tokenizer implements ITokenizer {
                 result.push(rule);
             }
         }
+
+        console.log("results:", result);
 
         return result;
     }
