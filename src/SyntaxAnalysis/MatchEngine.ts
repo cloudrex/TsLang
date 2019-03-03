@@ -9,7 +9,8 @@ export class MatchEngine {
             // Create expression and remove first + last characters of value (regex delimiters '/').
             // '^' is appended at the start to match strings starting with resolved value,
             // otherwise multiple same values will occur.
-            return new RegExp("^" + value.substring(1).substring(0, value.length - 2));
+            return new RegExp("^" + value.substring(1)
+                .substring(0, value.length - 2));
         }
 
         return value;
