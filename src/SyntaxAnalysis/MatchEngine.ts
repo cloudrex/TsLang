@@ -20,7 +20,11 @@ export class MatchEngine {
      * Computes the exact length of a possible matched token by a rule.
      * Returns '0' if input rule is a pattern and does not match text.
      */
-    public static lengthOf(@expect(RegExp, Type.String) rule: MatchRule, @expect(Type.String) text: string): number {
+    public static lengthOf
+    (
+        @expect(RegExp, Type.String) rule: MatchRule,
+        @expect(Type.String) text: string
+    ): number {
         if (rule instanceof RegExp) {
             const match: RegExpExecArray | null = rule.exec(text);
 
@@ -37,7 +41,11 @@ export class MatchEngine {
     /**
      * Tests rule against input text. Whitespace is not ignored.
      */
-    public static test(@expect(Type.String) text: string, @expect(RegExp, Type.String) rule: MatchRule): boolean {
+    public static test
+    (
+        @expect(Type.String) text: string,
+        @expect(RegExp, Type.String) rule: MatchRule
+    ): boolean {
         if (rule instanceof RegExp) {
             return rule.test(text);
         }
@@ -50,7 +58,11 @@ export class MatchEngine {
      * Whitespace is not ignored. Returns matched string if test
      * is successful, otherwise 'null'.
      */
-    public static partialTest(@expect(Type.String) text: string, @expect(RegExp, Type.String) rule: MatchRule): string | null {
+    public static partialTest
+    (
+        @expect(Type.String) text: string,
+        @expect(RegExp, Type.String) rule: MatchRule
+    ): string | null {
         // Rule is a pattern, attempt to return it's match.
         if (rule instanceof RegExp) {
             const match: RegExpExecArray | null = rule.exec(text);
