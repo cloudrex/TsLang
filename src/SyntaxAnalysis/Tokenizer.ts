@@ -37,19 +37,19 @@ export class Tokenizer implements ITokenizer {
         for (let i: number = 0; i < input.length; i++) {
             const char: string = input[i];
 
-            // End of file.
+            // End of file, stop loop.
             if (char === SpecialCharacter.EOF) {
                 break;
             }
 
-            const matches: MatchRule[] = this.filterDefs(input.substring(i));
+            const matches: string[] = this.filterDefs(input.substring(i));
 
             // TODO: Not matching.
-            console.log("Matches:", matches, "substr:", input.substring(i));
+            console.log("Matches:", matches, "substr:", input.substring(i), "i:", i);
 
             // Report ambiguous token definitions (2+ matches).
             if (matches.length > 1) {
-                // TODO: Better reporting required.
+                // TODO: Better reporting needed.
                 throw new Error("Ambiguous token definitions");
             }
             // Continue if there was no match.
@@ -58,8 +58,17 @@ export class Tokenizer implements ITokenizer {
             }
 
             // Skip over matched character(s).
-            i += MatchEngine.lengthOf(matches[0]);
+            i += MatchEngine.lengthOf(matches[0], input);
+
+            // Create & append discovered token.
+            result.push({
+                type: this.identifier.identify(matches[0]),
+                value: matches[0]
+            });
         }
+
+        console.log(result[0]);
+        console.log(result[1]);
 
         return result;
     }
@@ -67,12 +76,14 @@ export class Tokenizer implements ITokenizer {
     /**
      * Filter rules from identifier definitions that match input text.
      */
-    protected filterDefs(text: string): MatchRule[] {
-        const result: MatchRule[] = [];
+    protected filterDefs(text: string): string[] {
+        const result: string[] = [];
 
         for (const rule of this.identifier.defs.keys()) {
-            if (MatchEngine.partialTest(text, rule)) {
-                result.push(rule);
+            const test: string | null = MatchEngine.partialTest(text, rule)
+
+            if (test !== null) {
+                result.push(test);
             }
         }
 

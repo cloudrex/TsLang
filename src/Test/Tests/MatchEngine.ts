@@ -9,7 +9,7 @@ default class {
 
         // Assert regex rule.
         Assert.that(regexRule, Is.instanceOf(RegExp));
-        Assert.equal(regexRule.source, "\\/[a-z]\\/");
+        Assert.equal(regexRule.source, "^[a-z]");
         Assert.false(regexRule.global);
         Assert.false(regexRule.ignoreCase);
         Assert.false(regexRule.multiline);
@@ -18,7 +18,7 @@ default class {
         Assert.equal(MatchEngine.resolve("test"), "test");
     }
 
-    @test("resolve(): match rule should not be affected by flags")
+    @test("resolve(): should match rule should not be affected by flags")
     public resolve_correctRuleWithFlags() {
         const rule: MatchRule = MatchEngine.resolve("/[a-z]/gi") as RegExp;
 
@@ -28,17 +28,27 @@ default class {
         Assert.false(rule.multiline);
     }
 
-    @test("test(): correctly determine whether input text adheres to a rule")
+    @test("test(): should correctly determine whether input text adheres to a rule")
     public test_determineCorrectly() {
         const rule: MatchRule = MatchEngine.resolve("test");
 
         Assert.true(MatchEngine.test("test", rule));
     }
 
-    @test("partialTest(): correctly determine whether input text adheres to a rule")
+    @test("partialTest(): should correctly determine whether input text adheres to a rule and return matched text")
     public partialTest_determineCorrectly() {
         const rule: MatchRule = MatchEngine.resolve("tes");
 
-        Assert.true(MatchEngine.partialTest("test", rule));
+        Assert.equal(MatchEngine.partialTest("test", rule), "tes");
+    }
+
+    @test("lengthOf(): should correctly measure length of a string-literal rule")
+    public lengthOf_measureLiteral() {
+        Assert.equal(MatchEngine.lengthOf(MatchEngine.resolve("test"), "test"), 4);
+    }
+
+    @test("lengthOf(): should correctly measure length of a regular expression rule")
+    public lengthOf_measureExpr() {
+        // TODO
     }
 }

@@ -7,7 +7,9 @@ export class MatchEngine {
     public static resolve(@expect(Type.String) value: string): MatchRule {
         if (Pattern.matchRegexRule.test(value)) {
             // Create expression and remove first + last characters of value (regex delimiters '/').
-            return new RegExp(value.substring(1).substring(0, value.length - 1));
+            // '^' is appended at the start to match strings starting with resolved value,
+            // otherwise multiple same values will occur.
+            return new RegExp("^" + value.substring(1).substring(0, value.length - 2));
         }
 
         return value;
@@ -15,13 +17,17 @@ export class MatchEngine {
 
     /**
      * Computes the exact length of a possible matched token by a rule.
+     * Returns '0' if input rule is a pattern and does not match text.
      */
-    public static lengthOf(@expect(RegExp, Type.String) rule: MatchRule): number {
+    public static lengthOf(@expect(RegExp, Type.String) rule: MatchRule, @expect(Type.String) text: string): number {
         if (rule instanceof RegExp) {
-            console.log(rule);
+            const match: RegExpExecArray | null = rule.exec(text);
 
-            // TODO
-            return -1;
+            if (match === null) {
+                return 0;
+            }
+
+            return match[0].length;
         }
 
         return rule.length;
@@ -39,13 +45,23 @@ export class MatchEngine {
     }
 
     /**
-     * Tests rule against the beginning of input text. Whitespace is not ignored.
+     * Tests rule against the beginning of input text.
+     * Whitespace is not ignored. Returns matched string if test
+     * is successful, otherwise 'null'.
      */
-    public static partialTest(@expect(Type.String) text: string, @expect(RegExp, Type.String) rule: MatchRule): boolean {
+    public static partialTest(@expect(Type.String) text: string, @expect(RegExp, Type.String) rule: MatchRule): string | null {
+        // Rule is a pattern, attempt to return it's match.
         if (rule instanceof RegExp) {
-            return rule.test(text);
+            const match: RegExpExecArray | null = rule.exec(text);
+
+            return match !== null ? match[0] : null;
+        }
+        // Rule is a string-literal, attempt to return itself.
+        else if (text.startsWith(rule)) {
+            return rule;
         }
 
-        return text.startsWith(rule);
+        // Otherwise, return null.
+        return null;
     }
 }
