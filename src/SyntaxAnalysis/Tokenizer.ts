@@ -44,9 +44,6 @@ export class Tokenizer implements ITokenizer {
 
             const matches: string[] = this.filterDefs(input.substring(i));
 
-            // TODO: Not matching.
-            console.log("Matches:", matches, "substr:", input.substring(i), "i:", i);
-
             // Report ambiguous token definitions (2+ matches).
             if (matches.length > 1) {
                 // TODO: Better reporting needed.
@@ -66,9 +63,6 @@ export class Tokenizer implements ITokenizer {
                 value: matches[0]
             });
         }
-
-        console.log(result[0]);
-        console.log(result[1]);
 
         return result;
     }
