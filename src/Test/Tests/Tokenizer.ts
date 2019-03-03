@@ -13,5 +13,7 @@ default class {
         const tokens: IToken[] = tokenizer.tokenize("abcd defg hello hilm");
 
         Assert.that(tokens, Is.arrayWithLength(1));
+        Assert.equal(tokens[0].type, "HelloWorld");
+        Assert.equal(tokens[0].value, "hello");
     }
 }
