@@ -1,5 +1,4 @@
 import {IToken} from "../SyntaxAnalysis/Token";
-import Validate from "../SyntaxAnalysis/TokenValidation";
 
 export class FunctionHeader {
     readonly name?: string;
