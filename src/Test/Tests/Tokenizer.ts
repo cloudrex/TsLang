@@ -18,6 +18,22 @@ default class {
         Assert.equal(tokens[0].value, "defg hello");
     }
 
+    @Test("Should tokenize input using a repetitive pattern rule")
+    @Target(Tokenizer.prototype.tokenize)
+    public tokenize_repetitivePattern() {
+        const tokenizer: Tokenizer = Tokenizer.create(new Map([
+            TokenDefinition.create("/(repeat )+/", "Repetitive")
+        ]));
+
+        const tokens: IToken[] = tokenizer.tokenize("hello repeat repeat repeat world");
+
+        console.log(tokens);
+
+        Assert.that(tokens, Is.arrayWithLength(2));
+        Assert.equal(tokens[0].type, "Repetitive");
+        Assert.equal(tokens[0].value, "repeat repeat repeat ");
+    }
+
     @Test("Should tokenize input using a literal rule")
     @Target(Tokenizer.prototype.tokenize)
     public tokenize_literal() {
