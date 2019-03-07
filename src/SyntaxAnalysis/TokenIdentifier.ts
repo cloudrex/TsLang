@@ -1,4 +1,4 @@
-import {TokenType, RawToken, CommonToken} from "./Token";
+import {TokenType, RawToken, CommonTokenType} from "./Token";
 import {MatchRule, MatchEngine} from "./MatchEngine";
 import {Pattern} from "../Core/Pattern";
 import {SpecialCharacter} from "../Core/SpecialCharacter";
@@ -13,17 +13,17 @@ export interface ITokenIdentifier {
  * Identify and classify tokens by values.
  */
 export class TokenIdentifier implements ITokenIdentifier {
-    public static primeCommonTokens(text: RawToken): CommonToken {
+    public static primeCommonTokens(text: RawToken): CommonTokenType {
         // Test for common tokens.
         if (Pattern.whitepsace.test(text)) {
-            return CommonToken.Whitespace;
+            return CommonTokenType.Whitespace;
         }
         else if (text === SpecialCharacter.EOF) {
-            return CommonToken.EOF;
+            return CommonTokenType.EOF;
         }
 
         // Otherwise, identify as unknown.
-        return CommonToken.Unknown;
+        return CommonTokenType.Unknown;
     }
 
     /**
