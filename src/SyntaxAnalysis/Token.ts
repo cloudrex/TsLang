@@ -1,5 +1,4 @@
 import {MatchRule, MatchEngine} from "./MatchEngine";
-import fs from "fs";
 
 export enum CommonTokenType {
     Unknown = -1,
