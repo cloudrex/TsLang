@@ -32,24 +32,9 @@ export class Tokenizer implements ITokenizer {
      * Break up input string into a sequence of identified tokens.
      */
     public tokenize(input: string): IToken[] {
-        // Append the special EOF character to input string.
-        input += SpecialChar.EOF;
-
         const result: IToken[] = [];
 
         for (let i: number = 0; i < input.length; i++) {
-            const char: string = input[i];
-
-            // End of file, append EOF token and stop the loop.
-            if (char === SpecialChar.EOF) {
-                result.push({
-                    type: CommonTokenType.EOF,
-                    value: SpecialChar.EOF
-                });
-
-                break;
-            }
-
             const matches: string[] = this.filterDefs(input.substring(i));
 
             // Report ambiguous token definitions (2+ matches).
@@ -71,6 +56,12 @@ export class Tokenizer implements ITokenizer {
                 value: matches[0]
             });
         }
+
+        // Always append the EOF token.
+        result.push({
+            type: CommonTokenType.EOF,
+            value: SpecialChar.EOF
+        });
 
         return result;
     }

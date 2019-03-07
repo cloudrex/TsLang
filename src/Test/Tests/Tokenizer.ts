@@ -4,17 +4,52 @@ import {IToken, TokenDefinition} from "../../SyntaxAnalysis/Token";
 
 @Unit("Tokenizer")
 default class {
-    @Test("Should return correct tokens")
+    @Test("Should tokenize input using a pattern rule")
     @Target(Tokenizer.prototype.tokenize)
-    public tokenize_returnCorrectTokens() {
+    public tokenize_pattern() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
-            TokenDefinition.create("/hello/", "HelloWorld")
+            TokenDefinition.create("/defg hello/", "Hello")
         ]));
 
         const tokens: IToken[] = tokenizer.tokenize("abcd defg hello hilm");
 
         Assert.that(tokens, Is.arrayWithLength(2));
-        Assert.equal(tokens[0].type, "HelloWorld");
+        Assert.equal(tokens[0].type, "Hello");
+        Assert.equal(tokens[0].value, "defg hello");
+    }
+
+    @Test("Should tokenize input using a literal rule")
+    @Target(Tokenizer.prototype.tokenize)
+    public tokenize_literal() {
+        const tokenizer: Tokenizer = Tokenizer.create(new Map([
+            TokenDefinition.create("hello", "Hello")
+        ]));
+
+        const tokens: IToken[] = tokenizer.tokenize("abcd defg hello hilm");
+
+        Assert.that(tokens, Is.arrayWithLength(2));
+        Assert.equal(tokens[0].type, "Hello");
         Assert.equal(tokens[0].value, "hello");
+    }
+
+    @Test("Should return correct tokens when provided multiple rules")
+    @Target(Tokenizer.prototype.tokenize)
+    public tokenize_multiple() {
+        const tokenizer: Tokenizer = Tokenizer.create(new Map([
+            TokenDefinition.create("/hello/", "Hello"),
+            TokenDefinition.create("world", "World")
+        ]));
+
+        const tokens: IToken[] = tokenizer.tokenize("defg hello hilm world");
+
+        Assert.that(tokens, Is.arrayWithLength(3));
+
+        // First token 'Hello'.
+        Assert.equal(tokens[0].type, "Hello");
+        Assert.equal(tokens[0].value, "hello");
+
+        // Second token 'World'.
+        Assert.equal(tokens[1].type, "World");
+        Assert.equal(tokens[1].value, "world");
     }
 }
