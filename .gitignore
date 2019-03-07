@@ -3,3 +3,4 @@ dist/
 gen/
 .antlr
 .playground
+.TuskCache.json
