@@ -1,15 +1,16 @@
-import {unit, test, Assert, Is, JsType, Does} from "unit";
+import {Unit, Test, Assert, Is, JsType, Does, Target} from "unit";
 import {GrammarResolver} from "../../Grammar/GrammarResolver";
 
-@unit("Grammar Value Resolver")
+@Unit("Grammar Value Resolver")
 default class {
-    @test("break(): should correctly tokenize input into an array")
+    @Test("Should correctly tokenize input into an array")
+    @Target(GrammarResolver.break)
     public break_correctlyTokenize() {
         Assert.that(GrammarResolver.break("hello world"),
             Is.arrayOf(JsType.String),
             Is.arrayWithLength(2),
-            Does.contain("hello"),
-            Does.contain("world")
+            Does.include("hello"),
+            Does.include("world")
         );
     }
 }

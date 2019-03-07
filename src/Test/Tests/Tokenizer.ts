@@ -1,10 +1,11 @@
-import {unit, test, Is, Assert} from "unit";
+import {Unit, Test, Is, Assert, Target} from "unit";
 import {Tokenizer} from "../../SyntaxAnalysis/Tokenizer";
 import {IToken, TokenDefinition} from "../../SyntaxAnalysis/Token";
 
-@unit("Tokenizer")
+@Unit("Tokenizer")
 default class {
-    @test("tokenize(): should return correct tokens")
+    @Test("Should return correct tokens")
+    @Target(Tokenizer.prototype.tokenize)
     public tokenize_returnCorrectTokens() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
             TokenDefinition.create("/hello/", "HelloWorld")

@@ -1,9 +1,10 @@
-import {unit, test, Assert, Is} from "unit";
+import {Unit, Test, Assert, Is, Target} from "unit";
 import {MatchEngine, MatchRule} from "../../SyntaxAnalysis/MatchEngine";
 
-@unit("Match Engine")
+@Unit("Match Engine")
 default class {
-    @test("resolve(): should determine and resolve correct match rule from provided text")
+    @Test("Should determine and resolve correct match rule from provided text")
+    @Target(MatchEngine.resolve)
     public resolve_correctRule() {
         const regexRule: RegExp = MatchEngine.resolve("/[a-z]/") as RegExp;
 
@@ -18,7 +19,8 @@ default class {
         Assert.equal(MatchEngine.resolve("test"), "test");
     }
 
-    @test("resolve(): should match rule should not be affected by flags")
+    @Test("Should match rule should not be affected by flags")
+    @Target(MatchEngine.resolve)
     public resolve_correctRuleWithFlags() {
         const rule: MatchRule = MatchEngine.resolve("/[a-z]/gi") as RegExp;
 
@@ -28,26 +30,30 @@ default class {
         Assert.false(rule.multiline);
     }
 
-    @test("test(): should correctly determine whether input text adheres to a rule")
+    @Test("Should correctly determine whether input text adheres to a rule")
+    @Target(MatchEngine.test)
     public test_determineCorrectly() {
         const rule: MatchRule = MatchEngine.resolve("test");
 
         Assert.true(MatchEngine.test("test", rule));
     }
 
-    @test("partialTest(): should correctly determine whether input text adheres to a rule and return matched text")
+    @Test("Should correctly determine whether input text adheres to a rule and return matched text")
+    @Target(MatchEngine.partialTest)
     public partialTest_determineCorrectly() {
         const rule: MatchRule = MatchEngine.resolve("tes");
 
         Assert.equal(MatchEngine.partialTest("test", rule), "tes");
     }
 
-    @test("lengthOf(): should correctly measure length of a string-literal rule")
+    @Test("Should correctly measure length of a string-literal rule")
+    @Target(MatchEngine.lengthOf)
     public lengthOf_measureLiteral() {
         Assert.equal(MatchEngine.lengthOf(MatchEngine.resolve("test"), "test"), 4);
     }
 
-    @test("lengthOf(): should correctly measure length of a regular expression rule")
+    @Test("Should correctly measure length of a regular expression rule")
+    @Target(MatchEngine.lengthOf)
     public lengthOf_measureExpr() {
         // TODO
     }
