@@ -1,4 +1,9 @@
-import llvm, {BasicBlock} from "llvm-node";
+import {IToken, TokenDefinition, TokenDef} from "./SyntaxAnalysis/Token";
+import {Tokenizer} from "./SyntaxAnalysis/Tokenizer";
+import fs from "fs";
+import path from "path";
+
+/* import llvm, {BasicBlock} from "llvm-node";
 
 function enterTopLevelFn() {
     //
@@ -20,4 +25,14 @@ b.createRetVoid();
 const intType = llvm.Type.getInt32Ty(context);
 const initializer = llvm.ConstantInt.get(context, 0);
 
-console.log(mod.print());
+console.log(mod.print()); */
+
+/// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
+
+const input: string = "fn myFn ( ) { }";
+const tokenDefsPath: string = path.resolve("src/Tokens.json");
+const tokenDefs: Array<TokenDef> = TokenDefinition.fromObj(JSON.parse(fs.readFileSync(tokenDefsPath).toString()));
+const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
+const tokens: IToken[] = tokenizer.tokenize(input);
+
+console.log(tokens);
