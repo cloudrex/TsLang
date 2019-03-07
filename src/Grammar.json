@@ -1,0 +1,15 @@
+{
+    "$Root": "Fn*",
+
+    "Expr": "[Atom]",
+
+    "Statement": "Expr [SymbolSemicolon]",
+
+    "Block": "[SymbolBraceOpen] Statement* [SymbolBraceClose]",
+
+    "Args": "[SymbolParenOpen] [SymbolParenClose]",
+
+    "Fn": [
+        "[KeywordFn] Id Args Block"
+    ]
+}
