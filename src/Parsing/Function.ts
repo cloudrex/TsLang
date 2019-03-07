@@ -19,6 +19,6 @@ export class FunctionHeader {
 export default abstract class FunctionParser {
     // TODO: Common validation required (.length !== 0, etc.).
     public static parseHeader(tokens: IToken[]): FunctionHeader {
-        
+        // TODO
     }
 }
