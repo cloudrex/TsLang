@@ -1,7 +1,8 @@
-import {TokenType, RawToken, CommonTokenType} from "./Token";
+import {RawToken} from "./Token";
 import {MatchRule, MatchEngine} from "./MatchEngine";
 import {Pattern} from "../Core/Pattern";
-import {SpecialCharacter} from "../Core/SpecialCharacter";
+import {SpecialCharacter} from "../Core/SpecialChar";
+import {TokenType, CommonTokenType} from "./TokenType";
 
 export interface ITokenIdentifier {
     readonly defs: ReadonlyMap<MatchRule, string>;
@@ -13,7 +14,7 @@ export interface ITokenIdentifier {
  * Identify and classify tokens by values.
  */
 export class TokenIdentifier implements ITokenIdentifier {
-    public static primeCommonTokens(text: RawToken): CommonTokenType {
+    public static primeCommonTokens(text: RawToken): TokenType {
         // Test for common tokens.
         if (Pattern.whitepsace.test(text)) {
             return CommonTokenType.Whitespace;

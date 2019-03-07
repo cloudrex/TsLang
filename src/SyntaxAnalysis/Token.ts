@@ -1,12 +1,5 @@
 import {MatchRule, MatchEngine} from "./MatchEngine";
-
-export enum CommonTokenType {
-    Unknown = -1,
-    EOF = -2,
-    Whitespace = -3
-}
-
-export type TokenType = CommonTokenType | string;
+import {TokenType} from "./TokenType";
 
 export interface IToken {
     readonly type: TokenType;

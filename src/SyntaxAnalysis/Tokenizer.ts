@@ -1,7 +1,9 @@
 import {MatchRule, MatchEngine} from "./MatchEngine";
-import {IToken, CommonTokenType} from "./Token";
+import {IToken} from "./Token";
 import {TokenIdentifier, ITokenIdentifier} from "./TokenIdentifier";
-import {SpecialCharacter as SpecialChar} from "../Core/SpecialCharacter";
+import {SpecialCharacter as SpecialChar} from "../Core/SpecialChar";
+import {ReportError} from "../Core/Report";
+import {CommonTokenType} from "./TokenType";
 
 export interface ITokenizer {
     tokenize(input: string): IToken[];
@@ -39,8 +41,7 @@ export class Tokenizer implements ITokenizer {
 
             // Report ambiguous token definitions (2+ matches).
             if (matches.length > 1) {
-                // TODO: Better reporting needed.
-                throw new Error("Ambiguous token definitions");
+                throw ReportError.ambiguousTokenDefs();
             }
             // Continue if there was no match.
             else if (matches.length === 0) {
