@@ -1,7 +1,7 @@
 import {MatchRule, MatchEngine} from "./MatchEngine";
 import {IToken, CommonTokenType} from "./Token";
 import {TokenIdentifier, ITokenIdentifier} from "./TokenIdentifier";
-import {SpecialCharacter} from "../Core/SpecialCharacter";
+import {SpecialCharacter as SpecialChar} from "../Core/SpecialCharacter";
 
 export interface ITokenizer {
     tokenize(input: string): IToken[];
@@ -33,7 +33,7 @@ export class Tokenizer implements ITokenizer {
      */
     public tokenize(input: string): IToken[] {
         // Append the special EOF character to input string.
-        input += SpecialCharacter.EOF;
+        input += SpecialChar.EOF;
 
         const result: IToken[] = [];
 
@@ -41,10 +41,10 @@ export class Tokenizer implements ITokenizer {
             const char: string = input[i];
 
             // End of file, append EOF token and stop the loop.
-            if (char === SpecialCharacter.EOF) {
+            if (char === SpecialChar.EOF) {
                 result.push({
                     type: CommonTokenType.EOF,
-                    value: ""
+                    value: SpecialChar.EOF
                 });
 
                 break;
