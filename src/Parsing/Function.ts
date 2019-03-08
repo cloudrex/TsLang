@@ -1,9 +1,11 @@
 import TokenStream from "../SyntaxAnalysis/TokenStream";
 import ArgsParser, {IFormalArg} from "./Args";
+import {Type, SpecialType} from "../Core/Type";
 
 export interface IFunctionHeader {
     readonly name: string;
     readonly args: IFormalArg[];
+    readonly returnType: Type;
 }
 
 export default abstract class FunctionParser {
@@ -15,11 +17,21 @@ export default abstract class FunctionParser {
         // Capture the function name.
         const name: string = stream.get().value;
 
+        // Invoke the formal arguemnt parser.
+        const args: IFormalArg[] = ArgsParser.parseFormal(stream);
+
+        let returnType: Type = SpecialType.Void;
+
+        // The ':' symbol exists, therefore the return type is specified.
+        if (stream.hasNext()) {
+            // Capture the return type.
+            returnType = stream.continue().next().value as Type;
+        }
+
         return {
             name,
-
-            // Invoke the formal arguemnt parser.
-            args: ArgsParser.parseFormal(stream)
+            args,
+            returnType
         };
     }
 }
