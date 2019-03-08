@@ -1,3 +1,9 @@
+## Introduction
+
+This article outlines basic principles, phases, and systems used in compiler design.
+
+Estimated reading time: 5 minutes.
+
 ## Tokenization Entities
 
 #### Tokenization Process
