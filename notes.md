@@ -6,7 +6,7 @@ concepts such as parsing and code generation which will be implemented later on.
 
 *This article is a [living document](https://en.wikipedia.org/wiki/Living_document).*
 
-Estimated reading time: 5 minutes.
+Estimated reading time: 5-10 minutes.
 
 ## Tokenization Entities
 
