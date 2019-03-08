@@ -62,7 +62,7 @@ A **dynamic** token rule is represented as a subset of two possible entities:
 
 #### Token Rule Collision
 
-A *token rule collision* occurs when two token rules successfully match the same input string.
+A *token rule collision* occurs when two or more token rules successfully match the same input string.
 
 In case of a token rule collision, the following table will determine the action to be taken.
 
