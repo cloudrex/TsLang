@@ -1,5 +1,15 @@
 ## Tokenization Entities
 
+#### Tokenization
+
+The *tokenization process* is a process in which a string (or a sequence of characters) is broken up
+into an identified stream of meaningful entities.
+
+The resulting tokens play a vital role in parsing and structuring of a language's syntax.
+
+Please see [Tokenization in Wikipedia](https://en.wikipedia.org/wiki/Lexical_analysis#Tokenization)
+for more information.
+
 #### Tokenizer
 
 The *tokenizer* is the entity responsible for performing and handling the tokenization process.
