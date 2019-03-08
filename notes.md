@@ -36,7 +36,7 @@ This property is automatically assigned by the tokenizer.
 
 A *token rule* is used to match, classify, and capture an input string.
 
-A token rule is identified to be either a *literal* or *dynamic*.
+A token rule is identified to be either *literal* or *dynamic*.
 
 A **literal** token rule is represented as a string literal value. For example, `'hello'` is a
 literal token rule which matches the sequence of characters `hello` with zero or more following
