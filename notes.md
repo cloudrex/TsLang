@@ -1,6 +1,6 @@
 ## Tokenization Entities
 
-#### Tokenization
+#### Tokenization Process
 
 The *tokenization process* is a process in which a string (or a sequence of characters) is broken up
 into an identified stream of meaningful entities.
