@@ -1,4 +1,4 @@
-import TokenStream from "../SyntaxAnalysis/tokenStream";
+import TokenStream from "../syntaxAnalysis/tokenStream";
 import {IStatement} from "./statement";
 
 export interface IBlock {

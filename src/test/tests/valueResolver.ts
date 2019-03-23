@@ -1,5 +1,5 @@
 import {Unit, Test, Assert, Is, JsType, Does, Target} from "unit";
-import {GrammarResolver} from "../../Grammar/GrammarResolver";
+import {GrammarResolver} from "../../grammar/grammarResolver";
 
 @Unit("Grammar Value Resolver")
 default class {

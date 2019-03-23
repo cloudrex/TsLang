@@ -1,5 +1,5 @@
-import {IToken, TokenDefinition, TokenDef} from "./SyntaxAnalysis/token";
-import {Tokenizer} from "./SyntaxAnalysis/tokenizer";
+import {IToken, TokenDefinition, TokenDef} from "./syntaxAnalysis/token";
+import {Tokenizer} from "./syntaxAnalysis/tokenizer";
 import fs from "fs";
 import path from "path";
 

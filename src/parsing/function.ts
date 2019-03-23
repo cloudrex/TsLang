@@ -1,6 +1,6 @@
-import TokenStream from "../SyntaxAnalysis/tokenStream";
+import TokenStream from "../syntaxAnalysis/tokenStream";
 import ArgsParser, {IFormalArg} from "./args";
-import {Type, SpecialType} from "../Core/type";
+import {Type, SpecialType} from "../core/type";
 
 export interface IFunctionHeader {
     readonly name: string;
