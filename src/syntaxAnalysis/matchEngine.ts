@@ -1,5 +1,5 @@
-import {Expect, Type} from "../Core/Expect";
-import {Pattern} from "../Core/Pattern";
+import {Expect, Type} from "../Core/expect";
+import {Pattern} from "../Core/pattern";
 
 export type MatchRule = RegExp | string;
 

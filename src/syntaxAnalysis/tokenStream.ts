@@ -1,4 +1,4 @@
-import {IToken} from "./Token";
+import {IToken} from "./token";
 
 export default class TokenStream {
     protected readonly tokens: IToken[];

@@ -1,4 +1,4 @@
-import TokenStream from "../SyntaxAnalysis/TokenStream";
+import TokenStream from "../SyntaxAnalysis/tokenStream";
 
 export enum StatementType {
     Expression,

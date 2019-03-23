@@ -1,9 +1,9 @@
-import {MatchRule, MatchEngine} from "./MatchEngine";
-import {IToken} from "./Token";
-import {TokenIdentifier, ITokenIdentifier} from "./TokenIdentifier";
-import {SpecialCharacter as SpecialChar} from "../Core/SpecialChar";
-import {ReportError} from "../Core/Report";
-import {CommonTokenType} from "./TokenType";
+import {MatchRule, MatchEngine} from "./matchEngine";
+import {IToken} from "./token";
+import {TokenIdentifier, ITokenIdentifier} from "./tokenIdentifier";
+import {SpecialCharacter as SpecialChar} from "../Core/specialCharacter";
+import {ReportError} from "../Core/report";
+import {CommonTokenType} from "./tokenType";
 
 export interface ITokenizer {
     tokenize(input: string): IToken[];

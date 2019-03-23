@@ -1,8 +1,8 @@
-import {RawToken} from "./Token";
-import {MatchRule, MatchEngine} from "./MatchEngine";
-import {Pattern} from "../Core/Pattern";
-import {SpecialCharacter} from "../Core/SpecialChar";
-import {TokenType, CommonTokenType} from "./TokenType";
+import {RawToken} from "./token";
+import {MatchRule, MatchEngine} from "./matchEngine";
+import {Pattern} from "../Core/pattern";
+import {SpecialCharacter} from "../Core/specialCharacter";
+import {TokenType, CommonTokenType} from "./tokenType";
 
 export interface ITokenIdentifier {
     readonly defs: ReadonlyMap<MatchRule, string>;

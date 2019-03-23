@@ -1,5 +1,5 @@
-import TokenStream from "../SyntaxAnalysis/TokenStream";
-import {VarTokenType} from "../SyntaxAnalysis/TokenType";
+import TokenStream from "../SyntaxAnalysis/tokenStream";
+import {VarTokenType} from "../SyntaxAnalysis/tokenType";
 
 export interface IFormalArg {
     readonly type: VarTokenType;

@@ -1,5 +1,5 @@
-import {IToken} from "./Token";
-import {KeywordTokenType, TokenType, BasicTokenType} from "./TokenType";
+import {IToken} from "./token";
+import {KeywordTokenType, TokenType, BasicTokenType} from "./tokenType";
 
 export default class TokenSequence {
     /**

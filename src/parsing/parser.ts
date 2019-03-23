@@ -1,4 +1,4 @@
-import {IToken} from "../SyntaxAnalysis/Token";
+import {IToken} from "../SyntaxAnalysis/token";
 
 export default class Parser {
     protected readonly tokens: IToken[];

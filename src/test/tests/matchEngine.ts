@@ -1,5 +1,5 @@
 import {Unit, Test, Assert, Is, Target} from "unit";
-import {MatchEngine, MatchRule} from "../../SyntaxAnalysis/MatchEngine";
+import {MatchEngine, MatchRule} from "../../SyntaxAnalysis/matchEngine";
 
 @Unit("Match Engine")
 default class {

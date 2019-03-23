@@ -1,6 +1,6 @@
 import {Unit, Test, Is, Assert, Target} from "unit";
-import {Tokenizer} from "../../SyntaxAnalysis/Tokenizer";
-import {IToken, TokenDefinition} from "../../SyntaxAnalysis/Token";
+import {Tokenizer} from "../../SyntaxAnalysis/tokenizer";
+import {IToken, TokenDefinition} from "../../SyntaxAnalysis/token";
 
 @Unit("Tokenizer")
 default class {

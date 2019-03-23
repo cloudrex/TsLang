@@ -1,5 +1,5 @@
-import {MatchRule, MatchEngine} from "./MatchEngine";
-import {TokenType} from "./TokenType";
+import {MatchRule, MatchEngine} from "./matchEngine";
+import {TokenType} from "./tokenType";
 
 export interface IToken {
     readonly type: TokenType;
