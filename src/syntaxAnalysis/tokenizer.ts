@@ -1,4 +1,4 @@
-import {MatchRule, MatchEngine} from "./matchEngine";
+import {MatchRule, MatchEngine, IPartialTestResult} from "./matchEngine";
 import {IToken} from "./token";
 import {TokenIdentifier, ITokenIdentifier} from "./tokenIdentifier";
 import {ReportError} from "../core/report";
@@ -37,26 +37,21 @@ export class Tokenizer implements ITokenizer {
 
         // Loop through all characters in the input string.
         for (let i: number = 0; i < input.length; i++) {
-            const match: string | null = this.processDefs(input.substring(i));
+            const match: IPartialTestResult | null = this.processDefs(input.substring(i));
 
             // Continue if there was no match.
             if (match === null) {
                 continue;
             }
 
-            // Compute matched character(s)' length.
-            const length: number = MatchEngine.lengthOf(match, input);
-
-            // Skip over matched character(s) if applicable.
-            if (length !== -1) {
-                i += length;
-            } 
-
             // Create & append discovered token.
             result.push({
-                type: this.identifier.identify(match),
-                value: match
+                type: this.identifier.identify(match.value),
+                value: match.capturedValue
             });
+
+            // Skip over matched character(s).
+            i += match.length;
         }
 
         return result;
@@ -67,13 +62,13 @@ export class Tokenizer implements ITokenizer {
      * definitions that match input text. Returns null
      * if there was no match.
      */
-    protected processDefs(text: string): string | null {
-        const matches: Map<MatchRule, string> = new Map();
+    protected processDefs(text: string): IPartialTestResult | null {
+        const matches: Map<MatchRule, IPartialTestResult> = new Map();
 
-        let result: string | null = null;
+        let result: IPartialTestResult | null = null;
 
         for (const rule of this.identifier.defs.keys()) {
-            const test: string | null = MatchEngine.partialTest(text, rule);
+            const test: IPartialTestResult | null = MatchEngine.partialTest(text, rule);
 
             // Test was positive, save the rule and prepare the result.
             if (test !== null) {

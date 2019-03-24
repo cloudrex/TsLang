@@ -3,6 +3,25 @@ import {Pattern} from "../core/pattern";
 
 export type MatchRule = RegExp | string;
 
+export interface IPartialTestResult {
+    /**
+     * The captured value, otherwise the entire input string.
+     */
+    readonly capturedValue: string;
+
+    /**
+     * The entire input string.
+     */
+    readonly value: string;
+
+    /**
+     * The length of the input string.
+     * Used in the tokenize method to skip over
+     * matched characters.
+     */
+    readonly length: number;
+}
+
 export class MatchEngine {
     public static resolve(@Expect(Type.String) value: string): MatchRule {
         if (Pattern.matchRegexRule.test(value)) {
@@ -19,6 +38,8 @@ export class MatchEngine {
     /**
      * Computes the exact length of a possible matched token by a rule.
      * Returns '-1' if input rule is a pattern and does not match text.
+     * Generally, partial test result's length property is preferred
+     * over this method.
      */
     public static lengthOf
     (
@@ -32,8 +53,8 @@ export class MatchEngine {
                 return -1;
             }
 
-            // Select the first capture group value's length, otherwise matched string's length.
-            return match[1] !== undefined ? match[1].length : match[0].length;
+            // Return the length of the entire matched string.
+            return match[0].length;
         }
 
         return rule.length;
@@ -56,28 +77,37 @@ export class MatchEngine {
 
     /**
      * Tests rule against the beginning of input text.
-     * Whitespace is not ignored. Returns matched string if test
-     * is successful, otherwise 'null'.
+     * Whitespace is not ignored. Returns matched string
+     * and captured value if test is successful, otherwise 'null'.
      */
     public static partialTest
     (
         @Expect(Type.String) text: string,
         @Expect(RegExp, Type.String) rule: MatchRule
-    ): string | null {
+    ): IPartialTestResult | null {
         // Rule is a pattern, attempt to return it's match.
         if (rule instanceof RegExp) {
             const match: RegExpExecArray | null = rule.exec(text);
 
+            // Pattern did not match.
             if (match === null) {
                 return null;
             }
 
-            // Return the first capture group's value, otherwise entire matched string.
-            return match[1] || match[0];
+            // Return an object with the input string, and the captured value (if applicable).
+            return {
+                capturedValue: match[1] || match[0],
+                value: match.input,
+                length: match.input.length
+            };
         }
         // Rule is a string-literal, attempt to return itself.
         else if (text.startsWith(rule)) {
-            return rule;
+            return {
+                capturedValue: rule,
+                value: rule,
+                length: rule.length
+            };
         }
 
         // Otherwise, return null.
