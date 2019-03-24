@@ -2,6 +2,7 @@ import {IToken, TokenDefinition, TokenDef} from "./syntaxAnalysis/token";
 import {Tokenizer} from "./syntaxAnalysis/tokenizer";
 import fs from "fs";
 import path from "path";
+import Util from "./core/util";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -29,9 +30,9 @@ console.log(mod.print()); */
 
 /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
-const input: string = "{ fn }";
+const input: string = "fn main: i32 { }";
 const tokenDefsPath: string = path.resolve("src/tokens.json");
-const tokenDefs: Array<TokenDef> = TokenDefinition.fromObj(JSON.parse(fs.readFileSync(tokenDefsPath).toString()));
+const tokenDefs: Array<TokenDef> = TokenDefinition.fromObj(JSON.parse(Util.removeJsonComments(fs.readFileSync(tokenDefsPath).toString())));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
 
