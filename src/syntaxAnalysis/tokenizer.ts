@@ -4,6 +4,7 @@ import {TokenIdentifier, ITokenIdentifier} from "./tokenIdentifier";
 import {SpecialCharacter as SpecialChar} from "../core/specialCharacter";
 import {ReportError} from "../core/report";
 import {CommonTokenType} from "./tokenType";
+import {ConflictResolver} from "./conflictResolver";
 
 export interface ITokenizer {
     tokenize(input: string): IToken[];
@@ -37,24 +38,20 @@ export class Tokenizer implements ITokenizer {
         const result: IToken[] = [];
 
         for (let i: number = 0; i < input.length; i++) {
-            const matches: string[] = this.filterDefs(input.substring(i));
+            const match: string | null = this.processDefs(input.substring(i));
 
-            // Report ambiguous token definitions (2+ matches).
-            if (matches.length > 1) {
-                throw ReportError.ambiguousTokenDefs();
-            }
             // Continue if there was no match.
-            else if (matches.length === 0) {
+            if (match === null) {
                 continue;
             }
 
             // Skip over matched character(s).
-            i += MatchEngine.lengthOf(matches[0], input);
+            i += MatchEngine.lengthOf(match, input);
 
             // Create & append discovered token.
             result.push({
-                type: this.identifier.identify(matches[0]),
-                value: matches[0]
+                type: this.identifier.identify(match),
+                value: match
             });
         }
 
@@ -68,17 +65,54 @@ export class Tokenizer implements ITokenizer {
     }
 
     /**
-     * Filter rules from identifier definitions that match input text.
+     * Process token definition rules from identifier
+     * definitions that match input text. Returns null
+     * if there was no match.
      */
-    protected filterDefs(text: string): string[] {
-        const result: string[] = [];
+    protected processDefs(text: string): string | null {
+        const matches: Map<MatchRule, string> = new Map();
+
+        let result: string | null = null;
 
         for (const rule of this.identifier.defs.keys()) {
-            const test: string | null = MatchEngine.partialTest(text, rule)
+            const test: string | null = MatchEngine.partialTest(text, rule);
 
             if (test !== null) {
-                result.push(test);
+                matches.set(rule, test);
             }
+        }
+
+        // Process ambiguous token definitions (2+ matches).
+        if (matches.size > 1) {
+            // Cannot resolve conflicting token definitions of >2.
+            if (matches.size > 2) {
+                throw ReportError.ambiguousTokenDefs();
+            }
+
+            // Extract matches from the map.
+            let ruleA: MatchRule | null = null;
+            let ruleB: MatchRule | null = null;
+
+            for (const rule of matches.keys()) {
+                if (ruleA !== null) {
+                    ruleB = rule;
+
+                    break;
+                }
+
+                ruleA = rule;
+            }
+
+            // Attempt to resolve conflict.
+            const resolvedResult: MatchRule | null = ConflictResolver.resolve(ruleA!, ruleB!);
+
+            // Unable to resolve conflict, report to the console.
+            if (resolvedResult === null) {
+                throw ReportError.ambiguousTokenDefs();
+            }
+
+            // Otherwise, assign the result to the resolved value.
+            result = matches.get(resolvedResult)!;
         }
 
         return result;
