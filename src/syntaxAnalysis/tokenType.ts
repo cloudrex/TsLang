@@ -1,4 +1,4 @@
-import Util from "../Core/util";
+import Util from "../core/util";
 
 export enum CommonTokenType {
     Unknown = -1,

@@ -1,7 +1,7 @@
 import {RawToken} from "./token";
 import {MatchRule, MatchEngine} from "./matchEngine";
-import {Pattern} from "../Core/pattern";
-import {SpecialCharacter} from "../Core/specialCharacter";
+import {Pattern} from "../core/pattern";
+import {SpecialCharacter} from "../core/specialCharacter";
 import {TokenType, CommonTokenType} from "./tokenType";
 
 export interface ITokenIdentifier {

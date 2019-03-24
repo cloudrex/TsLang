@@ -2,12 +2,12 @@
     "name": "ts-lang",
     "version": "1.0.0",
     "description": "",
-    "main": "dist/App.js",
+    "main": "dist/app.js",
     "scripts": {
         "build": "tsc",
-        "start": "npm run build && node dist/App.js",
+        "start": "npm run build && node dist/app.js",
         "antlr4ts": "antlr4ts -listener grammar/MyLang.g4 -o gen && bash scripts/post-antlr-build.sh",
-        "test": "npm run build && node dist/Test/Runner.js"
+        "test": "npm run build && node dist/test/runner.js"
     },
     "keywords": [
         "llvm",

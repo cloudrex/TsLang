@@ -1,8 +1,8 @@
 import {MatchRule, MatchEngine} from "./matchEngine";
 import {IToken} from "./token";
 import {TokenIdentifier, ITokenIdentifier} from "./tokenIdentifier";
-import {SpecialCharacter as SpecialChar} from "../Core/specialCharacter";
-import {ReportError} from "../Core/report";
+import {SpecialCharacter as SpecialChar} from "../core/specialCharacter";
+import {ReportError} from "../core/report";
 import {CommonTokenType} from "./tokenType";
 
 export interface ITokenizer {

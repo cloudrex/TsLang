@@ -30,7 +30,7 @@ console.log(mod.print()); */
 /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
 const input: string = "fn _iD9 { }";
-const tokenDefsPath: string = path.resolve("src/Tokens.json");
+const tokenDefsPath: string = path.resolve("src/tokens.json");
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObj(JSON.parse(fs.readFileSync(tokenDefsPath).toString()));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
