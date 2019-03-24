@@ -30,7 +30,17 @@ console.log(mod.print()); */
 
 /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
-const input: string = "fn main: i32 { }";
+// TODO: "import \"path\";export fn main : int { ret }", comes out:
+/**
+ * [ { type: 'KeywordImport', value: 'import' },
+  { type: 'Id', value: 'path' },
+  { type: 'SymbolSemiColon', value: ';' },
+  { type: 'Id', value: 'xport' },
+
+  As we can see, the 'e' is skipped from 'export' when bunched together.
+ */
+
+const input: string = `import 'a' "sentence with spaces" ; export fn main : int { ret }`;
 const tokenDefsPath: string = path.resolve("src/tokens.json");
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObj(JSON.parse(Util.removeJsonComments(fs.readFileSync(tokenDefsPath).toString())));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));

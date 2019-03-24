@@ -44,8 +44,13 @@ export class Tokenizer implements ITokenizer {
                 continue;
             }
 
-            // Skip over matched character(s).
-            i += MatchEngine.lengthOf(match, input);
+            // Compute matched character(s)' length.
+            const length: number = MatchEngine.lengthOf(match, input);
+
+            // Skip over matched character(s) if applicable.
+            if (length !== -1) {
+                i += length;
+            } 
 
             // Create & append discovered token.
             result.push({

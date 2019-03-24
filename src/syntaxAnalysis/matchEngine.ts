@@ -18,7 +18,7 @@ export class MatchEngine {
 
     /**
      * Computes the exact length of a possible matched token by a rule.
-     * Returns '0' if input rule is a pattern and does not match text.
+     * Returns '-1' if input rule is a pattern and does not match text.
      */
     public static lengthOf
     (
@@ -29,10 +29,11 @@ export class MatchEngine {
             const match: RegExpExecArray | null = rule.exec(text);
 
             if (match === null) {
-                return 0;
+                return -1;
             }
 
-            return match[0].length;
+            // Select the first capture group value's length, otherwise matched string's length.
+            return match[1] !== undefined ? match[1].length : match[0].length;
         }
 
         return rule.length;
@@ -67,7 +68,12 @@ export class MatchEngine {
         if (rule instanceof RegExp) {
             const match: RegExpExecArray | null = rule.exec(text);
 
-            return match !== null ? match[0] : null;
+            if (match === null) {
+                return null;
+            }
+
+            // Return the first capture group's value, otherwise entire matched string.
+            return match[1] || match[0];
         }
         // Rule is a string-literal, attempt to return itself.
         else if (text.startsWith(rule)) {
