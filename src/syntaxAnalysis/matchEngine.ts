@@ -89,16 +89,22 @@ export class MatchEngine {
         if (rule instanceof RegExp) {
             const match: RegExpExecArray | null = rule.exec(text);
 
+            console.log(text);
+            console.log(rule, ":", match);
+            console.log("\n\n");
+
             // Pattern did not match.
             if (match === null) {
                 return null;
             }
 
+            const capturedValue: string = match[0] || match.input;
+
             // Return an object with the input string, and the captured value (if applicable).
             return {
-                capturedValue: match[1] || match[0],
+                capturedValue,
                 value: match.input,
-                length: match.input.length
+                length: capturedValue.length
             };
         }
         // Rule is a string-literal, attempt to return itself.

@@ -39,6 +39,8 @@ export class Tokenizer implements ITokenizer {
         for (let i: number = 0; i < input.length; i++) {
             const match: IPartialTestResult | null = this.processDefs(input.substring(i));
 
+            console.log(match);
+
             // Continue if there was no match.
             if (match === null) {
                 continue;
