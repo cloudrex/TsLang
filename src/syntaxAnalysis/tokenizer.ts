@@ -1,9 +1,7 @@
 import {MatchRule, MatchEngine} from "./matchEngine";
 import {IToken} from "./token";
 import {TokenIdentifier, ITokenIdentifier} from "./tokenIdentifier";
-import {SpecialCharacter as SpecialChar} from "../core/specialCharacter";
 import {ReportError} from "../core/report";
-import {CommonTokenType} from "./tokenType";
 import {ConflictResolver} from "./conflictResolver";
 
 export interface ITokenizer {
@@ -37,6 +35,7 @@ export class Tokenizer implements ITokenizer {
     public tokenize(input: string): IToken[] {
         const result: IToken[] = [];
 
+        // Loop through all characters in the input string.
         for (let i: number = 0; i < input.length; i++) {
             const match: string | null = this.processDefs(input.substring(i));
 
@@ -71,8 +70,12 @@ export class Tokenizer implements ITokenizer {
         for (const rule of this.identifier.defs.keys()) {
             const test: string | null = MatchEngine.partialTest(text, rule);
 
+            // Test was positive, save the rule and prepare the result.
             if (test !== null) {
                 matches.set(rule, test);
+
+                // Set the result, will be changed if there are more than 1 matches.
+                result = test;
             }
         }
 
