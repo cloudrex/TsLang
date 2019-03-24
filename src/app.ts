@@ -40,7 +40,7 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `import 'a' "sentence with spaces" ; export fn main : int { ret }`;
+const input: string = `import 'a' ; export fn main : int { ret }`;
 const tokenDefsPath: string = path.resolve("src/tokens.json");
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObj(JSON.parse(Util.removeJsonComments(fs.readFileSync(tokenDefsPath).toString())));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
