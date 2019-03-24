@@ -55,12 +55,6 @@ export class Tokenizer implements ITokenizer {
             });
         }
 
-        // Always append the EOF token.
-        result.push({
-            type: CommonTokenType.EOF,
-            value: SpecialChar.EOF
-        });
-
         return result;
     }
 
