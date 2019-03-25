@@ -1,24 +1,24 @@
 import {MatchRule, MatchEngine} from "./matchEngine";
-import {TokenType} from "./tokenType";
+import {Token} from "./tokenType";
 
 export interface IToken {
-    readonly type: TokenType;
+    readonly type: Token;
     readonly value: string;
 }
 
 export type RawToken = string;
 
-export type TokenDef = [MatchRule, string];
+export type TokenDef = [MatchRule, Token];
 
 export class TokenDefinition {
-    public static create(value: string, name: string): [MatchRule, string] {
+    public static create(value: string, name: string): TokenDef {
         return [MatchEngine.resolve(value), name];
     }
 
     /**
-     * Create an array of token definitions from an object.
+     * Create an array of token definitions from an object-like entity (maps, objects).
      */
-    public static fromObj(obj: any): Array<TokenDef> {
+    public static fromObjLike(obj: any): Array<TokenDef> {
         const result: Array<TokenDef> = [];
 
         for (const [key, value] of Object.entries(obj)) {

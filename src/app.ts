@@ -3,6 +3,7 @@ import {Tokenizer} from "./syntaxAnalysis/tokenizer";
 import fs from "fs";
 import path from "path";
 import Util from "./core/util";
+import TokenTypeUtil, {Token} from "./syntaxAnalysis/tokenType";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -40,9 +41,8 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `import 'a' "a b c" export ; : { } fn`;
-const tokenDefsPath: string = path.resolve("src/tokens.jsonc");
-const tokenDefs: Array<TokenDef> = TokenDefinition.fromObj(JSON.parse(Util.removeJsonComments(fs.readFileSync(tokenDefsPath).toString())));
+const input: string = `fn{}`;
+const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(Token));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
 

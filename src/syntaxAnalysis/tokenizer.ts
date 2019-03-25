@@ -3,6 +3,7 @@ import {IToken} from "./token";
 import {TokenIdentifier, ITokenIdentifier} from "./tokenIdentifier";
 import {ReportError} from "../core/report";
 import {ConflictResolver} from "./conflictResolver";
+import {Token} from "./tokenType";
 
 export interface ITokenizer {
     tokenize(input: string): IToken[];
@@ -19,7 +20,7 @@ export class Tokenizer implements ITokenizer {
     /**
      * Create a standard Tokenizer class instance.
      */
-    public static create(defs: ReadonlyMap<MatchRule, string>): Tokenizer {
+    public static create(defs: Map<MatchRule, Token>): Tokenizer {
         return new Tokenizer(new TokenIdentifier(defs));
     }
 

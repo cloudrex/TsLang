@@ -6,43 +6,70 @@ export enum CommonTokenType {
     Whitespace = -3
 }
 
-export enum BasicTokenType {
-    Id = "/[a-z]/",
-    StringLiteral = "/\"[^]*\"/"
+export enum Token {
+    // Keywords
+    KeywordFn = "fn",
+
+    KeywordReturn = "ret",
+
+    KeywordExport = "export",
+
+    KeywordImport = "import",
+
+    KeywordVar = "var",
+
+    // Symbols
+    SymbolBraceOpen = "{",
+
+    SymbolBraceClose = "}",
+
+    SymbolParenOpen = "(",
+
+    SymbolParenClose = ")",
+
+    SymbolColon =  ":",
+
+    SymbolSemiColon = ";",
+
+    // Literals
+    CharLiteral = "/'([^']?)'/",
+
+    StringLiteral = "/\"([^\"]*)\"/",
+
+    // Types
+    TypeInt = "int",
+
+    TypeFloat = "float",
+
+    TypeDouble = "double",
+
+    TypeString = "str",
+
+    // Misc
+    Whitespace = "/[\\s\\t\\n]/",
+
+    EOF = "/$/",
+
+    Unknown = "/$/",
+
+    Id = "/[_a-zA-Z]+/"
 }
 
-export enum KeywordTokenType {
-    Fn = "fn",
-    Return = "ret",
-    Var = "var",
-    Exit = "exit"
-}
+export 
 
-export enum VarTokenType {
-    Int = "int",
-    Float = "float",
-    Long = "long",
-    Short = "short",
-    Double = "double"
-}
+export default abstract class TokenTypeUtil {
+    public static parseEnum(input: any): Map<string, string> {
+        const result: Map<string, string> = new Map();
 
-export type TokenTypeValue = string | number;
+        // Extract keys and values.
+        const keys: string[] = Util.resolveEnumKeys(input);
+        const values: string[] = Util.resolveEnumValues(input);
 
-export type TokenType = CommonTokenType | KeywordTokenType | BasicTokenType | VarTokenType | string;
+        // Populate result map.
+        keys.forEach((key: string, index: number) => {
+            result.set(key, values[index]);
+        });
 
-export abstract class TokenTypeValues {
-    public static getAllTypes(): TokenTypeValue[] {
-        return TokenTypeValues.getStringTypes()
-            .concat(TokenTypeValues.getNumberTypes() as any);
-    }
-
-    public static getStringTypes(): string[] {
-        return Util.resolveEnumValues(BasicTokenType)
-            .concat(Util.resolveEnumValues(VarTokenType))
-            .concat(Util.resolveEnumValues(KeywordTokenType)) as string[];
-    }
-
-    public static getNumberTypes(): number[] {
-        return Util.resolveEnumValues(CommonTokenType) as number[];
+        return result;
     }
 }

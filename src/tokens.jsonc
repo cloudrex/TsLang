@@ -8,6 +8,8 @@
 
     "KeywordImport": "import",
 
+    "KeywordVar": "var",
+
     // Symbols
     "SymbolBraceOpen": "{",
 

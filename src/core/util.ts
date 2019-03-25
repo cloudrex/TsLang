@@ -1,6 +1,7 @@
 import {Pattern} from "./pattern";
 
 export default abstract class Util {
+    // TODO: Convert to a map.
     public static resolveEnum(target: any) {
         return target;
     }

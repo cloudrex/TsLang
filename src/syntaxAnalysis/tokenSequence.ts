@@ -1,11 +1,11 @@
 import {IToken} from "./token";
-import {KeywordTokenType, TokenType, BasicTokenType} from "./tokenType";
+import {Token} from "./tokenType";
 
 export default class TokenSequence {
     /**
      * Validate a token array to ensure it follows the provided sequence.
      */
-    public static validate(tokens: IToken[], sequence: TokenType[]): boolean {
+    public static validate(tokens: IToken[], sequence: Token[]): boolean {
         // Lengths differ--validation failed.
         if (tokens.length !== sequence.length) {
             return false;
@@ -26,7 +26,7 @@ export default class TokenSequence {
      * The token type sequence representation
      * of an expression.
      */
-    public static get expr(): TokenType[] {
+    public static get expr(): Token[] {
         // TODO
         return null as any;
     }
@@ -35,11 +35,11 @@ export default class TokenSequence {
      * The token type sequence representation
      * of a statement block.
      */
-    public static get block(): TokenType[] {
+    public static get block(): Token[] {
         return [
-            "{",
+            Token.SymbolBraceOpen,
             // TODO
-            "}"
+            Token.SymbolBraceClose
         ];
     }
 
@@ -47,11 +47,11 @@ export default class TokenSequence {
      * The token type sequence representation
      * of an argument list.
      */
-    public static get args(): TokenType[] {
+    public static get args(): Token[] {
         return [
-            "(",
+            Token.SymbolParenOpen,
             // TODO
-            ")"
+            Token.SymbolParenClose
         ];
     }
 
@@ -59,16 +59,16 @@ export default class TokenSequence {
      * The token type sequence representation
      * of a function.
      */
-    public static get fn(): TokenType[] {
+    public static get fn(): Token[] {
         return [
-            KeywordTokenType.Fn,
-            BasicTokenType.Id,
+            Token.KeywordFn,
+            Token.Id,
             ...TokenSequence.args,
             ...TokenSequence.block
         ];
     }
 
-    protected sequence: TokenType[];
+    protected sequence: Token[];
 
     public constructor() {
         this.sequence = [];
@@ -78,7 +78,7 @@ export default class TokenSequence {
      * Retrieved the stored sequence in its
      * current state.
      */
-    public get(): ReadonlyArray<TokenType> {
+    public get(): ReadonlyArray<Token> {
         return this.sequence;
     }
 
@@ -86,7 +86,7 @@ export default class TokenSequence {
      * Concat a token type array to the existing
      * stored sequence.
      */
-    public add(sequence: TokenType[]): this {
+    public add(sequence: Token[]): this {
         this.sequence = this.sequence.concat(sequence);
 
         return this;
@@ -96,7 +96,7 @@ export default class TokenSequence {
      * Append a single token type to the existing
      * stored sequence.
      */
-    public addSingle(type: TokenType): this {
+    public addSingle(type: Token): this {
         this.sequence.push(type);
 
         return this;

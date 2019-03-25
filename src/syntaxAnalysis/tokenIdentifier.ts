@@ -2,46 +2,46 @@ import {RawToken} from "./token";
 import {MatchRule, MatchEngine} from "./matchEngine";
 import {Pattern} from "../core/pattern";
 import {SpecialCharacter} from "../core/specialCharacter";
-import {TokenType, CommonTokenType} from "./tokenType";
+import {Token} from "./tokenType";
 
 export interface ITokenIdentifier {
     readonly defs: ReadonlyMap<MatchRule, string>;
 
-    identify(text: RawToken): TokenType;
+    identify(text: RawToken): Token;
 }
 
 /**
  * Identify and classify tokens by values.
  */
 export class TokenIdentifier implements ITokenIdentifier {
-    public static primeCommonTokens(text: RawToken): TokenType {
+    public static primeCommonTokens(text: RawToken): Token {
         // Test for common tokens.
         if (Pattern.whitepsace.test(text)) {
-            return CommonTokenType.Whitespace;
+            return Token.Whitespace;
         }
         else if (text === SpecialCharacter.EOF) {
-            return CommonTokenType.EOF;
+            return Token.EOF;
         }
 
         // Otherwise, identify as unknown.
-        return CommonTokenType.Unknown;
+        return Token.Unknown;
     }
 
     /**
      * Token definitions.
      */
-    public readonly defs: ReadonlyMap<MatchRule, string>;
+    public readonly defs: ReadonlyMap<MatchRule, Token>;
 
-    public constructor(defs: ReadonlyMap<MatchRule, string>) {
+    public constructor(defs: ReadonlyMap<MatchRule, Token>) {
         this.defs = defs;
     }
 
     /**
      * Identify token types by values.
      */
-    public identify(text: RawToken): TokenType {
+    public identify(text: RawToken): Token {
         // Set default case to a common token if applicable.
-        let result: TokenType = TokenIdentifier.primeCommonTokens(text);
+        let result: Token = TokenIdentifier.primeCommonTokens(text);
 
         // Test all rule definitions.
         for (const [rule, type] of this.defs) {
