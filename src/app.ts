@@ -41,7 +41,7 @@ console.log(mod.print()); */
  */
 
 const input: string = `import 'a' "a b c" export ; : { } fn`;
-const tokenDefsPath: string = path.resolve("src/tokens.json");
+const tokenDefsPath: string = path.resolve("src/tokens.jsonc");
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObj(JSON.parse(Util.removeJsonComments(fs.readFileSync(tokenDefsPath).toString())));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
