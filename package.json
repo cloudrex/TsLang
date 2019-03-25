@@ -1,7 +1,7 @@
 {
     "name": "ts-lang",
     "version": "1.0.0",
-    "description": "A simple programming language",
+    "description": "A programming language built with TypeScript & LLVM.",
     "main": "dist/app.js",
     "scripts": {
         "build": "tsc",
