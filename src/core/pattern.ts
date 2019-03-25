@@ -4,7 +4,10 @@ export abstract class Pattern {
      */
     public static readonly whitepsace: RegExp = /[\s]/;
 
-    public static readonly matchRegexRule: RegExp = /^\/[^*]*\/[a-z]*$/;
+    /**
+     * Matches regex patterns starting and ending with a slash.
+     */
+    public static readonly matchRegexRule: RegExp = /^\/[^\/]*\/[a-z]*$/;
 
     public static readonly jsonComment: RegExp = /\/\/[^\n]*/g;
 }
