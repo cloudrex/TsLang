@@ -1,6 +1,6 @@
-import {Unit, Test, Assert, Is, JsType, Does, Target} from "unit";
+import {unit, test, Assert, Is, JsType, Does, target} from "unit";
 
-@Unit("Grammar Value Resolver")
+@unit("Grammar Value Resolver")
 default class {
     // TODO
 }

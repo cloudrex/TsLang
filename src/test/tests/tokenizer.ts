@@ -1,11 +1,11 @@
-import {Unit, Test, Is, Assert, Target} from "unit";
+import {unit, test, Is, Assert, target} from "unit";
 import {Tokenizer} from "../../syntaxAnalysis/tokenizer";
 import {IToken, TokenDefinition} from "../../syntaxAnalysis/token";
 
-@Unit("Tokenizer")
+@unit("Tokenizer")
 default class {
-    @Test("Should tokenize input using a pattern rule")
-    @Target(Tokenizer.prototype.tokenize)
+    @test("should tokenize input using a pattern rule")
+    @target(Tokenizer.prototype.tokenize)
     public tokenize_pattern() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
             TokenDefinition.create("/defg hello/", "Hello")
@@ -18,8 +18,8 @@ default class {
         Assert.equal(tokens[0].value, "defg hello");
     }
 
-    @Test("Should tokenize input using a repetitive pattern rule")
-    @Target(Tokenizer.prototype.tokenize)
+    @test("should tokenize input using a repetitive pattern rule")
+    @target(Tokenizer.prototype.tokenize)
     public tokenize_repetitivePattern() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
             TokenDefinition.create("/(repeat )+/", "Repetitive")
@@ -34,8 +34,8 @@ default class {
         Assert.equal(tokens[0].value, "repeat repeat repeat ");
     }
 
-    @Test("Should tokenize input using a literal rule")
-    @Target(Tokenizer.prototype.tokenize)
+    @test("should tokenize input using a literal rule")
+    @target(Tokenizer.prototype.tokenize)
     public tokenize_literal() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
             TokenDefinition.create("hello", "Hello")
@@ -48,8 +48,8 @@ default class {
         Assert.equal(tokens[0].value, "hello");
     }
 
-    @Test("Should return correct tokens when provided multiple rules")
-    @Target(Tokenizer.prototype.tokenize)
+    @test("should return correct tokens when provided multiple rules")
+    @target(Tokenizer.prototype.tokenize)
     public tokenize_multiple() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
             TokenDefinition.create("/hello/", "Hello"),
