@@ -55,7 +55,7 @@ export enum Token {
     Id = "/[_a-zA-Z]+/"
 }
 
-export 
+export type TokenType = Token | string;
 
 export default abstract class TokenTypeUtil {
     public static parseEnum(input: any): Map<string, string> {

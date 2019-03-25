@@ -1,14 +1,14 @@
 import {MatchRule, MatchEngine} from "./matchEngine";
-import {Token} from "./tokenType";
+import {Token, TokenType} from "./tokenType";
 
 export interface IToken {
-    readonly type: Token;
+    readonly type: TokenType;
     readonly value: string;
 }
 
 export type RawToken = string;
 
-export type TokenDef = [MatchRule, Token];
+export type TokenDef = [MatchRule, TokenType];
 
 export class TokenDefinition {
     public static create(value: string, name: string): TokenDef {
