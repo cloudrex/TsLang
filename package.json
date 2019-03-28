@@ -20,7 +20,7 @@
     },
     "devDependencies": {
         "@types/antlr4": "^4.7.0",
-        "@types/node": "^11.9.5",
+        "@types/node": "^11.12.0",
         "antlr4ts-cli": "^0.5.0-alpha.3",
         "tusk": "^1.2.4",
         "typescript": "^3.3.4000",
