@@ -8,12 +8,12 @@ default class {
     @target(Tokenizer.prototype.tokenize)
     public tokenize_pattern() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
-            TokenDefinition.create("/defg hello/", "Hello")
+            TokenDefinition.create("/(defg hello)/", "Hello")
         ]));
 
         const tokens: IToken[] = tokenizer.tokenize("abcd defg hello hilm");
 
-        Assert.that(tokens, Is.arrayWithLength(2));
+        Assert.that(tokens, Is.arrayWithLength(1));
         Assert.equal(tokens[0].type, "Hello");
         Assert.equal(tokens[0].value, "defg hello");
     }
@@ -22,14 +22,12 @@ default class {
     @target(Tokenizer.prototype.tokenize)
     public tokenize_repetitivePattern() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
-            TokenDefinition.create("/(repeat )+/", "Repetitive")
+            TokenDefinition.create("/((?:repeat )+)/", "Repetitive")
         ]));
 
         const tokens: IToken[] = tokenizer.tokenize("hello repeat repeat repeat world");
 
-        console.log(tokens);
-
-        Assert.that(tokens, Is.arrayWithLength(2));
+        Assert.that(tokens, Is.arrayWithLength(1));
         Assert.equal(tokens[0].type, "Repetitive");
         Assert.equal(tokens[0].value, "repeat repeat repeat ");
     }
@@ -43,7 +41,7 @@ default class {
 
         const tokens: IToken[] = tokenizer.tokenize("abcd defg hello hilm");
 
-        Assert.that(tokens, Is.arrayWithLength(2));
+        Assert.that(tokens, Is.arrayWithLength(1));
         Assert.equal(tokens[0].type, "Hello");
         Assert.equal(tokens[0].value, "hello");
     }
@@ -52,13 +50,13 @@ default class {
     @target(Tokenizer.prototype.tokenize)
     public tokenize_multiple() {
         const tokenizer: Tokenizer = Tokenizer.create(new Map([
-            TokenDefinition.create("/hello/", "Hello"),
+            TokenDefinition.create("/(hello)/", "Hello"),
             TokenDefinition.create("world", "World")
         ]));
 
         const tokens: IToken[] = tokenizer.tokenize("defg hello hilm world");
 
-        Assert.that(tokens, Is.arrayWithLength(3));
+        Assert.that(tokens, Is.arrayWithLength(2));
 
         // First token 'Hello'.
         Assert.equal(tokens[0].type, "Hello");

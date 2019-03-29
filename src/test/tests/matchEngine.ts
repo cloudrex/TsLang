@@ -1,5 +1,5 @@
 import {unit, test, Assert, Is, target} from "unit";
-import {MatchEngine, MatchRule} from "../../syntaxAnalysis/matchEngine";
+import {MatchEngine, MatchRule, IPartialTestResult} from "../../syntaxAnalysis/matchEngine";
 
 @unit("Match Engine")
 default class {
@@ -41,9 +41,17 @@ default class {
     @test("should correctly determine whether input text adheres to a rule and return matched text")
     @target(MatchEngine.partialTest)
     public partialTest_determineCorrectly() {
-        const rule: MatchRule = MatchEngine.resolve("tes");
+        const ruleString: string = "tes";
+        const rule: MatchRule = MatchEngine.resolve(ruleString);
+        const testString: string = "test with spaces";
+        const result: IPartialTestResult | null = MatchEngine.partialTest(testString, rule);
 
-        Assert.equal(MatchEngine.partialTest("test", rule), "tes");
+        Assert.notEqual(result, null);
+
+        // String literal rules populate all with captured value.
+        Assert.equal(result!.value, ruleString);
+        Assert.equal(result!.capturedValue, ruleString);
+        Assert.equal(result!.length, ruleString.length);
     }
 
     @test("should correctly measure length of a string-literal rule")
