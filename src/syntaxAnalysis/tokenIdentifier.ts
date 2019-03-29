@@ -1,11 +1,11 @@
 import {RawToken} from "./token";
-import {MatchRule, MatchEngine} from "./matchEngine";
+import {MatchEngine, ReadonlyMatchRuleMap, MatchRuleMap} from "./matchEngine";
 import {Pattern} from "../core/pattern";
 import {SpecialCharacter} from "../core/specialCharacter";
 import {Token, TokenType} from "./tokenType";
 
 export interface ITokenIdentifier {
-    readonly defs: ReadonlyMap<MatchRule, string>;
+    readonly defs: ReadonlyMatchRuleMap;
 
     identify(text: RawToken): TokenType;
 }
@@ -30,9 +30,9 @@ export class TokenIdentifier implements ITokenIdentifier {
     /**
      * Token definitions.
      */
-    public readonly defs: ReadonlyMap<MatchRule, TokenType>;
+    public readonly defs: ReadonlyMatchRuleMap;
 
-    public constructor(defs: ReadonlyMap<MatchRule, TokenType>) {
+    public constructor(defs: MatchRuleMap) {
         this.defs = defs;
     }
 

@@ -1,4 +1,5 @@
 import Util from "../core/util";
+import {MatchRule} from "./matchEngine";
 
 export enum CommonTokenType {
     Unknown = -1,
@@ -7,7 +8,7 @@ export enum CommonTokenType {
 }
 
 export enum Token {
-    // Keywords
+    // Keywords.
     KeywordFn = "fn",
 
     KeywordReturn = "ret",
@@ -18,7 +19,7 @@ export enum Token {
 
     KeywordVar = "var",
 
-    // Symbols
+    // Symbols.
     SymbolBraceOpen = "{",
 
     SymbolBraceClose = "}",
@@ -31,12 +32,12 @@ export enum Token {
 
     SymbolSemiColon = ";",
 
-    // Literals
+    // Literals.
     CharLiteral = "/'([^']?)'/",
 
     StringLiteral = "/\"([^\"]*)\"/",
 
-    // Types
+    // Types.
     TypeInt = "int",
 
     TypeFloat = "float",
@@ -45,7 +46,7 @@ export enum Token {
 
     TypeString = "str",
 
-    // Misc
+    // Misc.
     Whitespace = "/[\\s\\t\\n]/",
 
     EOF = "/$/",
@@ -58,7 +59,11 @@ export enum Token {
 export type TokenType = Token | string;
 
 export default abstract class TokenTypeUtil {
-    public static parseEnum(input: any): Map<string, string> {
+    /**
+     * Parse and reverse an enum to create a
+     * token definition map.
+     */
+    public static parseEnum(input: any): Map<MatchRule, string> {
         const result: Map<string, string> = new Map();
 
         // Extract keys and values.

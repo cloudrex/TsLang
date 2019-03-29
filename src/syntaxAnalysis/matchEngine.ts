@@ -3,6 +3,10 @@ import {Pattern} from "../core/pattern";
 
 export type MatchRule = RegExp | string;
 
+export type MatchRuleMap = Map<MatchRule, string>;
+
+export type ReadonlyMatchRuleMap = ReadonlyMap<MatchRule, string>;
+
 export interface IPartialTestResult {
     /**
      * The captured value, otherwise the entire input string.
