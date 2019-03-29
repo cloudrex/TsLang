@@ -75,6 +75,6 @@ export default abstract class TokenTypeUtil {
             result.set(key, values[index]);
         });
 
-        return result;
+        return Util.reverseMap(result);
     }
 }

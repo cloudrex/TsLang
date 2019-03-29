@@ -24,4 +24,18 @@ export default abstract class Util {
 
         return jsonStr;
     }
+
+    /**
+     * Reverse a map, settings its keys as its values
+     * and vice-versa.
+     */
+    public static reverseMap(map: Map<any, any>): Map<any, any> {
+        const result: Map<any, any> = new Map();
+
+        for (const [key, value] of map) {
+            result.set(value, key);
+        }
+
+        return result;
+    }
 }
