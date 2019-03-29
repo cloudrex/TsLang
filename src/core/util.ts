@@ -33,6 +33,11 @@ export default abstract class Util {
         const result: Map<any, any> = new Map();
 
         for (const [key, value] of map) {
+            // Ensure values aren't repeated.
+            if (result.has(value)) {
+                throw new Error("Value already exists on reversed map");
+            }
+
             result.set(value, key);
         }
 
