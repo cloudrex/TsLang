@@ -26,52 +26,52 @@ export default class TokenSequence {
      * The token type sequence representation
      * of an expression.
      */
-    public static get expr(): Token[] {
+    public static readonly expr: Token[] = [
         // TODO
-        return null as any;
-    }
+    ];
 
     /**
      * The token type sequence representation
      * of a statement block.
      */
-    public static get block(): Token[] {
-        return [
-            Token.SymbolBraceOpen,
-            // TODO
-            Token.SymbolBraceClose
-        ];
-    }
+    public static readonly block: Token[] = [
+        Token.SymbolBraceOpen,
+        // TODO
+        Token.SymbolBraceClose
+    ];
 
     /**
      * The token type sequence representation
      * of an argument list.
      */
-    public static get args(): Token[] {
-        return [
-            Token.SymbolParenOpen,
-            // TODO
-            Token.SymbolParenClose
-        ];
-    }
+    public static readonly args: Token[] = [
+        Token.SymbolParenOpen,
+        // TODO
+        Token.SymbolParenClose
+    ];
 
     /**
      * The token type sequence representation
      * of a function.
      */
-    public static get fn(): Token[] {
-        return [
-            Token.KeywordFn,
-            Token.Id,
-            ...TokenSequence.args,
-            ...TokenSequence.block
-        ];
-    }
+    public static readonly fn: Token[] = [
+        Token.KeywordFn,
+        Token.Id,
+        ...TokenSequence.args,
+        ...TokenSequence.block
+    ];
+
+    public static readonly assignment: Token[] = [
+        Token.KeywordLet,
+        Token.Id,
+        Token.SymbolEqual,
+        Token.NumLiteral
+    ];
 
     protected sequence: Token[];
 
-    public constructor() {
-        this.sequence = [];
+    public constructor(sequence: Token[] = []) {
+        this.sequence = sequence;
     }
 
     /**
@@ -108,7 +108,7 @@ export default class TokenSequence {
      * Returns null if the provided tokens do not satisfy
      * the stored sequence.
      */
-    public run(tokens: IToken[]): string[] | null {
+    public test(tokens: IToken[]): string[] | null {
         // Provided tokens do not satisfy sequence.
         if (!TokenSequence.validate(tokens, this.sequence)) {
             return null;
