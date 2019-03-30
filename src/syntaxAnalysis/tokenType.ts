@@ -21,6 +21,9 @@ export enum Token {
 
     KeywordLet = "let",
 
+    // Operators.
+    OpAssign = "=",
+
     // Symbols.
     SymbolBraceOpen = "{",
 
@@ -33,8 +36,6 @@ export enum Token {
     SymbolColon =  ":",
 
     SymbolSemiColon = ";",
-
-    SymbolEqual = "=",
 
     // Literals.
     CharLiteral = "/'([^']?)'/",

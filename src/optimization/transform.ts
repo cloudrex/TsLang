@@ -1,5 +1,5 @@
-import {IToken} from "./token";
-import {TokenType} from "./tokenType";
+import {IToken} from "../syntaxAnalysis/token";
+import {TokenType} from "../syntaxAnalysis/tokenType";
 
 /**
  * Transforms and alters token sequences.

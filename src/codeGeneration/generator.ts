@@ -1,8 +1,6 @@
-import {Module, IRBuilder, LLVMContext, BasicBlock} from "llvm-node";
-import {TokenType} from "./tokenType";
-import {BlockSequence} from "./sequence";
+import {Module, IRBuilder, LLVMContext, BasicBlock, Type, AllocaInst} from "llvm-node";
 import {Mutable} from "../core/helpers";
-import CodeMap from "./codeMap";
+import CodeMap from "../syntaxAnalysis/codeMap";
 
 export type GeneratorTarget = Module | Function | IRBuilder;
 
@@ -35,19 +33,35 @@ export interface IGeneratorContext<T extends GeneratorTarget = GeneratorTarget> 
  * Processes token sequences & performs corresponding actions.
  * Does not apply sequence transformations.
  */
-export type Generator<TSequence extends TokenType[]= TokenType[], TContext extends GeneratorTarget = GeneratorTarget> =
-    (context: IGeneratorContext<TContext>, sequence?: Readonly<TSequence>) => void;
+export type Generator<TContext extends GeneratorTarget = GeneratorTarget> =
+    (context: IGeneratorContext<TContext>, sequence: ReadonlyArray<string>) => void;
 
-export const llvmBlockGen: Generator<BlockSequence, Function> = ($) => {
+export const blockGen: Generator<Function> = ($) => {
     /**
      * Transform legend:
      * 
      * 0. Token.SymbolBraceOpen => Create block
      * 1. Token.SymbolBraceClose => void
      */
+
     const block: BasicBlock = BasicBlock.create($.context);
     const irBuilder: IRBuilder = new IRBuilder($.context);
 
     irBuilder.setInsertionPoint(block);
     $.builder.setTarget(irBuilder);
+};
+
+export const assignmentGen: Generator<IRBuilder> = ($, seq) => {
+    /**
+     * Transform legend:
+     * 
+     * 0. Token.TypeInt => Allocate INT32
+     * 1. Token.Id => Name allocation
+     * 2. Token.OpAssign => Prepare assignment
+     * 3. Token.NumLiteral => Assign value
+     */
+    
+    const inst: AllocaInst = $.target.createAlloca(Type.getInt32Ty($.context));
+
+    inst.name = seq[1];
 };

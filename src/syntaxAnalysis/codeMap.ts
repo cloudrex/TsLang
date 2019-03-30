@@ -4,4 +4,5 @@
  */
 export default class CodeMap {
     // TODO
+    public readonly functions: Map<string, any> = new Map();
 }

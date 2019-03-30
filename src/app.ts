@@ -3,6 +3,10 @@ import {Tokenizer} from "./syntaxAnalysis/tokenizer";
 import TokenTypeUtil, {Token} from "./syntaxAnalysis/tokenType";
 import TokenSequence from "./syntaxAnalysis/tokenSequence";
 import Sequence from "./syntaxAnalysis/sequence";
+import {LLVMContext, Module, IRBuilder, BasicBlock, FunctionType, Type} from "llvm-node";
+import {assignmentGen, IGeneratorContext, GeneratorBuilder} from "./codeGeneration/generator";
+import CodeMap from "./syntaxAnalysis/codeMap";
+import colors from "colors";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -40,13 +44,54 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `let a = 5`;
+const input: string = `int hello = 5`;
 
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(Token));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
+const sequenceHandler: TokenSequence = new TokenSequence(Sequence.assignment);
 
-const sequence: TokenSequence = new TokenSequence(Sequence.assignment);
+// Print out the tokenized tokens.
+console.log("Tokens:", tokens);
 
-console.log("Sequence Test:", sequence.exec(tokens));
-console.log(tokens);
+const seq: string[] | null = sequenceHandler.exec(tokens);
+
+// Ensure sequence was met.
+if (seq === null) {
+    console.log("Test sequence was not met");
+    process.exit(-1);
+}
+
+// Create LLVM entities.
+const context = new LLVMContext();
+const mod = new Module("Entry", context);
+const mainFn = mod.getOrInsertFunction("main", FunctionType.get(Type.getVoidTy(context), false)) as llvm.Function;
+const body = BasicBlock.create(context);
+
+mainFn.addBasicBlock(body);
+
+// Create the IR builder.
+const $ = new IRBuilder(context);
+
+// Prepare the IR builder.
+$.setInsertionPoint(body);
+
+// Create the generator context.
+const genContext: IGeneratorContext<IRBuilder> = {
+    // Builder won't be used for now.
+    builder: new GeneratorBuilder(null as any),
+
+    context,
+    map: new CodeMap(),
+    target: $
+};
+
+// Invoke the assignment generator.
+assignmentGen(genContext, seq!);
+
+// Create required return statement.
+$.createRetVoid();
+
+// Print the LLVM IR code.
+console.log("\n--- LLVM IR CODE OUTPUT ---\n");
+console.log(colors.cyan(mod.print()));

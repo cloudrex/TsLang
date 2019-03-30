@@ -44,14 +44,10 @@ export default class Sequence {
     ];
 
     public static readonly assignment: Token[] = [
-        Token.KeywordLet,
+        // TODO: Should be multi-type.
+        Token.TypeInt,
         Token.Id,
-        Token.SymbolEqual,
+        Token.OpAssign,
         Token.NumLiteral
     ];
 }
-
-/**
- * Sequence of a common statement block.
- */
-export type BlockSequence = [Token.SymbolBraceOpen, Token.SymbolBraceClose];
