@@ -59,6 +59,7 @@ export enum Token {
 
     Unknown = "/^$/",
 
+    // TODO: This without '()' takes precedence somehow. Test-sample: 'a ='.
     Id = "/([_a-zA-Z]+)/"
 }
 
