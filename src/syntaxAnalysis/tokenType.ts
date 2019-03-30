@@ -19,6 +19,8 @@ export enum Token {
 
     KeywordVar = "var",
 
+    KeywordLet = "let",
+
     // Symbols.
     SymbolBraceOpen = "{",
 
@@ -32,10 +34,14 @@ export enum Token {
 
     SymbolSemiColon = ";",
 
+    SymbolEqual = "=",
+
     // Literals.
     CharLiteral = "/'([^']?)'/",
 
     StringLiteral = "/\"([^\"]*)\"/",
+
+    NumLiteral = "/[0-9]/",
 
     // Types.
     TypeInt = "int",
@@ -53,7 +59,7 @@ export enum Token {
 
     Unknown = "/^$/",
 
-    Id = "/[_a-zA-Z]+/"
+    Id = "/([_a-zA-Z]+)/"
 }
 
 export type TokenType = Token | string;
