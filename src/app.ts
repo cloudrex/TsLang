@@ -40,8 +40,6 @@ console.log(mod.print()); */
 
 const input: string = `fn {}`;
 
-console.log(TokenTypeUtil.parseEnum(Token));
-
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(Token));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
