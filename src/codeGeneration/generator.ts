@@ -1,4 +1,4 @@
-import {Module, IRBuilder, LLVMContext, BasicBlock, Type, AllocaInst} from "llvm-node";
+import {Module, IRBuilder, LLVMContext, BasicBlock, Type, AllocaInst, ConstantInt} from "llvm-node";
 import {Mutable} from "../core/helpers";
 import CodeMap from "../syntaxAnalysis/codeMap";
 
@@ -51,7 +51,7 @@ export const blockGen: Generator<Function> = ($) => {
     $.builder.setTarget(irBuilder);
 };
 
-export const assignmentGen: Generator<IRBuilder> = ($, seq) => {
+export const declarationGen: Generator<IRBuilder> = ($, seq) => {
     /**
      * Transform legend:
      * 
@@ -60,8 +60,16 @@ export const assignmentGen: Generator<IRBuilder> = ($, seq) => {
      * 2. Token.OpAssign => Prepare assignment
      * 3. Token.NumLiteral => Assign value
      */
-    
-    const inst: AllocaInst = $.target.createAlloca(Type.getInt32Ty($.context));
 
-    inst.name = seq[1];
+    const intType: Type = Type.getInt32Ty($.context);
+    const allocaInst: AllocaInst = $.target.createAlloca(intType);
+
+    // Assign name.
+    allocaInst.name = seq[1];
+
+    // Create value.
+    const value: ConstantInt = ConstantInt.get($.context, parseInt(seq[3]));
+
+    // Assign value.
+    $.target.createStore(value, allocaInst);
 };

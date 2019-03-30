@@ -4,7 +4,7 @@ import TokenTypeUtil, {Token} from "./syntaxAnalysis/tokenType";
 import TokenSequence from "./syntaxAnalysis/tokenSequence";
 import Sequence from "./syntaxAnalysis/sequence";
 import {LLVMContext, Module, IRBuilder, BasicBlock, FunctionType, Type} from "llvm-node";
-import {assignmentGen, IGeneratorContext, GeneratorBuilder} from "./codeGeneration/generator";
+import {declarationGen, IGeneratorContext, GeneratorBuilder} from "./codeGeneration/generator";
 import CodeMap from "./syntaxAnalysis/codeMap";
 import colors from "colors";
 
@@ -32,6 +32,13 @@ const initializer = llvm.ConstantInt.get(context, 0);
 
 console.log(mod.print()); */
 
+// Things to consider:
+/**
+ * ConstantInt.getTrue()
+ * ConstantInt.getFalse()
+ * ConstantInt.getNullValue()
+ */
+
 /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// /// ///
 
 // TODO: "import \"path\";export fn main : int { ret }", comes out:
@@ -44,12 +51,12 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `int hello = 5`;
+const input: string = `int num4 = 5`;
 
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(Token));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
-const sequenceHandler: TokenSequence = new TokenSequence(Sequence.assignment);
+const sequenceHandler: TokenSequence = new TokenSequence(Sequence.declaration);
 
 // Print out the tokenized tokens.
 console.log("Tokens:", tokens);
@@ -87,7 +94,7 @@ const genContext: IGeneratorContext<IRBuilder> = {
 };
 
 // Invoke the assignment generator.
-assignmentGen(genContext, seq!);
+declarationGen(genContext, seq!);
 
 // Create required return statement.
 $.createRetVoid();

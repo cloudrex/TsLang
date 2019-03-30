@@ -43,7 +43,7 @@ export default class Sequence {
         ...Sequence.block
     ];
 
-    public static readonly assignment: Token[] = [
+    public static readonly declaration: Token[] = [
         // TODO: Should be multi-type.
         Token.TypeInt,
         Token.Id,
