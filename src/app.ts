@@ -1,8 +1,5 @@
 import {IToken, TokenDefinition, TokenDef} from "./syntaxAnalysis/token";
 import {Tokenizer} from "./syntaxAnalysis/tokenizer";
-import fs from "fs";
-import path from "path";
-import Util from "./core/util";
 import TokenTypeUtil, {Token} from "./syntaxAnalysis/tokenType";
 
 /* import llvm, {BasicBlock} from "llvm-node";

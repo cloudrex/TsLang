@@ -1,5 +1,5 @@
 {
-    // Keywords
+    // Keywords.
     "KeywordFn": "fn",
 
     "KeywordReturn": "ret",
@@ -10,7 +10,7 @@
 
     "KeywordVar": "var",
 
-    // Symbols
+    // Symbols.
     "SymbolBraceOpen": "{",
 
     "SymbolBraceClose": "}",
@@ -23,12 +23,12 @@
 
     "SymbolSemiColon": ";",
 
-    // Literals
+    // Literals.
     "CharLiteral": "/'([^']?)'/",
 
     "StringLiteral": "/\"([^\"]*)\"/",
 
-    // Types
+    // Types.
     "TypeInt": "int",
 
     "TypeFloat": "float",
@@ -37,6 +37,6 @@
 
     "TypeString": "str",
 
-    // Misc
+    // Misc.
     "Id": "/[_a-zA-Z]+/"
 }
