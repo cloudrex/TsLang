@@ -18,6 +18,7 @@ export default abstract class Util {
      * Remove double-slash comments from a JSON string.
      */
     public static removeJsonComments(jsonStr: string): string {
+        // Replace & remove comments while comment pattern matches.
         while (Pattern.jsonComment.test(jsonStr)) {
             jsonStr = jsonStr.replace(Pattern.jsonComment, "");
         }
@@ -35,7 +36,7 @@ export default abstract class Util {
         for (const [key, value] of map) {
             // Ensure values aren't repeated.
             if (result.has(value)) {
-                throw new Error("Value already exists on reversed map");
+                throw new Error("Expected source values to be unique");
             }
 
             result.set(value, key);

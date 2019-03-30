@@ -51,7 +51,7 @@ export enum Token {
 
     EOF = "/$/",
 
-    Unknown = "/$/",
+    Unknown = "/^$/",
 
     Id = "/[_a-zA-Z]+/"
 }
