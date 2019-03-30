@@ -41,9 +41,10 @@ export enum Token {
 
     StringLiteral = "/\"([^\"]*)\"/",
 
-    NumLiteral = "/[0-9]/",
+    // Literals.
+    // TODO: This without '()' takes precedence somehow. Test-sample: '5 ;'.
+    NumLiteral = "/([0-9])/",
 
-    // Types.
     TypeInt = "int",
 
     TypeFloat = "float",
