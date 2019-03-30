@@ -1,5 +1,5 @@
 import {IToken} from "./token";
-import {Token} from "./tokenType";
+import {Token, reverseToken} from "./tokenType";
 
 export default class TokenSequence {
     /**
@@ -13,7 +13,7 @@ export default class TokenSequence {
 
         for (let i: number = 0; i < tokens.length; i++) {
             // Type is not reflected in the sequence--validation failed.
-            if (tokens[i].type !== sequence[i]) {
+            if (tokens[i].type !== reverseToken(sequence[i])) {
                 return false;
             }
         }
@@ -21,52 +21,6 @@ export default class TokenSequence {
         // Otherwise, the validation passed.
         return true;
     }
-
-    /**
-     * The token type sequence representation
-     * of an expression.
-     */
-    public static readonly expr: Token[] = [
-        // TODO
-    ];
-
-    /**
-     * The token type sequence representation
-     * of a statement block.
-     */
-    public static readonly block: Token[] = [
-        Token.SymbolBraceOpen,
-        // TODO
-        Token.SymbolBraceClose
-    ];
-
-    /**
-     * The token type sequence representation
-     * of an argument list.
-     */
-    public static readonly args: Token[] = [
-        Token.SymbolParenOpen,
-        // TODO
-        Token.SymbolParenClose
-    ];
-
-    /**
-     * The token type sequence representation
-     * of a function.
-     */
-    public static readonly fn: Token[] = [
-        Token.KeywordFn,
-        Token.Id,
-        ...TokenSequence.args,
-        ...TokenSequence.block
-    ];
-
-    public static readonly assignment: Token[] = [
-        Token.KeywordLet,
-        Token.Id,
-        Token.SymbolEqual,
-        Token.NumLiteral
-    ];
 
     protected sequence: Token[];
 
@@ -108,7 +62,7 @@ export default class TokenSequence {
      * Returns null if the provided tokens do not satisfy
      * the stored sequence.
      */
-    public test(tokens: IToken[]): string[] | null {
+    public exec(tokens: IToken[]): string[] | null {
         // Provided tokens do not satisfy sequence.
         if (!TokenSequence.validate(tokens, this.sequence)) {
             return null;

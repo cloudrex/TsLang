@@ -1,9 +1,25 @@
 import {Pattern} from "./pattern";
 
+export type EnumMap<T = string | number> = Map<string, T>;
+
 export default abstract class Util {
-    // TODO: Convert to a map.
-    public static resolveEnum(target: any) {
-        return target;
+    /**
+     * Converts target enum to a Map with
+     * the corresponding keys and values.
+     */
+    public static resolveEnum<T = string | number>(target: any): EnumMap<T> {
+        const result: EnumMap<T> = new Map();
+
+        for (const [key, value] of Object.entries(target)) {
+            // Ensure all source keys are unique.
+            if (result.has(key)) {
+                throw new Error("Expected target enum to contain unique keys");
+            }
+
+            result.set(key, value as T);
+        }
+
+        return result;
     }
 
     public static resolveEnumValues<T = string | number>(target: any): Array<T> {

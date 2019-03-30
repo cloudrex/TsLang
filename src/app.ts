@@ -2,6 +2,7 @@ import {IToken, TokenDefinition, TokenDef} from "./syntaxAnalysis/token";
 import {Tokenizer} from "./syntaxAnalysis/tokenizer";
 import TokenTypeUtil, {Token} from "./syntaxAnalysis/tokenType";
 import TokenSequence from "./syntaxAnalysis/tokenSequence";
+import Sequence from "./syntaxAnalysis/sequence";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -45,6 +46,7 @@ const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.par
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
 
-const sequence: TokenSequence = new TokenSequence(TokenSequence.assignment);
+const sequence: TokenSequence = new TokenSequence(Sequence.assignment);
 
+console.log("Sequence Test:", sequence.exec(tokens));
 console.log(tokens);

@@ -1,8 +1,8 @@
 import {MatchRule, MatchEngine} from "./matchEngine";
 import {TokenType} from "./tokenType";
 
-export interface IToken {
-    readonly type: TokenType;
+export interface IToken<T extends TokenType = TokenType> {
+    readonly type: T;
     readonly value: string;
 }
 

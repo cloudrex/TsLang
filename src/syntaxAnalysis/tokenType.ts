@@ -1,5 +1,5 @@
-import Util from "../core/util";
-import {MatchRule} from "./matchEngine";
+import Util, {EnumMap} from "../core/util";
+import {MatchRuleMap} from "./matchEngine";
 
 export enum CommonTokenType {
     Unknown = -1,
@@ -64,14 +64,29 @@ export enum Token {
     Id = "/([_a-zA-Z]+)/"
 }
 
+/**
+ * Generalized form of a token
+ */
 export type TokenType = Token | string;
+
+/**
+ * Reversed Map of the Token enum.
+ */
+export const reversedToken: EnumMap<string> = Util.reverseMap(Util.resolveEnum(Token));
+
+/**
+ * Retrieve the key of a Token enum value.
+ */
+export function reverseToken(token: Token): string {
+    return reversedToken.get(token)!;
+}
 
 export default abstract class TokenTypeUtil {
     /**
      * Parse and reverse an enum to create a
      * token definition map.
      */
-    public static parseEnum(input: any): Map<MatchRule, string> {
+    public static parseEnum(input: any): MatchRuleMap {
         const result: Map<string, string> = new Map();
 
         // Extract keys and values.
