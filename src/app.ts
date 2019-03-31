@@ -4,7 +4,7 @@ import TokenTypeUtil, {Token} from "./syntaxAnalysis/tokenType";
 import TokenSequence from "./syntaxAnalysis/tokenSequence";
 import Sequence from "./syntaxAnalysis/sequence";
 import {LLVMContext, Module, IRBuilder, BasicBlock, FunctionType, Type} from "llvm-node";
-import {declarationGen, IGeneratorContext, GeneratorBuilder} from "./codeGeneration/generator";
+import {declarationGen, IGeneratorContext, GeneratorBuilder, returnGen} from "./codeGeneration/generator";
 import CodeMap from "./syntaxAnalysis/codeMap";
 import colors from "colors";
 
@@ -96,8 +96,8 @@ const genContext: IGeneratorContext<IRBuilder> = {
 // Invoke the assignment generator.
 declarationGen(genContext, seq!);
 
-// Create required return statement.
-$.createRetVoid();
+// Generate required return statement.
+returnGen(genContext);
 
 // Print the LLVM IR code.
 console.log("\n--- LLVM IR CODE OUTPUT ---\n");

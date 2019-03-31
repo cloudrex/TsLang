@@ -34,7 +34,7 @@ export interface IGeneratorContext<T extends GeneratorTarget = GeneratorTarget> 
  * Does not apply sequence transformations.
  */
 export type Generator<TContext extends GeneratorTarget = GeneratorTarget> =
-    (context: IGeneratorContext<TContext>, sequence: ReadonlyArray<string>) => void;
+    (context: IGeneratorContext<TContext>, sequence?: ReadonlyArray<string>) => void;
 
 export const blockGen: Generator<Function> = ($) => {
     /**
@@ -65,11 +65,22 @@ export const declarationGen: Generator<IRBuilder> = ($, seq) => {
     const allocaInst: AllocaInst = $.target.createAlloca(intType);
 
     // Assign name.
-    allocaInst.name = seq[1];
+    allocaInst.name = seq![1];
 
     // Create value.
-    const value: ConstantInt = ConstantInt.get($.context, parseInt(seq[3]));
+    const value: ConstantInt = ConstantInt.get($.context, parseInt(seq![3]));
 
     // Assign value.
     $.target.createStore(value, allocaInst);
+};
+
+export const returnGen: Generator<IRBuilder> = ($) => {
+    /**
+     * Transform legend:
+     * 
+     * -
+     */
+
+    // TODO: Temporarily force-return void.
+    $.target.createRetVoid();
 };
