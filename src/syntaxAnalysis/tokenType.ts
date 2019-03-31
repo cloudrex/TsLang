@@ -21,6 +21,8 @@ export enum Token {
 
     KeywordLet = "let",
 
+    KeywordExtern = "extern",
+
     // Operators.
     OpAssign = "=",
 
@@ -64,11 +66,6 @@ export enum Token {
     // TODO: This without '()' takes precedence somehow. Test-sample: 'a ='.
     Id = "/([_a-zA-Z]+[_a-zA-Z0-9]*)/"
 }
-
-/**
- * Generalized form of a token
- */
-export type TokenType = Token | string;
 
 /**
  * Reversed Map of the Token enum.

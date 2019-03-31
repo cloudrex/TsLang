@@ -1,32 +1,17 @@
-import {Module, IRBuilder, LLVMContext, BasicBlock, Type, AllocaInst, ConstantInt} from "llvm-node";
-import {Mutable} from "../core/helpers";
-import CodeMap from "../syntaxAnalysis/codeMap";
+import {Module, IRBuilder, BasicBlock, Type, AllocaInst, ConstantInt} from "llvm-node";
+import GeneratorContext from "./generatorContext";
 
 export type GeneratorTarget = Module | Function | IRBuilder;
 
 // TODO: This should be a "creator + CodeMap" bridge. It will create desired abstracted LLVM entities (local Blocks, Functions, etc.) and register them on the CodeMap automatically.
 export class GeneratorBuilder {
-    protected context: Mutable<IGeneratorContext>;
+    protected context: GeneratorContext;
 
-    public constructor(context: IGeneratorContext) {
+    public constructor(context: GeneratorContext) {
         this.context = context;
     }
 
-    /**
-     * Set the target of the generator context.
-     */
-    public setTarget(target: GeneratorTarget): this {
-        this.context.target = target;
-
-        return this;
-    }
-}
-
-export interface IGeneratorContext<T extends GeneratorTarget = GeneratorTarget> {
-    readonly target: T;
-    readonly context: LLVMContext;
-    readonly builder: GeneratorBuilder;
-    readonly map: CodeMap;
+    // TODO
 }
 
 /**
@@ -34,31 +19,32 @@ export interface IGeneratorContext<T extends GeneratorTarget = GeneratorTarget> 
  * Does not apply sequence transformations.
  */
 export type Generator<TContext extends GeneratorTarget = GeneratorTarget> =
-    (context: IGeneratorContext<TContext>, sequence?: ReadonlyArray<string>) => void;
+    (context: GeneratorContext<TContext>, sequence?: ReadonlyArray<string>) => void;
 
 export const blockGen: Generator<Function> = ($) => {
     /**
-     * Transform legend:
+     * Generator legend:
      * 
-     * 0. Token.SymbolBraceOpen => Create block
-     * 1. Token.SymbolBraceClose => void
+     * [0] Token.SymbolBraceOpen : Create block
+     * [1] Token.SymbolBraceClose : void
      */
 
     const block: BasicBlock = BasicBlock.create($.context);
     const irBuilder: IRBuilder = new IRBuilder($.context);
 
     irBuilder.setInsertionPoint(block);
-    $.builder.setTarget(irBuilder);
+    
+    // TODO: Register the irBuilder of this block in the CodeMap.
 };
 
 export const declarationGen: Generator<IRBuilder> = ($, seq) => {
     /**
-     * Transform legend:
+     * Generator legend:
      * 
-     * 0. Token.TypeInt => Allocate INT32
-     * 1. Token.Id => Name allocation
-     * 2. Token.OpAssign => Prepare assignment
-     * 3. Token.NumLiteral => Assign value
+     * [0] Token.TypeInt : Allocate INT32
+     * [1] Token.Id : Name allocation
+     * [2] Token.OpAssign : Prepare assignment
+     * [3] Token.NumLiteral : Assign value
      */
 
     const intType: Type = Type.getInt32Ty($.context);
@@ -76,7 +62,7 @@ export const declarationGen: Generator<IRBuilder> = ($, seq) => {
 
 export const returnGen: Generator<IRBuilder> = ($) => {
     /**
-     * Transform legend:
+     * Generator legend:
      * 
      * -
      */
@@ -84,3 +70,5 @@ export const returnGen: Generator<IRBuilder> = ($) => {
     // TODO: Temporarily force-return void.
     $.target.createRetVoid();
 };
+
+export default Generator;

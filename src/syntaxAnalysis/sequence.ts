@@ -50,4 +50,10 @@ export default class Sequence {
         Token.OpAssign,
         Token.NumLiteral
     ];
+
+    public static readonly external: Token[] = [
+        Token.KeywordExtern,
+        Token.Id,
+        ...Sequence.args
+    ];
 }

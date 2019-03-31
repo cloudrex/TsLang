@@ -4,9 +4,12 @@ import TokenTypeUtil, {Token} from "./syntaxAnalysis/tokenType";
 import TokenSequence from "./syntaxAnalysis/tokenSequence";
 import Sequence from "./syntaxAnalysis/sequence";
 import {LLVMContext, Module, IRBuilder, BasicBlock, FunctionType, Type} from "llvm-node";
-import {declarationGen, IGeneratorContext, GeneratorBuilder, returnGen} from "./codeGeneration/generator";
+import {GeneratorBuilder, returnGen} from "./codeGeneration/generator";
 import CodeMap from "./syntaxAnalysis/codeMap";
 import colors from "colors";
+import {SpecialFunction} from "./core/specialFunction";
+import functionGen from "./codeGeneration/functionGen";
+import GeneratorContext from "./codeGeneration/generatorContext";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -51,12 +54,12 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `int num4 = 5`;
+const input: string = `fn z ( ) { }`;
 
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(Token));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
-const sequenceHandler: TokenSequence = new TokenSequence(Sequence.declaration);
+const sequenceHandler: TokenSequence = new TokenSequence(Sequence.fn);
 
 // Print out the tokenized tokens.
 console.log("Tokens:", tokens);
@@ -72,7 +75,7 @@ if (seq === null) {
 // Create LLVM entities.
 const context = new LLVMContext();
 const mod = new Module("Entry", context);
-const mainFn = mod.getOrInsertFunction("main", FunctionType.get(Type.getVoidTy(context), false)) as llvm.Function;
+const mainFn = mod.getOrInsertFunction(SpecialFunction.Main, FunctionType.get(Type.getVoidTy(context), false)) as llvm.Function;
 const body = BasicBlock.create(context);
 
 mainFn.addBasicBlock(body);
@@ -84,20 +87,13 @@ const $ = new IRBuilder(context);
 $.setInsertionPoint(body);
 
 // Create the generator context.
-const genContext: IGeneratorContext<IRBuilder> = {
-    // Builder won't be used for now.
-    builder: new GeneratorBuilder(null as any),
+const genContext: GeneratorContext<Module> = new GeneratorContext(mod, context);
 
-    context,
-    map: new CodeMap(),
-    target: $
-};
-
-// Invoke the assignment generator.
-declarationGen(genContext, seq!);
+// Invoke the corresponding generator.
+functionGen(genContext, seq!);
 
 // Generate required return statement.
-returnGen(genContext);
+returnGen(genContext.withTarget($));
 
 // Print the LLVM IR code.
 console.log("\n--- LLVM IR CODE OUTPUT ---\n");

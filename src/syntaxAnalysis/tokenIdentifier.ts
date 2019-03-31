@@ -2,12 +2,12 @@ import {RawToken} from "./token";
 import {MatchEngine, ReadonlyMatchRuleMap, MatchRuleMap} from "./matchEngine";
 import {Pattern} from "../core/pattern";
 import {SpecialCharacter} from "../core/specialCharacter";
-import {Token, TokenType} from "./tokenType";
+import {Token} from "./tokenType";
 
 export interface ITokenIdentifier {
     readonly defs: ReadonlyMatchRuleMap;
 
-    identify(text: RawToken): TokenType;
+    identify(text: RawToken): string;
 }
 
 /**
@@ -39,9 +39,9 @@ export class TokenIdentifier implements ITokenIdentifier {
     /**
      * Identify token types by values.
      */
-    public identify(text: RawToken): TokenType {
+    public identify(text: RawToken): string {
         // Set default case to a common token if applicable.
-        let result: TokenType = TokenIdentifier.primeCommonTokens(text);
+        let result: string = TokenIdentifier.primeCommonTokens(text);
 
         // Test all rule definitions.
         for (const [rule, type] of this.defs) {
