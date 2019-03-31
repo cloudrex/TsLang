@@ -7,7 +7,7 @@ export enum CommonTokenType {
     Whitespace = -3
 }
 
-export enum Token {
+export enum TokenType {
     // Keywords.
     KeywordFn = "fn",
 
@@ -70,12 +70,12 @@ export enum Token {
 /**
  * Reversed Map of the Token enum.
  */
-export const reversedToken: EnumMap<string> = Util.reverseMap(Util.resolveEnum(Token));
+export const reversedToken: EnumMap<string> = Util.reverseMap(Util.resolveEnum(TokenType));
 
 /**
  * Retrieve the key of a Token enum value.
  */
-export function reverseToken(token: Token): string {
+export function reverseToken(token: TokenType): string {
     return reversedToken.get(token)!;
 }
 

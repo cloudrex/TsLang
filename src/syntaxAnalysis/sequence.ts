@@ -1,4 +1,4 @@
-import {Token} from "./tokenType";
+import {TokenType} from "./tokenType";
 
 /**
  * Contains all possible token sequences.
@@ -8,7 +8,7 @@ export default class Sequence {
      * The token type sequence representation
      * of an expression.
      */
-    public static readonly expr: Token[] = [
+    public static readonly expr: TokenType[] = [
         // TODO
     ];
 
@@ -16,44 +16,44 @@ export default class Sequence {
      * The token type sequence representation
      * of a statement block.
      */
-    public static readonly block: Token[] = [
-        Token.SymbolBraceOpen,
+    public static readonly block: TokenType[] = [
+        TokenType.SymbolBraceOpen,
         // TODO
-        Token.SymbolBraceClose
+        TokenType.SymbolBraceClose
     ];
 
     /**
      * The token type sequence representation
      * of an argument list.
      */
-    public static readonly args: Token[] = [
-        Token.SymbolParenOpen,
+    public static readonly args: TokenType[] = [
+        TokenType.SymbolParenOpen,
         // TODO
-        Token.SymbolParenClose
+        TokenType.SymbolParenClose
     ];
 
     /**
      * The token type sequence representation
      * of a function.
      */
-    public static readonly fn: Token[] = [
-        Token.KeywordFn,
-        Token.Id,
+    public static readonly fn: TokenType[] = [
+        TokenType.KeywordFn,
+        TokenType.Id,
         ...Sequence.args,
         ...Sequence.block
     ];
 
-    public static readonly declaration: Token[] = [
+    public static readonly declaration: TokenType[] = [
         // TODO: Should be multi-type.
-        Token.TypeInt,
-        Token.Id,
-        Token.OpAssign,
-        Token.NumLiteral
+        TokenType.TypeInt,
+        TokenType.Id,
+        TokenType.OpAssign,
+        TokenType.NumLiteral
     ];
 
-    public static readonly external: Token[] = [
-        Token.KeywordExtern,
-        Token.Id,
+    public static readonly external: TokenType[] = [
+        TokenType.KeywordExtern,
+        TokenType.Id,
         ...Sequence.args
     ];
 }

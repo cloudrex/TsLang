@@ -1,11 +1,11 @@
 import {IToken} from "./token";
-import {Token, reverseToken} from "./tokenType";
+import {TokenType, reverseToken} from "./tokenType";
 
 export default class TokenSequence {
     /**
      * Validate a token array to ensure it follows the provided sequence.
      */
-    public static validate(tokens: IToken[], sequence: Token[]): boolean {
+    public static validate(tokens: IToken[], sequence: TokenType[]): boolean {
         // Lengths differ--validation failed.
         if (tokens.length !== sequence.length) {
             return false;
@@ -22,9 +22,9 @@ export default class TokenSequence {
         return true;
     }
 
-    protected sequence: Token[];
+    protected sequence: TokenType[];
 
-    public constructor(sequence: Token[] = []) {
+    public constructor(sequence: TokenType[] = []) {
         this.sequence = sequence;
     }
 
@@ -32,7 +32,7 @@ export default class TokenSequence {
      * Retrieved the stored sequence in its
      * current state.
      */
-    public get(): ReadonlyArray<Token> {
+    public get(): ReadonlyArray<TokenType> {
         return this.sequence;
     }
 
@@ -40,7 +40,7 @@ export default class TokenSequence {
      * Concat a token type array to the existing
      * stored sequence.
      */
-    public add(sequence: Token[]): this {
+    public add(sequence: TokenType[]): this {
         this.sequence = this.sequence.concat(sequence);
 
         return this;
@@ -50,7 +50,7 @@ export default class TokenSequence {
      * Append a single token type to the existing
      * stored sequence.
      */
-    public addSingle(type: Token): this {
+    public addSingle(type: TokenType): this {
         this.sequence.push(type);
 
         return this;

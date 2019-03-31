@@ -1,8 +1,8 @@
 import TokenStream from "../syntaxAnalysis/tokenStream";
-import {Token} from "../syntaxAnalysis/tokenType";
+import {TokenType} from "../syntaxAnalysis/tokenType";
 
 export interface IFormalArg {
-    readonly type: Token;
+    readonly type: TokenType;
     readonly name: string;
 }
 

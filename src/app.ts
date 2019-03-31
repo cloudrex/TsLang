@@ -1,6 +1,6 @@
 import {IToken, TokenDefinition, TokenDef} from "./syntaxAnalysis/token";
 import {Tokenizer} from "./syntaxAnalysis/tokenizer";
-import TokenTypeUtil, {Token} from "./syntaxAnalysis/tokenType";
+import TokenTypeUtil, {TokenType} from "./syntaxAnalysis/tokenType";
 import TokenSequence from "./syntaxAnalysis/tokenSequence";
 import Sequence from "./syntaxAnalysis/sequence";
 import {LLVMContext, Module, IRBuilder, BasicBlock, FunctionType, Type} from "llvm-node";
@@ -56,7 +56,7 @@ console.log(mod.print()); */
 
 const input: string = `fn z ( ) { }`;
 
-const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(Token));
+const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(TokenType));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
 const sequenceHandler: TokenSequence = new TokenSequence(Sequence.fn);

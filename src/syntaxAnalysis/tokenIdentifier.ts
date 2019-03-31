@@ -2,7 +2,7 @@ import {RawToken} from "./token";
 import {MatchEngine, ReadonlyMatchRuleMap, MatchRuleMap} from "./matchEngine";
 import {Pattern} from "../core/pattern";
 import {SpecialCharacter} from "../core/specialCharacter";
-import {Token} from "./tokenType";
+import {TokenType} from "./tokenType";
 
 export interface ITokenIdentifier {
     readonly defs: ReadonlyMatchRuleMap;
@@ -14,17 +14,17 @@ export interface ITokenIdentifier {
  * Identify and classify tokens by values.
  */
 export class TokenIdentifier implements ITokenIdentifier {
-    public static primeCommonTokens(text: RawToken): Token {
+    public static primeCommonTokens(text: RawToken): TokenType {
         // Test for common tokens.
         if (Pattern.whitepsace.test(text)) {
-            return Token.Whitespace;
+            return TokenType.Whitespace;
         }
         else if (text === SpecialCharacter.EOF) {
-            return Token.EOF;
+            return TokenType.EOF;
         }
 
         // Otherwise, identify as unknown.
-        return Token.Unknown;
+        return TokenType.Unknown;
     }
 
     /**
