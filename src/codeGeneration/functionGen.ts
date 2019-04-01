@@ -1,7 +1,7 @@
 import Generator from "./generator";
 import {Module, FunctionType, Type, Function, BasicBlock} from "llvm-node";
 
-export const functionGen: Generator<Module> = ($, seq) => {
+const functionGen: Generator<Module> = ($, seq) => {
     /**
      * Generator legend:
      * 

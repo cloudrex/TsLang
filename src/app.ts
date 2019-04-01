@@ -10,6 +10,7 @@ import colors from "colors";
 import {SpecialFunction} from "./core/specialFunction";
 import functionGen from "./codeGeneration/functionGen";
 import GeneratorContext from "./codeGeneration/generatorContext";
+import externGen from "./codeGeneration/externGen";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -54,12 +55,12 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `fn z ( ) { }`;
+const input: string = `extern printf ( )`;
 
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(TokenType));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
-const sequenceHandler: TokenSequence = new TokenSequence(Sequence.fn);
+const sequenceHandler: TokenSequence = new TokenSequence(Sequence.external);
 
 // Print out the tokenized tokens.
 console.log("Tokens:", tokens);
@@ -89,12 +90,13 @@ $.setInsertionPoint(body);
 // Create the generator context.
 const genContext: GeneratorContext<Module> = new GeneratorContext(mod, context);
 
-// Invoke the corresponding generator.
-functionGen(genContext, seq!);
-
 // Generate required return statement.
 returnGen(genContext.withTarget($));
+
+// Invoke the corresponding testing generator.
+externGen(genContext, seq!);
 
 // Print the LLVM IR code.
 console.log("\n--- LLVM IR CODE OUTPUT ---\n");
 console.log(colors.cyan(mod.print()));
+ 
