@@ -1,12 +1,20 @@
-import {LLVMContext} from "llvm-node";
+import {IPointer} from "./pointer";
 
 export default abstract class Entity<T> {
-    protected readonly context: LLVMContext;
+    protected readonly pointer: IPointer;
     protected readonly model: T;
 
-    protected constructor(model: T, context: LLVMContext) {
+    protected constructor(model: T, pointer: IPointer) {
         this.model = model;
-        this.context = context;
+        this.pointer = pointer;
+    }
+
+    /**
+     * Emit the model onto its corresponding
+     * LLVM target.
+     */
+    public emit(): this {
+        return this;
     }
 
     /**

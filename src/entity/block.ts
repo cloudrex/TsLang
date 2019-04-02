@@ -1,9 +1,19 @@
 import Entity from "./entity";
-import {BasicBlock, LLVMContext} from "llvm-node";
+import {BasicBlock, IRBuilder} from "llvm-node";
+import {IPointer} from "./pointer";
 
 export default class Block extends Entity<BasicBlock> {
-    public constructor(context: LLVMContext) {
+    /**
+     * The corresponding IR builder of this
+     * block.
+     */
+    public readonly builder: IRBuilder;
+
+    public constructor(pointer: IPointer) {
         // Create the block and invoke the parent's constructor.
-        super(BasicBlock.create(context), context);
+        super(BasicBlock.create(pointer.context), pointer);
+
+        // Create the IR builder.
+        this.builder = new IRBuilder(this.model);
     }
 }

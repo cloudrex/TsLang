@@ -1,8 +1,7 @@
 import Generator from "./generator";
-import {Module, FunctionType, Type, Function, BasicBlock} from "llvm-node";
 import Fn from "../entity/function";
 
-const functionGen: Generator<Module> = ($, seq) => {
+const functionGen: Generator = ($, seq) => {
     /**
      * Generator legend:
      * 
@@ -16,7 +15,7 @@ const functionGen: Generator<Module> = ($, seq) => {
 
     // TODO: Type, args.
     // Create and emit the function.
-    new Fn($.target, $.context, {
+    new Fn($.pointer, {
         name: seq![1]
     });
 };

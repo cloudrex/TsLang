@@ -2,6 +2,7 @@ import Block from "./block";
 import {LLVMContext, FunctionType, Type, LinkageTypes, Module} from "llvm-node";
 import Entity from "./entity";
 import {Function} from "llvm-node";
+import {IPointer} from "./pointer";
 
 export interface IFnOptions {
     /**
@@ -38,20 +39,20 @@ export default class Fn extends Entity<Function> {
     public body: Block;
 
     // TODO: Register function in CodeMap, along with its body block.
-    public constructor(module: Module, context: LLVMContext, options?: Partial<IFnOptions>) {
+    public constructor(pointer: IPointer, options?: Partial<IFnOptions>) {
         const opts: IFnOptions = {
-            ...defaultOptions(context),
+            ...defaultOptions(pointer.context),
             ...options
         };
 
         // Create the model.
-        const model: Function = Function.create(opts.type, opts.linkage, opts.name, module);
+        const model: Function = Function.create(opts.type, opts.linkage, opts.name, pointer.mod);
 
         // Invoke the parent's constructor.
-        super(model, context);
+        super(model, pointer);
 
         // Initialize the body.
-        this.body = new Block(context);
+        this.body = new Block(pointer);
 
         // Link the body block as the function's body.
         this.model.addBasicBlock(this.body.get());
@@ -62,6 +63,15 @@ export default class Fn extends Entity<Function> {
      */
     public setName(name: string): this {
         this.model.name = name;
+
+        return this;
+    }
+
+    /**
+     * Add a block to the function.
+     */
+    public addBlock(block: Block): this {
+        this.model.addBasicBlock(block.get());
 
         return this;
     }

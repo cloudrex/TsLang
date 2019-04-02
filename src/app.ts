@@ -11,6 +11,7 @@ import {SpecialFunction} from "./core/specialFunction";
 import functionGen from "./codeGeneration/functionGen";
 import GeneratorContext from "./codeGeneration/generatorContext";
 import externGen from "./codeGeneration/externGen";
+import {IPointer} from "./entity/pointer";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -87,8 +88,14 @@ const $ = new IRBuilder(context);
 // Prepare the IR builder.
 $.setInsertionPoint(body);
 
+// Create the pointer.
+const pointer: IPointer = {
+    context,
+    mod
+};
+
 // Create the generator context.
-const genContext: GeneratorContext<Module> = new GeneratorContext(mod, context);
+const genContext: GeneratorContext<null> = new GeneratorContext(pointer, null);
 
 // Generate required return statement.
 returnGen(genContext.withTarget($));
