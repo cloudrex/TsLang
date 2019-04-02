@@ -4,14 +4,12 @@ import TokenTypeUtil, {TokenType} from "./syntaxAnalysis/tokenType";
 import TokenSequence from "./syntaxAnalysis/tokenSequence";
 import Sequence from "./syntaxAnalysis/sequence";
 import {LLVMContext, Module, IRBuilder, BasicBlock, FunctionType, Type} from "llvm-node";
-import {GeneratorBuilder, returnGen} from "./codeGeneration/generator";
-import CodeMap from "./syntaxAnalysis/codeMap";
 import colors from "colors";
 import {SpecialFunction} from "./core/specialFunction";
-import functionGen from "./codeGeneration/functionGen";
 import GeneratorContext from "./codeGeneration/generatorContext";
 import externGen from "./codeGeneration/externGen";
 import {IPointer} from "./entity/pointer";
+import {returnGen} from "./codeGeneration/returnGen";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
