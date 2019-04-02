@@ -1,7 +1,7 @@
 import Generator from "./generator";
-import {IRBuilder, BasicBlock, Function} from "llvm-node";
+import {IRBuilder, BasicBlock} from "llvm-node";
 
-export const blockGen: Generator<Function> = ($) => {
+export const blockGen: Generator = ($) => {
     /**
      * Generator legend:
      * 

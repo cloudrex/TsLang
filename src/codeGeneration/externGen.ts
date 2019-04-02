@@ -1,7 +1,8 @@
 import Generator from "./generator";
-import {Module, Function, FunctionType, LinkageTypes, Type} from "llvm-node";
+import {Function, FunctionType, LinkageTypes, Type} from "llvm-node";
 
-const externGen: Generator<Module> = ($, seq) => {
+// TODO: Use Fn entity for function creation.
+const externGen: Generator = ($, seq) => {
     /**
      * Generator legend:
      * 
@@ -11,14 +12,14 @@ const externGen: Generator<Module> = ($, seq) => {
      */
 
     // Create the function type.
-    const type: FunctionType = FunctionType.get(Type.getVoidTy($.context), false);
+    const type: FunctionType = FunctionType.get(Type.getVoidTy($.pointer.context), false);
 
     // Create the external function definition.
     Function.create(
         type,
         LinkageTypes.ExternalLinkage,
         seq![1],
-        $.target
+        $.pointer.mod
     );
 
     // TODO: Register the external function in the CodeMap.

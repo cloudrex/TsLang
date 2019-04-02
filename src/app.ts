@@ -95,7 +95,7 @@ const pointer: IPointer = {
 };
 
 // Create the generator context.
-const genContext: GeneratorContext<null> = new GeneratorContext(pointer, null);
+const genContext: GeneratorContext = new GeneratorContext(pointer, null as any);
 
 // Generate required return statement.
 returnGen(genContext.withTarget($));
