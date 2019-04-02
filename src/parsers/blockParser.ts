@@ -1,5 +1,5 @@
 import TokenStream from "../syntaxAnalysis/tokenStream";
-import {IStatement} from "./statement";
+import {IStatement} from "./statementParser";
 
 export interface IBlock {
     readonly statements: IStatement;
