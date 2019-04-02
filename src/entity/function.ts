@@ -37,6 +37,7 @@ function defaultOptions(context: LLVMContext): IFnOptions {
 export default class Fn extends Entity<Function> {
     public body: Block;
 
+    // TODO: Register function in CodeMap, along with its body block.
     public constructor(module: Module, context: LLVMContext, options?: Partial<IFnOptions>) {
         const opts: IFnOptions = {
             ...defaultOptions(context),

@@ -1,5 +1,6 @@
 import Generator from "./generator";
 import {Module, FunctionType, Type, Function, BasicBlock} from "llvm-node";
+import Fn from "../entity/function";
 
 const functionGen: Generator<Module> = ($, seq) => {
     /**
@@ -14,12 +15,10 @@ const functionGen: Generator<Module> = ($, seq) => {
      */
 
     // TODO: Type, args.
-    // Create the function.
-    const fn: Function = $.target.getOrInsertFunction(seq![1], FunctionType.get(Type.getVoidTy($.context), false)) as Function;
-
-    // TODO: Register function in CodeMap, along with its body block.
-    // Create the body block.
-    fn.addBasicBlock(BasicBlock.create($.context));
+    // Create and emit the function.
+    new Fn($.target, $.context, {
+        name: seq![1]
+    });
 };
 
 export default functionGen;
