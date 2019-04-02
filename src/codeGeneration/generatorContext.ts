@@ -11,7 +11,7 @@ export interface IGeneratorContextOpts<T extends GeneratorTarget = GeneratorTarg
     readonly map: CodeMap;
 }
 
-export default class GeneratorContext<T extends GeneratorTarget | null = GeneratorTarget> {
+export default class GeneratorContext<T extends GeneratorTarget = GeneratorTarget> {
     public readonly map: CodeMap;
     public readonly builder: GeneratorBuilder;
     public readonly pointer: IPointer;
