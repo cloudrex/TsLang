@@ -18,7 +18,7 @@ const externGen: Generator = ($, stream) => {
     Function.create(
         type,
         LinkageTypes.ExternalLinkage,
-        stream.at(1)!.value,
+        stream!.at(1)!.value,
         $.pointer.mod
     );
 

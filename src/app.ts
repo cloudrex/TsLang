@@ -10,6 +10,7 @@ import GeneratorContext from "./codeGeneration/generatorContext";
 import externGen from "./codeGeneration/externGen";
 import {IPointer} from "./entity/pointer";
 import {returnGen} from "./codeGeneration/returnGen";
+import TokenStream from "./syntaxAnalysis/tokenStream";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -64,13 +65,16 @@ const sequenceHandler: TokenSequence = new TokenSequence(Sequence.external);
 // Print out the tokenized tokens.
 console.log("Tokens:", tokens);
 
-const seq: string[] | null = sequenceHandler.exec(tokens);
+const seq: IToken[] | null = sequenceHandler.exec(tokens);
 
 // Ensure sequence was met.
 if (seq === null) {
     console.log("Test sequence was not met");
     process.exit(-1);
 }
+
+// Create the token stream from the sequence.
+const stream: TokenStream = new TokenStream(seq!);
 
 // Create LLVM entities.
 const context = new LLVMContext();
@@ -99,7 +103,7 @@ const genContext: GeneratorContext = new GeneratorContext(pointer, null as any);
 returnGen(genContext.withTarget($));
 
 // Invoke the corresponding testing generator.
-externGen(genContext, seq!);
+externGen(genContext, stream);
 
 // Print the LLVM IR code.
 console.log("\n--- LLVM IR CODE OUTPUT ---\n");

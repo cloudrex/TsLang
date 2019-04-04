@@ -16,7 +16,7 @@ const functionGen: Generator = ($, stream) => {
     // TODO: Type, args.
     // Create and emit the function.
     new Fn($.pointer, {
-        name: stream.at(1)!.value
+        name: stream!.at(1)!.value
     });
 };
 

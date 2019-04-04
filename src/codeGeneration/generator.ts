@@ -20,6 +20,6 @@ export class GeneratorBuilder {
  * Does not apply sequence transformations.
  */
 export type Generator<TContext extends GeneratorTarget = GeneratorTarget> =
-    (context: GeneratorContext<TContext>, stream: TokenStream) => void;
+    (context: GeneratorContext<TContext>, stream?: TokenStream) => void;
 
 export default Generator;

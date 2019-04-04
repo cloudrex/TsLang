@@ -58,16 +58,16 @@ export default class TokenSequence {
 
     /**
      * Run the stored sequence against a token array and return
-     * an array containing the token's values.
+     * an array containing the matching tokens.
      * Returns null if the provided tokens do not satisfy
      * the stored sequence.
      */
-    public exec(tokens: IToken[]): string[] | null {
+    public exec(tokens: IToken[]): IToken[] | null {
         // Provided tokens do not satisfy sequence.
         if (!TokenSequence.validate(tokens, this.sequence)) {
             return null;
         }
 
-        return tokens.map((token: IToken): string => token.value);
+        return tokens;
     }
 }
