@@ -2,7 +2,7 @@ import Generator from "./generator";
 import {Function, FunctionType, LinkageTypes, Type} from "llvm-node";
 
 // TODO: Use Fn entity for function creation.
-const externGen: Generator = ($, seq) => {
+const externGen: Generator = ($, stream) => {
     /**
      * Generator legend:
      * 
@@ -18,7 +18,7 @@ const externGen: Generator = ($, seq) => {
     Function.create(
         type,
         LinkageTypes.ExternalLinkage,
-        seq![1],
+        stream.at(1)!.value,
         $.pointer.mod
     );
 

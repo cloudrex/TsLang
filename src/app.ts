@@ -104,4 +104,3 @@ externGen(genContext, seq!);
 // Print the LLVM IR code.
 console.log("\n--- LLVM IR CODE OUTPUT ---\n");
 console.log(colors.cyan(mod.print()));
- 

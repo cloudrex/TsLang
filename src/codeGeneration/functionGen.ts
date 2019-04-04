@@ -1,7 +1,7 @@
 import Generator from "./generator";
 import Fn from "../entity/function";
 
-const functionGen: Generator = ($, seq) => {
+const functionGen: Generator = ($, stream) => {
     /**
      * Generator legend:
      * 
@@ -16,7 +16,7 @@ const functionGen: Generator = ($, seq) => {
     // TODO: Type, args.
     // Create and emit the function.
     new Fn($.pointer, {
-        name: seq![1]
+        name: stream.at(1)!.value
     });
 };
 

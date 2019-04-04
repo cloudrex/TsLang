@@ -1,7 +1,7 @@
 import Generator from "./generator";
 import {AllocaInst, Type, ConstantInt, IRBuilder} from "llvm-node";
 
-export const declarationGen: Generator<IRBuilder> = ($, seq) => {
+export const declarationGen: Generator<IRBuilder> = ($, stream) => {
     /**
      * Generator legend:
      * 
@@ -15,10 +15,10 @@ export const declarationGen: Generator<IRBuilder> = ($, seq) => {
     const allocaInst: AllocaInst = $.target.createAlloca(intType);
 
     // Assign name.
-    allocaInst.name = seq![1];
+    allocaInst.name = stream.at(1)!.value;
 
     // Create value.
-    const value: ConstantInt = ConstantInt.get($.pointer.context, parseInt(seq![3]));
+    const value: ConstantInt = ConstantInt.get($.pointer.context, parseInt(stream.at(3)!.value));
 
     // Assign value.
     $.target.createStore(value, allocaInst);

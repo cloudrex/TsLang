@@ -1,5 +1,6 @@
 import {IRBuilder} from "llvm-node";
 import GeneratorContext from "./generatorContext";
+import TokenStream from "../syntaxAnalysis/tokenStream";
 
 export type GeneratorTarget = Function | IRBuilder;
 
@@ -19,6 +20,6 @@ export class GeneratorBuilder {
  * Does not apply sequence transformations.
  */
 export type Generator<TContext extends GeneratorTarget = GeneratorTarget> =
-    (context: GeneratorContext<TContext>, sequence?: ReadonlyArray<string>) => void;
+    (context: GeneratorContext<TContext>, stream: TokenStream) => void;
 
 export default Generator;

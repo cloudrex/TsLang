@@ -83,6 +83,34 @@ export default class TokenStream {
 
         return this;
     }
+
+    /**
+     * Retrieve the first token.
+     */
+    public first(): IToken {
+        return this.tokens[0];
+    }
+
+    /**
+     * Retrieve the last token.
+     */
+    public last(): IToken {
+        let index: number = this.tokens.length - 1;
+
+        // Ensure index does not overflow.
+        if (index < 0) {
+            index = 0;
+        }
+
+        return this.tokens[index];
+    }
+
+    /**
+     * Retrieve a token at a specific index.
+     */
+    public at(index: number): IToken | undefined {
+        return this.tokens[index];
+    }
     
     /**
      * Reset the position counter to 0.
