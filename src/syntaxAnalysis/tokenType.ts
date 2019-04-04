@@ -27,6 +27,10 @@ export enum TokenType {
     OpAssign = "=",
 
     // Symbols.
+    SymbolAt = "@",
+
+    SymbolPipe = "|",
+
     SymbolBraceOpen = "{",
 
     SymbolBraceClose = "}",
@@ -35,7 +39,7 @@ export enum TokenType {
 
     SymbolParenClose = ")",
 
-    SymbolColon =  ":",
+    SymbolColon = ":",
 
     SymbolSemiColon = ";",
 

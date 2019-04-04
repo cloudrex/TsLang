@@ -85,6 +85,39 @@ export default class TokenStream {
     }
 
     /**
+     * Replace the current token.
+     */
+    public set(token: IToken): this {
+        this.tokens[this.pos] = token;
+
+        return this;
+    }
+
+    /**
+     * Update the current token's properties.
+     */
+    public update(changes: Partial<IToken>): this {
+        this.tokens[this.pos] = {
+            ...this.get(),
+            ...changes
+        };
+
+        return this;
+    }
+
+    /**
+     * Returns a copy of the stream with the
+     * same position and tokens.
+     */
+    public clone(): TokenStream {
+        const stream: TokenStream = new TokenStream([...this.tokens]);
+
+        stream.setPos(this.pos);
+
+        return stream;
+    }
+
+    /**
      * Retrieve upcoming tokens. Does not
      * advance the position counter.
      */
