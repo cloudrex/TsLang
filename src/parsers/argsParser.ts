@@ -12,7 +12,7 @@ export default abstract class ArgsParser {
         const result: IFormalArg[] = [];
 
         // Skip the '(' character.
-        stream.continue();
+        stream.skip();
 
         // TODO: '(' will never be present.
         while (stream.hasNext() && stream.next().type !== '(') {

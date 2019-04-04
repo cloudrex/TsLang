@@ -12,7 +12,7 @@ export default abstract class FunctionParser {
     // TODO: Common validation required (.length !== 0, etc.).
     public static parseHeader(stream: TokenStream): IFunctionHeader {
         // Skip 'fn' keyword.
-        stream.continue();
+        stream.skip();
 
         // Capture the function name.
         const name: string = stream.get().value;
@@ -25,7 +25,7 @@ export default abstract class FunctionParser {
         // The ':' symbol exists, therefore the return type is specified.
         if (stream.hasNext()) {
             // Capture the return type.
-            returnType = stream.continue().next().value as Type;
+            returnType = stream.skip().next().value as Type;
         }
 
         return {

@@ -64,7 +64,7 @@ export default class TokenStream {
      * Advance the position counter and retrieve the next token.
      */
     public next(): IToken {
-        return this.continue().get();
+        return this.skip().get();
     }
 
     /**
@@ -78,10 +78,24 @@ export default class TokenStream {
     /**
      * Advance the position counter.
      */
-    public continue(amount: number = 1): this {
+    public skip(amount: number = 1): this {
         this.setPos(this.pos + amount);
 
         return this;
+    }
+
+    /**
+     * Retrieve upcoming tokens. Does not
+     * advance the position counter.
+     */
+    public peek(pos: number = 1): IToken | null {
+        const computedPos: number = this.pos + pos;
+
+        if (this.tokens.length - 1 >= computedPos) {
+            return this.tokens[computedPos];
+        }
+
+        return null;
     }
 
     /**
@@ -111,7 +125,7 @@ export default class TokenStream {
     public at(index: number): IToken | undefined {
         return this.tokens[index];
     }
-    
+
     /**
      * Reset the position counter to 0.
      */
