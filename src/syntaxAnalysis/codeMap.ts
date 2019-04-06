@@ -1,8 +1,9 @@
+import {Function} from "llvm-node";
+
 /**
  * Manages registered symbols and its corresponding
  * values.
  */
 export default class CodeMap {
-    // TODO
-    public readonly functions: Map<string, any> = new Map();
+    public readonly functions: Map<string, Function> = new Map();
 }

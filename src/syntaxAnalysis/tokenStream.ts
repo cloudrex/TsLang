@@ -35,6 +35,13 @@ export default class TokenStream {
     }
 
     /**
+     * Retrieve the current position counter.
+     */
+    public getPos(): number {
+        return this.pos;
+    }
+
+    /**
      * Retrieve the token at the current position counter.
      */
     public get(): IToken {

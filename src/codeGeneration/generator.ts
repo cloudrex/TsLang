@@ -1,8 +1,5 @@
-import {IRBuilder, Function} from "llvm-node";
 import GeneratorContext from "./generatorContext";
 import TokenStream from "../syntaxAnalysis/tokenStream";
-
-export type GeneratorTarget = Function | IRBuilder;
 
 // TODO: This should be a "creator + CodeMap" bridge. It will create desired abstracted LLVM entities (local Blocks, Functions, etc.) and register them on the CodeMap automatically.
 export class GeneratorBuilder {
@@ -19,7 +16,6 @@ export class GeneratorBuilder {
  * Processes token sequences & performs corresponding actions.
  * Does not apply sequence transformations.
  */
-export type Generator<TContext extends GeneratorTarget = GeneratorTarget> =
-    (context: GeneratorContext<TContext>, stream: TokenStream) => void;
+export type Generator = (context: GeneratorContext, stream: TokenStream) => void;
 
 export default Generator;

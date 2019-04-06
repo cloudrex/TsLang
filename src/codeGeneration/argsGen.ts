@@ -1,9 +1,8 @@
 import Generator from "./generator";
 import {IToken} from "../syntaxAnalysis/token";
 import {TokenType} from "../syntaxAnalysis/tokenType";
-import {Function} from "llvm-node";
 
-export const argsGen: Generator<Function> = ($, stream) => {
+export const argsGen: Generator = ($, stream) => {
     /**
      * Generator legend:
      * 
@@ -23,7 +22,7 @@ export const argsGen: Generator<Function> = ($, stream) => {
         const name: IToken = stream!.next();
 
         // TODO
-        $.target/*.*/;
+        $.builder/*.*/;
 
         // Continue processing.
         peek = stream!.peek();

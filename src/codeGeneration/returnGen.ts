@@ -1,7 +1,6 @@
 import Generator from "./generator";
-import {IRBuilder} from "llvm-node";
 
-export const returnGen: Generator<IRBuilder> = ($) => {
+export const returnGen: Generator = ($) => {
     /**
      * Generator legend:
      * 
@@ -9,5 +8,5 @@ export const returnGen: Generator<IRBuilder> = ($) => {
      */
 
     // TODO: Temporarily force-return void.
-    $.target.createRetVoid();
+    $.builder.createRetVoid();
 };
