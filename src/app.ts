@@ -98,13 +98,13 @@ const pointer: IPointer = {
 // Create the generator context.
 const genContext: GeneratorContext = new GeneratorContext(pointer, $);
 
-// Generate required return statement.
-returnGen(genContext, stream);
-
 // --- Start testing environment ---
 functionGen(genContext, stream);
 functionCallGen(genContext, stream);
 // --- End testing environment ---
+
+// Generate required return statement.
+returnGen(genContext, stream);
 
 // Print the LLVM IR code.
 console.log("\n--- LLVM IR CODE OUTPUT ---\n");
