@@ -13,6 +13,21 @@ fn main() {
 }
 ```
 
+#### Modules
+
+Importing
+
+```ts
+import {stdin} from io;
+```
+
+Exporting
+
+```rust
+export fn getName(): str
+    => "John Doe";
+```
+
 #### Decorators
 
 Useful built-in decorators
