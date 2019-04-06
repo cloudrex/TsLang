@@ -5,12 +5,7 @@ export default class TokenStream {
 
     protected pos: number;
 
-    public constructor(tokens: IToken[]) {
-        if (tokens.length === 0) {
-            // TODO: Should use ReportError? Maybe with 'Internal' error type?
-            throw new Error("Cannot create a token stream with an empty token array");
-        }
-
+    public constructor(tokens: IToken[] = []) {
         this.tokens = tokens;
         this.pos = 0;
     }

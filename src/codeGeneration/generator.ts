@@ -1,4 +1,4 @@
-import {IRBuilder} from "llvm-node";
+import {IRBuilder, Function} from "llvm-node";
 import GeneratorContext from "./generatorContext";
 import TokenStream from "../syntaxAnalysis/tokenStream";
 

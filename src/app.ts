@@ -56,7 +56,6 @@ console.log(mod.print()); */
  */
 
 const input: string = `extern printf ( )`;
-
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(TokenType));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
@@ -100,7 +99,7 @@ const pointer: IPointer = {
 const genContext: GeneratorContext = new GeneratorContext(pointer, null as any);
 
 // Generate required return statement.
-returnGen(genContext.withTarget($));
+returnGen(genContext.withTarget($), new TokenStream());
 
 // Invoke the corresponding testing generator.
 externGen(genContext, stream);
