@@ -12,13 +12,20 @@ export const functionCallGen: Generator = ($, stream) => {
     
     const name: string = stream.get().value;
 
+    console.log($.map.functions);
+
     console.log("FN Name:", name);
 
     // Ensure function is registered.
-    if (!$.map.functions.has(name)) {
+    if ($.map.functions.has(name)) {
+        // Ensure IR builder's block has a parent.
+        if (!$.parentFn) {
+            throw new Error("Expected IR builder's insertion block to have a parent");
+        }
+
         // TODO: Arguments.
         console.log($.map.functions.get(name)!);
-        $.builder.createCall($.builder.getInsertBlock()!.parent!, []);
+        $.builder.createCall($.map.functions.get(name)!, []);
     }
     else {
         throw new Error("No function with such name exists");
