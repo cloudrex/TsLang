@@ -109,15 +109,17 @@ fn main() {
 Local variables
 
 ```cpp
-int year = 2019;
+fn main() {
+    int year = 2019;
 
-const float e = 2.7;
+    const float e = 2.7;
 
-const double pi = 3.14;
+    const double pi = 3.14;
 
-str name = "John Doe";
+    str name = "John Doe";
 
-char sex = 'm';
+    char sex = 'm';
+}
 ```
 
 Global variables
