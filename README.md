@@ -13,19 +13,23 @@ fn main() {
 }
 ```
 
-Built-in DOM support & direct access
+#### Decorators
 
-```cs
-fn onClick() {
-    web.body.push(<div>You clicked the button!</div>);
+Useful built-in decorators
+
+```rust
+@deprecated // Deprecates a method.
+fn hello() {
+    printf("Hello world!");
 }
 
-fn main() {
-    web.mount(
-        <button click={onClick}>Click me</button>
-    );
+@transformValue(5) // Transforms return value.
+fn giveMeFive() {
+    return 7;
 }
 ```
+
+#### DOM
 
 Advanced DOM example
 
@@ -46,7 +50,23 @@ fn main()
     | log;
 ```
 
-Variables
+Built-in DOM support & direct access
+
+```cs
+fn onClick() {
+    web.body.push(<div>You clicked the button!</div>);
+}
+
+fn main() {
+    web.mount(
+        <button click={onClick}>Click me</button>
+    );
+}
+```
+
+#### Variables
+
+Local variables
 
 ```cpp
 int year = 2019;
@@ -66,6 +86,8 @@ Global variables
 const double @pi = 3.14;
 ```
 
+#### Functions
+
 Functions
 
 ```rust
@@ -83,6 +105,8 @@ External declarations
 ```cpp
 extern puts(str);
 ```
+
+#### Classes
 
 Classes
 
