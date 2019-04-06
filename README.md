@@ -1,5 +1,5 @@
 A strongly-typed programming language built with TypeScript & LLVM. The language is
-inspired by JavaScript, C++ and various other languages.
+inspired by JavaScript, TypeScript, React.js, Imba, C#, C++ and various other languages.
 
 The purpose of the language is to be a simply yet powerful general purpose programming language, with the posibility of targeting the web (compiling to JavaScript).
 
@@ -11,6 +11,39 @@ Hello world
 fn main() {
     printf("Hello world");
 }
+```
+
+Built-in DOM support & direct access
+
+```cs
+fn onClick() {
+    web.body.push(<div>You clicked the button!</div>);
+}
+
+fn main() {
+    web.mount(
+        <button click={onClick}>Click me</button>
+    );
+}
+```
+
+Advanced DOM example
+
+```cs
+str @message = "Hello world";
+web.El @root = web.html;
+
+// All attempts to access '@message' will be redirected here.
+@proxy(@message) => @message + "!";
+
+@route(web.path.root) => @root;
+
+fn main()
+    // Redirect to trigger accessing root path.
+    => web.get()
+
+    // Redirect root path's output & print DOM to the console.
+    | log;
 ```
 
 Variables
@@ -78,3 +111,4 @@ interface ITalkable {
     talk(): void;
 }
 ```
+
