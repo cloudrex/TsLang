@@ -3,6 +3,20 @@ inspired by JavaScript, TypeScript, React.js, Imba, C#, C++ and various other la
 
 The purpose of the language is to be a simply yet powerful general purpose programming language, with the posibility of targeting the web (compiling to JavaScript).
 
+#### Why?
+
+Summarized: I've always wanted to create my own language.
+
+Expanded: I use specific languages to accomplish goals in my projects. My directory of languages and tools are strictly limited, so when I want to expand my borders, I am limited by my own tools and experience.
+
+I love the JavaScript because of its simplicity, extensibility and extensive usability across different platforms.
+
+With this language my end goal is to combine the simplicity and extensibility provided by JavaScript with the power and the (relative) low-level features of C++.
+
+Not only should this language be flexible yet powerful, but it should also be able to leverage the DOM, providing direct support for creating powerful web applications that compile to JavaScript (or WebAssembly).
+
+Certainly the road looks bumpy ahead, there are many things to do. However, I'm looking forward to continually working on this as my main project. It will take long, but this has been one of my dreams as a developer from day 0.
+
 ### Syntax
 
 Hello world
@@ -12,6 +26,17 @@ fn main() {
     printf("Hello world");
 }
 ```
+
+#### Operators
+
++ Addition
+- Substraction
+* Multiplication
+/ Division
+% [Modulo](https://en.wikipedia.org/wiki/Modulo_operation)
+| Pipe (redirecting output)
+=> Single return value (functions)
+@ Global variables & attribute definitions
 
 #### Modules
 
