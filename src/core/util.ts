@@ -1,4 +1,5 @@
 import {Pattern} from "./pattern";
+import {TokenType} from "../syntaxAnalysis/tokenType";
 
 export type EnumMap<T = string | number> = Map<string, T>;
 
@@ -40,6 +41,25 @@ export default abstract class Util {
         }
 
         return jsonStr;
+    }
+
+    public static parseNumeric(value: string): number {
+        // Process boolean values if applicable.
+        if (value === TokenType.KeywordTrue) {
+            return 1;
+        }
+        else if (value === TokenType.KeywordFalse) {
+            return 0;
+        }
+
+        const parsed: number = parseFloat(value);
+
+        // Ensure value always gets parsed.
+        if (isNaN(parsed)) {
+            throw new Error(`Invalid numeric value: ${value}`);
+        }
+
+        return parsed;
     }
 
     /**

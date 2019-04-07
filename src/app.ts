@@ -53,7 +53,7 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `double pi = 3.14`;
+const input: string = `bool flag = true bool ; bool flag2 = false ;`;
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(TokenType));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
@@ -98,6 +98,7 @@ const pointer: IPointer = {
 const genContext: GeneratorContext = new GeneratorContext(pointer, $);
 
 // --- Start testing environment ---
+declarationGen(genContext, stream);
 declarationGen(genContext, stream);
 // --- End testing environment ---
 

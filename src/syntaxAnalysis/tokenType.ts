@@ -25,6 +25,10 @@ export enum TokenType {
 
     KeywordVoid = "void",
 
+    KeywordTrue = "true",
+    
+    KeywordFalse = "false",
+
     // Operators.
     OpAssign = "=",
 
@@ -61,6 +65,8 @@ export enum TokenType {
     TypeDouble = "double",
 
     TypeString = "str",
+
+    TypeBool = "bool",
 
     // Misc.
     Whitespace = "/[\\s\\t\\n]/",

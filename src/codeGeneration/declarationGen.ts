@@ -1,6 +1,11 @@
 import Generator from "./generator";
-import {AllocaInst, Type, ConstantFP} from "llvm-node";
-import {types} from "../core/constant";
+import {AllocaInst, Type, ConstantFP, LLVMContext, ConstantInt} from "llvm-node";
+import {types, constantFactories} from "../core/constant";
+import Util from "../core/util";
+
+export type ConstantFactory = ConstantInt | ConstantFP;
+
+export type ConstantFactoryCallback = (context: LLVMContext, value: number) => ConstantFactory;
 
 export const declarationGen: Generator = ($, stream) => {
     /**
@@ -10,24 +15,35 @@ export const declarationGen: Generator = ($, stream) => {
      * [1] Token.Id : Name allocation
      * [2] Token.OpAssign : Prepare assignment
      * [3] Token.NumLiteral : Assign value
+     * [4] Token.SymbolSemiColon : void
      */
 
     const typeValue: string = stream.get().value;
 
     if (!types.has(typeValue)) {
-        throw new Error("Invalid variable declaration type specified");
+        throw new Error(`Invalid variable declaration type: ${typeValue}`);
     }
 
     const type: Type = types.get(typeValue)!($.pointer.context);
     const allocaInst: AllocaInst = $.builder.createAlloca(type);
 
     // Assign name.
-    allocaInst.name = stream!.at(1)!.value;
+    allocaInst.name = stream.next().value;
 
-    // Create value.
-    // TODO: parseInt or parseFloat (actually, parseFloat always should be good, as it is intercepted by ConstantInt/ConstantFP) (also ConstantInt/ConstantFP). Should decide automatically.
-    const value: ConstantFP = ConstantFP.get($.pointer.context, parseFloat(stream!.at(3)!.value));
+    // Ensure corresponding constant factory exists.
+    if (!constantFactories.has(typeValue)) {
+        throw new Error(`No corresponding constant factory exists for type: ${typeValue}`);
+    }
 
-    // Assign value.
+    // Create the constant factory.
+    const constantFactory: ConstantFactoryCallback =  constantFactories.get(typeValue)!;
+
+    // Create the value.
+    const value: ConstantFactory = constantFactory($.pointer.context, Util.parseNumeric(stream!.at(3)!.value));
+
+    // Create the store instruction & assign the value.
     $.builder.createStore(value, allocaInst);
+
+    // Skip remaining tokens.
+    stream.skip(5);
 };
