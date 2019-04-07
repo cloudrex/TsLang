@@ -23,6 +23,8 @@ export enum TokenType {
 
     KeywordExtern = "extern",
 
+    KeywordVoid = "void",
+
     // Operators.
     OpAssign = "=",
 
@@ -49,8 +51,8 @@ export enum TokenType {
     StringLiteral = "/\"([^\"]*)\"/",
 
     // Literals.
-    // TODO: This without '()' takes precedence somehow. Test-sample: '5 ;'.
-    NumLiteral = "/([0-9])/",
+    // TODO: This without '()' takes precedence somehow. Test-sample: '5 ;'. | EDIT: This might be expected, see GH issue #8.
+    NumLiteral = "/([0-9](?:\.[0-9]+)?)/",
 
     TypeInt = "int",
 

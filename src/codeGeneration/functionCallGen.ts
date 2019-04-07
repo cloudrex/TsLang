@@ -27,6 +27,7 @@ export const functionCallGen: Generator = ($, stream) => {
         throw new Error("No function with such name exists");
     }
 
+    // TODO: Skipping is giving errors. Needs testing/debugging.
     // Skip [1].
     stream.skip();
 

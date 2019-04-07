@@ -8,8 +8,7 @@ import GeneratorContext from "./codeGeneration/generatorContext";
 import {IPointer} from "./entity/pointer";
 import {returnGen} from "./codeGeneration/returnGen";
 import TokenStream from "./syntaxAnalysis/tokenStream";
-import functionGen from "./codeGeneration/functionGen";
-import {functionCallGen} from "./codeGeneration/functionCallGen";
+import {declarationGen} from "./codeGeneration/declarationGen";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -54,7 +53,7 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `fn hello () { } hello ( ) ; hello ( ) ;`;
+const input: string = `double pi = 3.14`;
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(TokenType));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
@@ -99,9 +98,7 @@ const pointer: IPointer = {
 const genContext: GeneratorContext = new GeneratorContext(pointer, $);
 
 // --- Start testing environment ---
-functionGen(genContext, stream);
-functionCallGen(genContext, stream);
-functionCallGen(genContext, stream);
+declarationGen(genContext, stream);
 // --- End testing environment ---
 
 // Generate required return statement.
