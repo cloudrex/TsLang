@@ -25,7 +25,7 @@ export const declarationGen: Generator = ($, stream) => {
     allocaInst.name = stream!.at(1)!.value;
 
     // Create value.
-    // TODO: parseInt or parseFloat (also ConstantInt/ConstantFP). Should decide automatically.
+    // TODO: parseInt or parseFloat (actually, parseFloat always should be good, as it is intercepted by ConstantInt/ConstantFP) (also ConstantInt/ConstantFP). Should decide automatically.
     const value: ConstantInt = ConstantFP.get($.pointer.context, parseFloat(stream!.at(3)!.value));
 
     // Assign value.
