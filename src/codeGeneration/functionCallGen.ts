@@ -8,6 +8,7 @@ export const functionCallGen: Generator = ($, stream) => {
      * [1] Token.SymbolParenOpen : void
      * [2..n] {Token.Id, Token.Id} : Arguments
      * [n+1] Token.SymbolParenClose : void
+     * [n+2] Token.SymbolSemiColon : void
      */
     
     const name: string = stream.get().value;
@@ -25,4 +26,15 @@ export const functionCallGen: Generator = ($, stream) => {
     else {
         throw new Error("No function with such name exists");
     }
+
+    // Skip [1].
+    stream.skip();
+
+    // TODO: Arguments.
+
+    // Skip [n+1].
+    stream.skip();
+
+    // Skip [n+2].
+    stream.skip();
 };

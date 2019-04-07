@@ -54,7 +54,7 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `fn hello() { } hello ( )`;
+const input: string = `fn hello () { } hello ( ) ; hello ( ) ;`;
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(TokenType));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
@@ -100,6 +100,7 @@ const genContext: GeneratorContext = new GeneratorContext(pointer, $);
 
 // --- Start testing environment ---
 functionGen(genContext, stream);
+functionCallGen(genContext, stream);
 functionCallGen(genContext, stream);
 // --- End testing environment ---
 
