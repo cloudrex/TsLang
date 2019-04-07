@@ -78,6 +78,20 @@ fn giveMeFive() {
 
 #### DOM
 
+Built-in DOM support & direct access
+
+```cs
+fn onClick() {
+    web.body.push(<div>You clicked the button!</div>);
+}
+
+fn main() {
+    web.mount(
+        <button click={onClick}>Click me</button>
+    );
+}
+```
+
 Advanced DOM example
 
 ```cs
@@ -95,20 +109,6 @@ fn main()
 
     // Redirect root path's output & print DOM to the console.
     | log;
-```
-
-Built-in DOM support & direct access
-
-```cs
-fn onClick() {
-    web.body.push(<div>You clicked the button!</div>);
-}
-
-fn main() {
-    web.mount(
-        <button click={onClick}>Click me</button>
-    );
-}
 ```
 
 #### Variables
