@@ -5,9 +5,9 @@ The purpose of the language is to be a simply yet powerful general purpose progr
 
 #### Why?
 
-Summarized: I've always wanted to create my own language.
+**Summarized**: I've always wanted to create my own language.
 
-Expanded: I use specific languages to accomplish goals in my projects. My directory of languages and tools are strictly limited, so when I want to expand my borders, I am limited by my own tools and experience.
+**Expanded**: I use specific languages to accomplish goals in my projects. My directory of languages and tools are strictly limited, so when I want to expand my borders, I am limited by my own tools and experience.
 
 I love the JavaScript because of its simplicity, extensibility and extensive usability across different platforms.
 
@@ -24,6 +24,14 @@ Hello world
 ```rust
 fn main() {
     printf("Hello world");
+}
+
+// .. or if you like pipes ..
+
+import 
+
+fn main() {
+
 }
 ```
 
