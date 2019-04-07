@@ -1,4 +1,4 @@
-import {Expect, Type} from "../core/expect";
+import {expect, Type} from "../core/expect";
 import {Pattern} from "../core/pattern";
 
 export type MatchRule = RegExp | string;
@@ -27,7 +27,7 @@ export interface IPartialTestResult {
 }
 
 export class MatchEngine {
-    public static resolve(@Expect(Type.String) value: string): MatchRule {
+    public static resolve(@expect(Type.String) value: string): MatchRule {
         if (Pattern.matchRegexRule.test(value)) {
             // Create expression and remove first + last characters of value (regex delimiters '/').
             // '^' is appended at the start to match strings starting with resolved value,
@@ -47,8 +47,8 @@ export class MatchEngine {
      */
     public static lengthOf
     (
-        @Expect(RegExp, Type.String) rule: MatchRule,
-        @Expect(Type.String) text: string
+        @expect(RegExp, Type.String) rule: MatchRule,
+        @expect(Type.String) text: string
     ): number {
         if (rule instanceof RegExp) {
             const match: RegExpExecArray | null = rule.exec(text);
@@ -69,8 +69,8 @@ export class MatchEngine {
      */
     public static test
     (
-        @Expect(Type.String) text: string,
-        @Expect(RegExp, Type.String) rule: MatchRule
+        @expect(Type.String) text: string,
+        @expect(RegExp, Type.String) rule: MatchRule
     ): boolean {
         if (rule instanceof RegExp) {
             return rule.test(text);
@@ -86,8 +86,8 @@ export class MatchEngine {
      */
     public static partialTest
     (
-        @Expect(Type.String) text: string,
-        @Expect(RegExp, Type.String) rule: MatchRule
+        @expect(Type.String) text: string,
+        @expect(RegExp, Type.String) rule: MatchRule
     ): IPartialTestResult | null {
         // Rule is a pattern, attempt to return it's match.
         if (rule instanceof RegExp) {

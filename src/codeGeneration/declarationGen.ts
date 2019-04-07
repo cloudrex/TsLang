@@ -1,5 +1,5 @@
 import Generator from "./generator";
-import {AllocaInst, Type, ConstantInt, ConstantFP} from "llvm-node";
+import {AllocaInst, Type, ConstantFP} from "llvm-node";
 import {types} from "../core/constant";
 
 export const declarationGen: Generator = ($, stream) => {
@@ -26,7 +26,7 @@ export const declarationGen: Generator = ($, stream) => {
 
     // Create value.
     // TODO: parseInt or parseFloat (actually, parseFloat always should be good, as it is intercepted by ConstantInt/ConstantFP) (also ConstantInt/ConstantFP). Should decide automatically.
-    const value: ConstantInt = ConstantFP.get($.pointer.context, parseFloat(stream!.at(3)!.value));
+    const value: ConstantFP = ConstantFP.get($.pointer.context, parseFloat(stream!.at(3)!.value));
 
     // Assign value.
     $.builder.createStore(value, allocaInst);

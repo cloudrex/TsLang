@@ -4,7 +4,7 @@ export enum Type {
     Number = "number"
 }
 
-export function Expect(...types: Array<Type | any>): any {
+export function expect(...types: Array<Type | any>): any {
     return function (target: any, prop: string) {
         // TODO: 'target' is method's class. Need to access actual parameter.
         return;
