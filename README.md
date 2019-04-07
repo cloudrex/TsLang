@@ -115,7 +115,7 @@ fn main()
 
 Local variables
 
-```cpp
+```ts
 fn main() {
     int year = 2019;
 
@@ -126,6 +126,13 @@ fn main() {
     str name = "John Doe";
 
     char sex = 'm';
+
+    str[] weekEnds = ["Saturday", "Sundays"];
+
+    obj person = {
+        name: "John Doe",
+        sex: 'm'
+    };
 }
 ```
 
