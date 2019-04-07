@@ -29,13 +29,20 @@ fn main() {
 
 #### Operators
 
-+ Addition
-- Substraction
-* Multiplication
+\+ Addition
+
+\- Substraction
+
+\* Multiplication
+
 / Division
+
 % [Modulo](https://en.wikipedia.org/wiki/Modulo_operation)
+
 | Pipe (redirecting output)
+
 => Single return value (functions)
+
 @ Global variables & attribute definitions
 
 #### Modules
