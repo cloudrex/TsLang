@@ -9,7 +9,8 @@ import {IPointer} from "./entity/pointer";
 import {returnGen} from "./codeGeneration/returnGen";
 import TokenStream from "./syntaxAnalysis/tokenStream";
 import {SyntaxAnalyzer} from "./syntaxAnalysis/syntaxAnalyzer";
-import {allConstructs} from "./core/constant";
+import {allConstructs, constructGenerators} from "./core/constant";
+import TokenConstruct from "./syntaxAnalysis/tokenConstruct";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -54,7 +55,7 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `fn main ( ) { }`;
+const input: string = `fn test ( ) { } fn helloWorld ( ) { }`;
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(TokenType));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
@@ -101,9 +102,15 @@ const genContext: GeneratorContext = new GeneratorContext(pointer, $);
 // Create the syntax analyzer with all available constructs.
 const analyzer: SyntaxAnalyzer = new SyntaxAnalyzer(stream, allConstructs);
 
-// --- Start testing environment ---
-console.log("Matching constructs:", analyzer.analyze());
-// --- End testing environment ---
+// Begin analysis process.
+analyzer.analyze((match: TokenConstruct) => {
+    // A generator is linked to this match. Invoke it.
+    if (constructGenerators.has(match.get())) {
+        constructGenerators.get(match.get())!(genContext, stream);
+    }
+
+    console.log("Stream:", stream.getAllFromPos());
+});
 
 // Generate required return statement.
 returnGen(genContext, stream);

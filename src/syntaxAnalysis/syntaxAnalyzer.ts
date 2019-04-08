@@ -25,7 +25,7 @@ export class SyntaxAnalyzer implements ISyntaxAnalyzer {
         const result: TokenConstruct[] = [];
 
         for (const construct of this.constructs) {
-            if (construct.test(this.stream.getAllFromPos())) {
+            if (construct.partialTest(this.stream.getAllFromPos())) {
                 result.push(construct);
 
                 // Invoke callback if its defined, and provide it with matching construct.

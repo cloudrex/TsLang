@@ -5,15 +5,15 @@ export default class TokenConstruct {
     /**
      * Validate a token array to ensure it follows the provided sequence.
      */
-    public static validate(tokens: IToken[], sequence: TokenType[]): boolean {
-        // Lengths differ--validation failed.
-        if (tokens.length !== sequence.length) {
+    public static validate(tokens: IToken[], construct: TokenType[], partial: boolean = false): boolean {
+        // Not partial and lengths differ--validation failed.
+        if (!partial && tokens.length !== construct.length) {
             return false;
         }
 
-        for (let i: number = 0; i < tokens.length; i++) {
+        for (let i: number = 0; i < construct.length; i++) {
             // Type is not reflected in the sequence--validation failed.
-            if (tokens[i].type !== reverseToken(sequence[i])) {
+            if (tokens[i].type !== reverseToken(construct[i])) {
                 return false;
             }
         }
@@ -22,18 +22,18 @@ export default class TokenConstruct {
         return true;
     }
 
-    protected sequence: TokenType[];
+    protected construct: TokenType[];
 
     public constructor(sequence: TokenType[] = []) {
-        this.sequence = sequence;
+        this.construct = sequence;
     }
 
     /**
      * Retrieved the stored sequence in its
      * current state.
      */
-    public get(): ReadonlyArray<TokenType> {
-        return this.sequence;
+    public get(): readonly TokenType[] {
+        return this.construct;
     }
 
     /**
@@ -41,7 +41,7 @@ export default class TokenConstruct {
      * stored sequence.
      */
     public add(sequence: TokenType[]): this {
-        this.sequence = this.sequence.concat(sequence);
+        this.construct = this.construct.concat(sequence);
 
         return this;
     }
@@ -51,7 +51,7 @@ export default class TokenConstruct {
      * stored sequence.
      */
     public addSingle(type: TokenType): this {
-        this.sequence.push(type);
+        this.construct.push(type);
 
         return this;
     }
@@ -60,11 +60,14 @@ export default class TokenConstruct {
      * Run the stored sequence against a token array.
      */
     public test(tokens: IToken[]): boolean {
-        // Provided tokens do not satisfy sequence.
-        if (!TokenConstruct.validate(tokens, this.sequence)) {
-            return false;
-        }
+        return TokenConstruct.validate(tokens, this.construct);
+    }
 
-        return true;
+    /**
+     * Run the stored sequence against the beginning
+     * of a token array.
+     */
+    public partialTest(tokens: IToken[]): boolean {
+        return TokenConstruct.validate(tokens, this.construct, true);
     }
 }
