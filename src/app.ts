@@ -9,6 +9,8 @@ import {IPointer} from "./entity/pointer";
 import {returnGen} from "./codeGeneration/returnGen";
 import TokenStream from "./syntaxAnalysis/tokenStream";
 import {declarationGen} from "./codeGeneration/declarationGen";
+import {SyntaxAnalyzer} from "./syntaxAnalysis/syntaxAnalyzer";
+import {allConstructs} from "./core/constant";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -53,7 +55,7 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `bool flag = true bool ; bool flag2 = false ;`;
+const input: string = `fn main ( ) { }`;
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(TokenType));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
@@ -98,8 +100,9 @@ const pointer: IPointer = {
 const genContext: GeneratorContext = new GeneratorContext(pointer, $);
 
 // --- Start testing environment ---
-declarationGen(genContext, stream);
-declarationGen(genContext, stream);
+const analyzer: SyntaxAnalyzer = new SyntaxAnalyzer(stream, allConstructs);
+
+console.log("Matching constructs:", analyzer.analyze());
 // --- End testing environment ---
 
 // Generate required return statement.

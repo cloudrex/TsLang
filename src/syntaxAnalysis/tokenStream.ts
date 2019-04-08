@@ -167,4 +167,12 @@ export default class TokenStream {
     public reset(): this {
         return this.setPos(0);
     }
+
+    /**
+     * Retrieve all the tokens between the current position
+     * counter until the end of all the tokens.
+     */
+    public getAllFromPos(): IToken[] {
+        return this.tokens.slice(this.pos, this.tokens.length);
+    }
 }

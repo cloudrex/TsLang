@@ -1,5 +1,5 @@
 import Generator from "./generator";
-import {AllocaInst, Type, ConstantFP, LLVMContext, ConstantInt} from "llvm-node";
+import {AllocaInst, Type, ConstantFP, LLVMContext, ConstantInt, Constant} from "llvm-node";
 import {types, constantFactories} from "../core/constant";
 import Util from "../core/util";
 

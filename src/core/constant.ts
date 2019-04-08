@@ -1,6 +1,8 @@
 import {TokenType} from "../syntaxAnalysis/tokenType";
 import {Type, LLVMContext, ConstantInt, ConstantFP} from "llvm-node";
 import {ConstantFactoryCallback, ConstantFactory} from "../codeGeneration/declarationGen";
+import Construct from "../syntaxAnalysis/construct";
+import TokenConstruct from "../syntaxAnalysis/tokenSequence";
 
 export type LlvmTypeResolver = (context: LLVMContext) => Type;
 
@@ -27,3 +29,14 @@ export const constantFactories: Map<string, ConstantFactoryCallback> = new Map([
         return ConstantInt.getTrue(context);
     }]
 ]);
+
+/**
+ * An array with all the available constructs.
+ */
+export const allConstructs: TokenConstruct[] = [
+    Construct.declaration,
+    Construct.expr,
+    Construct.external,
+    Construct.fn,
+    Construct.args
+].map((construct: TokenType[]) => new TokenConstruct(construct));

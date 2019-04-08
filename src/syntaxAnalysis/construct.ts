@@ -1,11 +1,11 @@
 import {TokenType} from "./tokenType";
 
 /**
- * Contains all possible token sequences.
+ * Contains all possible token constructs.
  */
-export default class Sequence {
+export default class Construct {
     /**
-     * The token type sequence representation
+     * The token type construct representation
      * of an expression.
      */
     public static readonly expr: TokenType[] = [
@@ -13,7 +13,7 @@ export default class Sequence {
     ];
 
     /**
-     * The token type sequence representation
+     * The token type construct representation
      * of a statement block.
      */
     public static readonly block: TokenType[] = [
@@ -23,7 +23,7 @@ export default class Sequence {
     ];
 
     /**
-     * The token type sequence representation
+     * The token type construct representation
      * of an argument list.
      */
     public static readonly args: TokenType[] = [
@@ -33,14 +33,14 @@ export default class Sequence {
     ];
 
     /**
-     * The token type sequence representation
+     * The token type construct representation
      * of a function.
      */
     public static readonly fn: TokenType[] = [
         TokenType.KeywordFn,
         TokenType.Id,
-        ...Sequence.args,
-        ...Sequence.block
+        ...Construct.args,
+        ...Construct.block
     ];
 
     public static readonly declaration: TokenType[] = [
@@ -54,6 +54,6 @@ export default class Sequence {
     public static readonly external: TokenType[] = [
         TokenType.KeywordExtern,
         TokenType.Id,
-        ...Sequence.args
+        ...Construct.args
     ];
 }
