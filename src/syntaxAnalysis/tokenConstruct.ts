@@ -1,7 +1,7 @@
 import {IToken} from "./token";
 import {TokenType, reverseToken} from "./tokenType";
 
-export default class TokenSequence {
+export default class TokenConstruct {
     /**
      * Validate a token array to ensure it follows the provided sequence.
      */
@@ -61,7 +61,7 @@ export default class TokenSequence {
      */
     public test(tokens: IToken[]): boolean {
         // Provided tokens do not satisfy sequence.
-        if (!TokenSequence.validate(tokens, this.sequence)) {
+        if (!TokenConstruct.validate(tokens, this.sequence)) {
             return false;
         }
 

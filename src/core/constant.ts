@@ -2,7 +2,7 @@ import {TokenType} from "../syntaxAnalysis/tokenType";
 import {Type, LLVMContext, ConstantInt, ConstantFP} from "llvm-node";
 import {ConstantFactoryCallback, ConstantFactory} from "../codeGeneration/declarationGen";
 import Construct from "../syntaxAnalysis/construct";
-import TokenConstruct from "../syntaxAnalysis/tokenSequence";
+import TokenConstruct from "../syntaxAnalysis/tokenConstruct";
 
 export type LlvmTypeResolver = (context: LLVMContext) => Type;
 

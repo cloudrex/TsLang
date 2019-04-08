@@ -8,7 +8,6 @@ import GeneratorContext from "./codeGeneration/generatorContext";
 import {IPointer} from "./entity/pointer";
 import {returnGen} from "./codeGeneration/returnGen";
 import TokenStream from "./syntaxAnalysis/tokenStream";
-import {declarationGen} from "./codeGeneration/declarationGen";
 import {SyntaxAnalyzer} from "./syntaxAnalysis/syntaxAnalyzer";
 import {allConstructs} from "./core/constant";
 
@@ -99,9 +98,10 @@ const pointer: IPointer = {
 // Create the generator context.
 const genContext: GeneratorContext = new GeneratorContext(pointer, $);
 
-// --- Start testing environment ---
+// Create the syntax analyzer with all available constructs.
 const analyzer: SyntaxAnalyzer = new SyntaxAnalyzer(stream, allConstructs);
 
+// --- Start testing environment ---
 console.log("Matching constructs:", analyzer.analyze());
 // --- End testing environment ---
 
