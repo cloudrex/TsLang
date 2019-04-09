@@ -25,18 +25,39 @@ export default class ConstructBuilder {
     }
 
     protected flushLinearBuffer(): TokenType[] {
-        // Save buffer.
+        // Save the buffer.
         const linearBuffer: TokenType[] = [...this.linearBuffer]
 
-        // Reset buffer.
+        // Reset the buffer.
         this.linearBuffer.length = 0;
 
         return linearBuffer;
     }
     
     protected applyLinearBuffer(): void {
+        // Stop if the buffer is empty.
+        if (this.linearBuffer.length === 0) {
+            return;
+        }
+
         this.steps.push((stream) => {
-            // TODO
+            const tokens: TokenType[] = this.flushLinearBuffer();
+            const streamTokens: IToken[] = stream.getAllFromPos();
+
+            // Stream tokens' length is smaller. Fail immediatly.
+            if (streamTokens.length < tokens.length) {
+                return false;
+            }
+
+            // Loop through flushed tokens.
+            for (let i: number = 0; i < tokens.length; i++) {
+                // Token mismatch.
+                if (streamTokens[i].type !== tokens[i]) {
+                    return false;
+                }
+            }
+
+            return true;
         });
     }
 
