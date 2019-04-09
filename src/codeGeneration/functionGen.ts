@@ -14,7 +14,7 @@ const functionGen: Generator = ($, stream) => {
      * [5] Token.SymbolBraceClose : void
      */
 
-    const name: string = stream!.at(1)!.value;
+    const name: string = stream.skip().get().value;
 
     // TODO: Type, args.
     // Create and emit the function.
