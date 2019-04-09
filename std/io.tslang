@@ -1,13 +1,13 @@
-space std.io;
+namespace std.io;
 
-extern puts(str) ~> int;
-extern printf(str, ..) ~> int;
-extern scanf(str, ..) ~> int;
+extern puts(str): int;
+extern printf(str, ..): int;
+extern scanf(str, ..): int;
 
 /*
  Print text in the console.
  */
-exp fn write(str text) ~> void {
+export fn write(str text): void {
 	printf(text);
 }
 
@@ -15,16 +15,16 @@ exp fn write(str text) ~> void {
  Print a question in the console and prompt
  the user for input.
  */
-exp fn prompt(str question) ~> str {
+export fn prompt(str question): str {
 	printf(str + "? ");
 	scanf("%s", &[str response]);
 	
-	ret response;
+	return response;
 }
 
 /*
  Print text followed by a new line in the console.
  */
-exp fn ln(str text) ~> void {
+export fn ln(str text): void {
 	puts(text);
 } 
