@@ -1,4 +1,5 @@
 import {TokenType} from "./tokenType";
+import ConstructBuilder from "./constructBuilder";
 
 /**
  * Simplified representation of a construct.
@@ -50,10 +51,23 @@ export default class Construct {
 
     public static readonly declaration: BareConstruct = [
         // TODO: Should be multi-type.
+
         TokenType.TypeInt,
         TokenType.Id,
         TokenType.OpAssign,
-        TokenType.NumLiteral
+        TokenType.NumLiteral,
+        TokenType.SymbolSemiColon
+    ];
+
+    public static readonly globalVarDeclaration: BareConstruct = [
+        // TODO: Should be multi-type.
+        TokenType.TypeInt,
+        
+        TokenType.SymbolAt,
+        TokenType.Id,
+        TokenType.OpAssign,
+        TokenType.NumLiteral,
+        TokenType.SymbolSemiColon
     ];
 
     public static readonly external: BareConstruct = [
@@ -61,4 +75,15 @@ export default class Construct {
         TokenType.Id,
         ...Construct.args
     ];
+}
+
+export abstract class NewConstruct {
+    public static readonly args: ConstructBuilder = new ConstructBuilder()
+        .followedBy(TokenType.SymbolParenOpen)
+        .followedBy(TokenType.SymbolParenClose);
+
+    public static readonly fn: ConstructBuilder = new ConstructBuilder()
+        .followedBy(TokenType.KeywordFn)
+        .followedBy(TokenType.Id)
+        .merge(NewConstruct.args);
 }
