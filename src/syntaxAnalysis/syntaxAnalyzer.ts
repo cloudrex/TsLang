@@ -24,14 +24,26 @@ export class SyntaxAnalyzer implements ISyntaxAnalyzer {
     public analyze(callback?: AnalyzerCallback): TokenConstruct[] {
         const result: TokenConstruct[] = [];
 
-        for (const construct of this.constructs) {
-            if (construct.partialTest(this.stream.getAllFromPos())) {
+        console.log("THIS->CONSTRUCTS", this.constructs);
+
+        for (let i: number = 0; i < this.constructs.length; i++) {
+            const construct: TokenConstruct = this.constructs[i];
+
+            // Ensure construct is not empty.
+            if (construct.get().length === 0) {
+                throw new Error("Expected a non-empty construct");
+            }
+            // Construct matched.
+            else if (construct.partialTest(this.stream.getAllFromPos())) {
                 result.push(construct);
 
                 // Invoke callback if its defined, and provide it with matching construct.
                 if (callback !== undefined) {
                     callback(construct);
                 }
+
+                // Reset the index counter upon every match.
+                i = 0;
             }
         }
 

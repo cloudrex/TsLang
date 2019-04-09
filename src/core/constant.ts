@@ -40,7 +40,10 @@ export const constantFactories: Map<string, ConstantFactoryCallback> = new Map([
  */
 export const allConstructs: TokenConstruct[] = [
     Construct.declaration,
-    Construct.expr,
+
+    // TODO: Should not be empty.
+    // Construct.expr,
+
     Construct.external,
     Construct.fn,
     Construct.args

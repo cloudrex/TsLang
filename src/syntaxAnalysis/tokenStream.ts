@@ -169,6 +169,14 @@ export default class TokenStream {
     }
 
     /**
+     * Whether the current position points to the last
+     * token in the stream.
+     */
+    public get end(): boolean {
+        return this.pos === this.tokens.length - 1;
+    }
+
+    /**
      * Retrieve all the tokens between the current position
      * counter until the end of all the tokens.
      */

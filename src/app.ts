@@ -55,7 +55,7 @@ console.log(mod.print()); */
   As we can see, the 'e' is skipped from 'export' when bunched together.
  */
 
-const input: string = `fn test ( ) { } fn helloWorld ( ) { }`;
+const input: string = `fn test ( ) { } fn hello ( ) { }`;
 const tokenDefs: Array<TokenDef> = TokenDefinition.fromObjLike(TokenTypeUtil.parseEnum(TokenType));
 const tokenizer: Tokenizer = Tokenizer.create(new Map(tokenDefs));
 const tokens: IToken[] = tokenizer.tokenize(input);
@@ -107,6 +107,15 @@ analyzer.analyze((match: TokenConstruct) => {
     // A generator is linked to this match. Invoke it.
     if (constructGenerators.has(match.get())) {
         constructGenerators.get(match.get())!(genContext, stream);
+    }
+    // Otherwise, skip one token and continue matching attempts.
+    else {
+        stream.skip();
+    }
+
+    // Stop if the end of the stream has been reached.
+    if (stream.end) {
+        return;
     }
 
     console.log("Stream:", stream.getAllFromPos());
