@@ -106,8 +106,8 @@ const analyzer: SyntaxAnalyzer = new SyntaxAnalyzer(stream, topLevelConstructs);
 // Begin analysis process.
 analyzer.analyze((match: ConstructBuilder) => {
     // A generator is linked to this match. Invoke it.
-    if (constructGenerators.has(match.get())) {
-        constructGenerators.get(match.get())!(genContext, stream);
+    if (constructGenerators.has(match)) {
+        constructGenerators.get(match)!(genContext, stream);
     }
     // Otherwise, skip one token and continue matching attempts.
     else {

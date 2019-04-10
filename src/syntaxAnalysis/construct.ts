@@ -76,14 +76,26 @@ export class LinearConstruct {
  * Advanced language constructs.
  */
 export abstract class Construct {
-    public static readonly args: ConstructBuilder = new ConstructBuilder()
+    public static readonly formalArgs: ConstructBuilder = new ConstructBuilder()
         .followedBy(TokenType.SymbolParenOpen)
+        // TODO
         .followedBy(TokenType.SymbolParenClose);
+
+    public static readonly informalArgs: ConstructBuilder = new ConstructBuilder()
+        .followedBy(TokenType.SymbolParenOpen)
+        // TODO
+        .followedBy(TokenType.SymbolParenClose);
+
+    public static readonly block: ConstructBuilder = new ConstructBuilder()
+        .followedBy(TokenType.SymbolBraceOpen)
+        // TODO
+        .followedBy(TokenType.SymbolBraceClose);
 
     public static readonly fn: ConstructBuilder = new ConstructBuilder()
         .followedBy(TokenType.KeywordFn)
         .followedBy(TokenType.Id)
-        .merge(Construct.args);
+        .merge(Construct.formalArgs)
+        .merge(Construct.block);
 
     public static readonly type: ConstructBuilder = new ConstructBuilder()
         .either([
@@ -104,5 +116,13 @@ export abstract class Construct {
         .merge(Construct.type)
         .followedBy(TokenType.Id)
         .followedBy(TokenType.OpAssign)
-        .merge(Construct.declare);
+        .merge(Construct.expr)
+        .followedBy(TokenType.SymbolSemiColon);
+
+    public static extern: ConstructBuilder = new ConstructBuilder()
+        .followedBy(TokenType.KeywordExtern)
+        .followedBy(TokenType.KeywordFn)
+        .followedBy(TokenType.Id)
+        .merge(Construct.informalArgs)
+        .followedBy(TokenType.SymbolSemiColon);
 }

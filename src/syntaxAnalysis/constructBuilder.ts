@@ -4,7 +4,6 @@ import {IToken} from "./token";
 
 export type ConstructBuilderStep = (stream: TokenStream) => boolean;
 
-// TODO: Should just be 'Construct'.
 export default class ConstructBuilder {
     protected readonly steps: ConstructBuilderStep[] = [];
     protected readonly linearBuffer: TokenType[];
@@ -61,10 +60,22 @@ export default class ConstructBuilder {
         });
     }
 
+    /**
+     * Merge a construct's steps and mark them
+     * as optional (not required).
+     */
+    public opt(construct: ConstructBuilder): this {
+        // TODO: Finish implementing.
+        throw new Error("Not yet implemented");
+
+        return this;
+    }
+
+    /**
+     * Merge a construct's steps.
+     */
     public merge(construct: ConstructBuilder): this {
-        this.steps.push((stream) => {
-            return construct.testStream(stream);
-        });
+        this.steps.push(...construct.steps);
 
         return this;
     }
@@ -85,6 +96,9 @@ export default class ConstructBuilder {
      * Test this construct against a token array.
      */
     public test(tokens: IToken[], partial: boolean = false): boolean {
+        // Flush and apply linear buffer.
+        this.applyLinearBuffer();
+
         // Mode is not partial and lengths differ. Fail immediatly.
         if (!partial && this.steps.length !== tokens.length) {
             return false;
@@ -107,8 +121,8 @@ export default class ConstructBuilder {
     /**
      * Test this construct against a token stream.
      */
-    public testStream(stream: TokenStream): boolean {
-        return this.test(stream.getAllFromPos());
+    public testStream(stream: TokenStream, partial?: boolean): boolean {
+        return this.test(stream.getAllFromPos(), partial);
     }
 
     /**

@@ -27,12 +27,14 @@ export class SyntaxAnalyzer implements ISyntaxAnalyzer {
         for (let i: number = 0; i < this.constructs.length; i++) {
             const construct: ConstructBuilder = this.constructs[i];
 
+            console.log(construct);
+
             // Ensure construct is not empty.
-            if (construct.get().length === 0) {
+            if (construct.empty) {
                 throw new Error("Expected a non-empty construct");
             }
             // Construct matched.
-            else if (construct.partialTest(this.stream.getAllFromPos())) {
+            else if (construct.testStream(this.stream, true)) {
                 result.push(construct);
 
                 // Invoke callback if its defined, and provide it with matching construct.

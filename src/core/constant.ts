@@ -8,6 +8,7 @@ import externGen from "../codeGeneration/externGen";
 import {argsGen} from "../codeGeneration/argsGen";
 import {LinearConstruct, Construct} from "../syntaxAnalysis/construct";
 import ConstructBuilder from "../syntaxAnalysis/constructBuilder";
+import {exprGen} from "../codeGeneration/exprGen";
 
 export type LlvmTypeResolver = (context: LLVMContext) => Type;
 
@@ -39,16 +40,16 @@ export const constantFactories: Map<string, ConstantFactoryCallback> = new Map([
  * An array with all the top-level available constructs.
  */
 export const topLevelConstructs: ConstructBuilder[] = [
-    Construct.args,
+    Construct.formalArgs,
     Construct.declare,
     Construct.fn,
     Construct.expr
 ];
 
-export const constructGenerators: Map<readonly TokenType[], Generator> = new Map([
-    [LinearConstruct.fn, functionGen],
-    [LinearConstruct.declaration, declarationGen],
-    [LinearConstruct.block, blockGen],
-    [LinearConstruct.external, externGen],
-    [LinearConstruct.args, argsGen]
+export const constructGenerators: Map<ConstructBuilder, Generator> = new Map([
+    [Construct.fn, functionGen],
+    [Construct.declare, declarationGen],
+    [Construct.expr, exprGen],
+    [Construct.formalArgs, argsGen],
+    [Construct.extern, externGen]
 ]);
