@@ -24,8 +24,6 @@ export class SyntaxAnalyzer implements ISyntaxAnalyzer {
     public analyze(callback?: AnalyzerCallback): TokenConstruct[] {
         const result: TokenConstruct[] = [];
 
-        console.log("THIS->CONSTRUCTS", this.constructs);
-
         for (let i: number = 0; i < this.constructs.length; i++) {
             const construct: TokenConstruct = this.constructs[i];
 
