@@ -1,13 +1,13 @@
 import {TokenType} from "../syntaxAnalysis/tokenType";
 import {Type, LLVMContext, ConstantInt, ConstantFP} from "llvm-node";
 import {ConstantFactoryCallback, ConstantFactory, declarationGen} from "../codeGeneration/declarationGen";
-import TokenConstruct from "../syntaxAnalysis/tokenConstruct";
 import functionGen from "../codeGeneration/functionGen";
 import Generator from "../codeGeneration/generator";
 import {blockGen} from "../codeGeneration/blockGen";
 import externGen from "../codeGeneration/externGen";
 import {argsGen} from "../codeGeneration/argsGen";
-import {LinearConstruct} from "../syntaxAnalysis/construct";
+import {LinearConstruct, Construct} from "../syntaxAnalysis/construct";
+import ConstructBuilder from "../syntaxAnalysis/constructBuilder";
 
 export type LlvmTypeResolver = (context: LLVMContext) => Type;
 
@@ -36,18 +36,14 @@ export const constantFactories: Map<string, ConstantFactoryCallback> = new Map([
 ]);
 
 /**
- * An array with all the available constructs.
+ * An array with all the top-level available constructs.
  */
-export const allConstructs: TokenConstruct[] = [
-    LinearConstruct.declaration,
-
-    // TODO: Should not be empty.
-    // Construct.expr,
-
-    LinearConstruct.external,
-    LinearConstruct.fn,
-    LinearConstruct.args
-].map((construct: TokenType[]) => new TokenConstruct(construct));
+export const topLevelConstructs: ConstructBuilder[] = [
+    Construct.args,
+    Construct.declare,
+    Construct.fn,
+    Construct.expr
+];
 
 export const constructGenerators: Map<readonly TokenType[], Generator> = new Map([
     [LinearConstruct.fn, functionGen],

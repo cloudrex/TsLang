@@ -9,8 +9,9 @@ import {IPointer} from "./entity/pointer";
 import {returnGen} from "./codeGeneration/returnGen";
 import TokenStream from "./syntaxAnalysis/tokenStream";
 import {SyntaxAnalyzer} from "./syntaxAnalysis/syntaxAnalyzer";
-import {allConstructs, constructGenerators} from "./core/constant";
+import {topLevelConstructs, constructGenerators} from "./core/constant";
 import TokenConstruct from "./syntaxAnalysis/tokenConstruct";
+import ConstructBuilder from "./syntaxAnalysis/constructBuilder";
 
 /* import llvm, {BasicBlock} from "llvm-node";
 
@@ -100,10 +101,10 @@ const pointer: IPointer = {
 const genContext: GeneratorContext = new GeneratorContext(pointer, $);
 
 // Create the syntax analyzer with all available constructs.
-const analyzer: SyntaxAnalyzer = new SyntaxAnalyzer(stream, allConstructs);
+const analyzer: SyntaxAnalyzer = new SyntaxAnalyzer(stream, topLevelConstructs);
 
 // Begin analysis process.
-analyzer.analyze((match: TokenConstruct) => {
+analyzer.analyze((match: ConstructBuilder) => {
     // A generator is linked to this match. Invoke it.
     if (constructGenerators.has(match.get())) {
         constructGenerators.get(match.get())!(genContext, stream);

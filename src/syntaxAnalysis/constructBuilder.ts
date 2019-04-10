@@ -110,4 +110,11 @@ export default class ConstructBuilder {
     public testStream(stream: TokenStream): boolean {
         return this.test(stream.getAllFromPos());
     }
+
+    /**
+     * Whether this construct contains no steps.
+     */
+    public get empty(): boolean {
+        return this.steps.length === 0;
+    }
 }
