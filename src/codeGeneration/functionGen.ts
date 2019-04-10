@@ -16,7 +16,9 @@ const functionGen: Generator = ($, stream) => {
 
     const name: string = stream.skip().get().value;
 
-    // TODO: Type, args.
+    // TODO: Args, return type.
+    stream.skip(2);
+
     // Create and emit the function.
     const fn: Function = new Fn($.pointer, {
         name

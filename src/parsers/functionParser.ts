@@ -1,6 +1,7 @@
 import TokenStream from "../syntaxAnalysis/tokenStream";
 import ArgsParser, {IFormalArg} from "./argsParser";
 import {Type, SpecialType} from "../core/type";
+import {blockGen} from "../codeGeneration/blockGen";
 
 export interface IFunctionHeader {
     readonly name: string;
@@ -17,7 +18,7 @@ export default abstract class FunctionParser {
         // Capture the function name.
         const name: string = stream.get().value;
 
-        // Invoke the formal arguemnt parser.
+        // Invoke the formal argument parser.
         const args: IFormalArg[] = ArgsParser.parseFormal(stream);
 
         let returnType: Type = SpecialType.Void;

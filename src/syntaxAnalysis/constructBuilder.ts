@@ -69,7 +69,7 @@ export default class ConstructBuilder {
         return this;
     }
 
-    public or(range: TokenType[]): this {
+    public either(range: TokenType[]): this {
         // Attempt to apply the linear buffer before continuing.
         this.applyLinearBuffer();
 
