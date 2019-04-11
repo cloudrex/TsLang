@@ -26,11 +26,21 @@ export enum TokenType {
     KeywordVoid = "void",
 
     KeywordTrue = "true",
-    
+
     KeywordFalse = "false",
 
     // Operators.
     OpAssign = "=",
+
+    OpAdd = "+",
+
+    OpSub = "-",
+
+    OpMultiply = "*",
+
+    OpDivide = "/",
+
+    OpExponent = "^",
 
     // Symbols.
     SymbolAt = "@",
@@ -49,14 +59,16 @@ export enum TokenType {
 
     SymbolSemiColon = ";",
 
-    // Literals.
-    CharLiteral = "/'([^']?)'/",
+    SymbolComma = ",",
 
-    StringLiteral = "/\"([^\"]*)\"/",
+    // Literals.
+    CharAtom = "/'([^']?)'/",
+
+    StringAtom = "/\"([^\"]*)\"/",
 
     // Literals.
     // TODO: This without '()' takes precedence somehow. Test-sample: '5 ;'. | EDIT: This might be expected, see GH issue #8.
-    NumLiteral = "/([0-9](?:\.[0-9]+)?)/",
+    NumAtom = "/([0-9](?:\.[0-9]+)?)/",
 
     TypeInt = "int",
 

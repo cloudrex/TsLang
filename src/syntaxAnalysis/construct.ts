@@ -50,7 +50,7 @@ export class LinearConstruct {
         TokenType.TypeInt,
         TokenType.Id,
         TokenType.OpAssign,
-        TokenType.NumLiteral,
+        TokenType.NumAtom,
         TokenType.SymbolSemiColon
     ];
 
@@ -61,7 +61,7 @@ export class LinearConstruct {
         TokenType.SymbolAt,
         TokenType.Id,
         TokenType.OpAssign,
-        TokenType.NumLiteral,
+        TokenType.NumAtom,
         TokenType.SymbolSemiColon
     ];
 
@@ -76,14 +76,37 @@ export class LinearConstruct {
  * Advanced language constructs.
  */
 export abstract class Construct {
+    public static readonly type: ConstructBuilder = new ConstructBuilder()
+        .either(
+            TokenType.TypeBool,
+            TokenType.TypeDouble,
+            TokenType.TypeFloat,
+            TokenType.TypeInt,
+            TokenType.TypeString
+        );
+
+    // TODO: Repeating comma problem.
     public static readonly formalArgs: ConstructBuilder = new ConstructBuilder()
         .followedBy(TokenType.SymbolParenOpen)
-        // TODO
+        .opt(new ConstructBuilder()
+            .repeat(new ConstructBuilder()
+                .merge(Construct.type)
+                .followedBy(TokenType.Id)
+            )
+        )
         .followedBy(TokenType.SymbolParenClose);
 
+    // TODO: Repeating comma problem.
     public static readonly informalArgs: ConstructBuilder = new ConstructBuilder()
         .followedBy(TokenType.SymbolParenOpen)
-        // TODO
+        .opt(new ConstructBuilder()
+            .repeat(new ConstructBuilder()
+                .merge(Construct.type)
+                .opt(new ConstructBuilder()
+                    .followedBy(TokenType.Id)
+                )
+            )
+        )
         .followedBy(TokenType.SymbolParenClose);
 
     public static readonly block: ConstructBuilder = new ConstructBuilder()
@@ -91,38 +114,85 @@ export abstract class Construct {
         // TODO
         .followedBy(TokenType.SymbolBraceClose);
 
+    public static readonly fnReturnType: ConstructBuilder = new ConstructBuilder()
+        .opt(new ConstructBuilder()
+            .followedBy(TokenType.SymbolColon)
+            .either(
+                Construct.type,
+                TokenType.KeywordVoid
+            )
+        );
+
     public static readonly fn: ConstructBuilder = new ConstructBuilder()
         .followedBy(TokenType.KeywordFn)
         .followedBy(TokenType.Id)
         .merge(Construct.formalArgs)
+        .merge(Construct.fnReturnType)
         .merge(Construct.block);
 
-    public static readonly type: ConstructBuilder = new ConstructBuilder()
-        .either([
-            TokenType.TypeBool,
-            TokenType.TypeDouble,
-            TokenType.TypeFloat,
-            TokenType.TypeInt,
-            TokenType.TypeString
-        ]);
+    public static readonly atom: ConstructBuilder = new ConstructBuilder()
+        .either(
+            TokenType.StringAtom,
+            TokenType.NumAtom,
+            TokenType.CharAtom
+        );
+
+    public static readonly basicMathOp: ConstructBuilder = new ConstructBuilder()
+        .either(
+            TokenType.OpAdd,
+            TokenType.OpSub
+        );
+
+    public static readonly mathOp: ConstructBuilder = new ConstructBuilder()
+        .either(
+            Construct.basicMathOp,
+            TokenType.OpMultiply,
+            TokenType.OpDivide,
+            TokenType.OpExponent
+        );
+
+    // TODO: Repeating comma problem.
+    public static readonly fnCallArgs: ConstructBuilder = new ConstructBuilder()
+        .followedBy(TokenType.SymbolParenOpen)
+        .repeat(new ConstructBuilder()
+            // TODO: Should be expr.
+            .followedBy(TokenType.Id)
+        )
+        .followedBy(TokenType.SymbolParenClose);
+
+    public static readonly fnCall: ConstructBuilder = new ConstructBuilder()
+        .followedBy(TokenType.Id)
+        .merge(Construct.fnCallArgs);
+
+    public static readonly unaryExpr: ConstructBuilder = new ConstructBuilder()
+        .merge(Construct.basicMathOp)
+        .merge(Construct.atom);
+
+    public static readonly binExpr: ConstructBuilder = new ConstructBuilder()
+        .merge(Construct.atom)
+        .merge(Construct.mathOp)
+        .merge(Construct.atom);
 
     public static readonly expr: ConstructBuilder = new ConstructBuilder()
-        .either([
-            TokenType.StringLiteral,
-            TokenType.NumLiteral
-        ]);
+        .either(
+            Construct.atom,
+            Construct.unaryExpr,
+            Construct.binExpr,
+            Construct.fnCall
+        );
 
-    public static declare: ConstructBuilder = new ConstructBuilder()
+    public static readonly declare: ConstructBuilder = new ConstructBuilder()
         .merge(Construct.type)
         .followedBy(TokenType.Id)
         .followedBy(TokenType.OpAssign)
         .merge(Construct.expr)
         .followedBy(TokenType.SymbolSemiColon);
 
-    public static extern: ConstructBuilder = new ConstructBuilder()
+    public static readonly extern: ConstructBuilder = new ConstructBuilder()
         .followedBy(TokenType.KeywordExtern)
         .followedBy(TokenType.KeywordFn)
         .followedBy(TokenType.Id)
         .merge(Construct.informalArgs)
+        .merge(Construct.fnReturnType)
         .followedBy(TokenType.SymbolSemiColon);
 }

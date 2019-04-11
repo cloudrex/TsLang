@@ -32,7 +32,7 @@ export default class ConstructBuilder {
 
         return linearBuffer;
     }
-    
+
     protected applyLinearBuffer(): void {
         // Stop if the buffer is empty.
         if (this.linearBuffer.length === 0) {
@@ -61,12 +61,21 @@ export default class ConstructBuilder {
     }
 
     /**
-     * Merge a construct's steps and mark them
+     * Create a repeating pattern from a construct's
+     * step(s).
+     */
+    public repeat(construct: ConstructBuilder): this {
+        // TODO: Implement.
+
+        return this;
+    }
+
+    /**
+     * Merge a construct's step(s) and mark them
      * as optional (not required).
      */
     public opt(construct: ConstructBuilder): this {
-        // TODO: Finish implementing.
-        throw new Error("Not yet implemented");
+        // TODO: Implement.
 
         return this;
     }
@@ -80,7 +89,8 @@ export default class ConstructBuilder {
         return this;
     }
 
-    public either(range: TokenType[]): this {
+    // TODO: Update to support ConstructBuilder in range.
+    public either(...range: Array<ConstructBuilder | TokenType>): this {
         // Attempt to apply the linear buffer before continuing.
         this.applyLinearBuffer();
 
