@@ -3,10 +3,9 @@ import {Type, LLVMContext, ConstantInt, ConstantFP} from "llvm-node";
 import {ConstantFactoryCallback, ConstantFactory, declarationGen} from "../codeGeneration/declarationGen";
 import functionGen from "../codeGeneration/functionGen";
 import Generator from "../codeGeneration/generator";
-import {blockGen} from "../codeGeneration/blockGen";
 import externGen from "../codeGeneration/externGen";
 import {argsGen} from "../codeGeneration/argsGen";
-import {LinearConstruct, Construct} from "../syntaxAnalysis/construct";
+import {Construct} from "../syntaxAnalysis/construct";
 import ConstructBuilder from "../syntaxAnalysis/constructBuilder";
 import {exprGen} from "../codeGeneration/exprGen";
 
