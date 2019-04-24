@@ -25,7 +25,7 @@
         "@types/node": "^11.13.4",
         "antlr4ts-cli": "^0.5.0-alpha.3",
         "tusk": "^1.2.4",
-        "typescript": "^3.4.3",
+        "typescript": "^3.4.5",
         "unit": "^1.4.3-0"
     }
 }
